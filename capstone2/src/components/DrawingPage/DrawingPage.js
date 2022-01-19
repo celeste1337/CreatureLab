@@ -8,7 +8,7 @@ import Canvas from './Canvas';
 function DrawingPage(props) {
 
     return(
-        <div class="drawingPage">
+        <div className="drawingPage">
             <Canvas></Canvas>
         </div>
     );
