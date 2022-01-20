@@ -60,6 +60,7 @@ class Canvas extends React.Component{
         this.ctx.beginPath();
         this.ctx.moveTo(offsetX, offsetY);
         this.ctx.lineTo(x, y);
+        this.ctx.strokeStyle = this.props.strokeColor;
         this.ctx.stroke();
         
         this.prevPos = {offsetX, offsetY};
