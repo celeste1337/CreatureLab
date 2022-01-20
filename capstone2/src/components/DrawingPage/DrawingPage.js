@@ -4,14 +4,59 @@
 import React from 'react';
 import { render } from 'react-dom';
 import Canvas from './Canvas';
+import Colorpicker from './Colorpicker';
 
-function DrawingPage(props) {
+class DrawingPage extends React.Component {
 
-    return(
-        <div className="drawingPage">
-            <Canvas></Canvas>
-        </div>
-    );
+    constructor(props) {
+        super(props);
+        this.state = {
+            colors: {
+                red: "#eb2727",
+                black: "#333333",
+                white: "#ffffff",
+                orange: "#f89c14",
+                yellow: "#f1de2d",
+                lightgreen: "#82de57",
+                darkgreen: "#51ad42",
+                lightblue: "#84b5fe",
+                darkblue: "#1f32de",
+                purple: "#bb4bf0",
+            },
+            currentColor: "",
+        }
+    }
+
+    changeColor(i) {
+        this.setState({
+            currentColor: i
+        });
+    }
+
+    renderColorPicker(i) {
+        return (
+            <Colorpicker value={this.state.colors[i]} onClick={() => this.changeColor(this.state.colors[i])} />
+        )
+    }
+
+    render() {
+        return(
+            <div className="drawingPage">
+                <Canvas strokeColor={this.state.currentColor}></Canvas>
+                {this.renderColorPicker('red')}
+                {this.renderColorPicker('white')}
+                {this.renderColorPicker('black')}
+                {this.renderColorPicker('orange')}
+                {this.renderColorPicker('yellow')}
+                {this.renderColorPicker('lightgreen')}
+                {this.renderColorPicker('darkgreen')}
+                {this.renderColorPicker('lightblue')}
+                {this.renderColorPicker('darkblue')}
+                {this.renderColorPicker('purple')}
+            </div>
+        );
+    }
+
 }
 
 export default DrawingPage;
