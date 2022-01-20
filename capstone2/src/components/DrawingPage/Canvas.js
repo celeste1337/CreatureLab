@@ -7,6 +7,7 @@ class Canvas extends React.Component{
         this.onMouseDown = this.onMouseDown.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
+        this.onMouseUp = this.onMouseUp.bind(this);
         //this.endPaintEvent = this.endPaintEvent.bind(this);
     }
     //variables
@@ -26,6 +27,11 @@ class Canvas extends React.Component{
         this.isPainting = true;
         //chuck it into prevPos
         this.prevPos = {offsetX, offsetY};
+    }
+
+    onMouseUp({nativeEvent}) {
+        console.log("mouse up");
+        this.isPainting = false;
     }
 
     onMouseMove({nativeEvent}) {
@@ -50,6 +56,7 @@ class Canvas extends React.Component{
     }
 
     onMouseLeave() {
+        console.log("mouse left canvas");
         this.isPainting = false;
     }
 
@@ -79,6 +86,7 @@ class Canvas extends React.Component{
             onMouseDown={this.onMouseDown}
             onMouseMove={this.onMouseMove}
             onMouseLeave={this.onMouseLeave}
+            onMouseUp={this.onMouseUp}
             style={{border: "1px solid black"}}></canvas>
         );
     }
