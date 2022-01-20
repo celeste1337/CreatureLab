@@ -12,9 +12,16 @@ class DrawingPage extends React.Component {
         super(props);
         this.state = {
             colors: {
-                red: "#f54242",
-                black: "#000000",
-                white: "#ffffff"
+                red: "#eb2727",
+                black: "#333333",
+                white: "#ffffff",
+                orange: "#f89c14",
+                yellow: "#f1de2d",
+                lightgreen: "#82de57",
+                darkgreen: "#51ad42",
+                lightblue: "#84b5fe",
+                darkblue: "#1f32de",
+                purple: "#bb4bf0",
             },
             currentColor: "",
         }
@@ -39,6 +46,13 @@ class DrawingPage extends React.Component {
                 {this.renderColorPicker('red')}
                 {this.renderColorPicker('white')}
                 {this.renderColorPicker('black')}
+                {this.renderColorPicker('orange')}
+                {this.renderColorPicker('yellow')}
+                {this.renderColorPicker('lightgreen')}
+                {this.renderColorPicker('darkgreen')}
+                {this.renderColorPicker('lightblue')}
+                {this.renderColorPicker('darkblue')}
+                {this.renderColorPicker('purple')}
             </div>
         );
     }
