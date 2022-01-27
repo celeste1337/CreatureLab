@@ -44,12 +44,13 @@ class Canvas extends React.Component{
             const currOffset = {offsetX, offsetY};
 
             //we kinda dont need this yet lol but eventually we add all the linedata to an array and send it off to the server :)
-            // const lineData = {
-            //     //clone prevPos to start so our data is all nice n immutable:)
-            //     start: {...this.prevPos},
-            //     //clone curroffset to the end as the end point :)
-            //     end: {...currOffset},
-            // }
+            const lineData = {
+                //clone prevPos to start so our data is all nice n immutable:)
+                start: {...this.prevPos},
+                //clone curroffset to the end as the end point :)
+                end: {...currOffset},
+            }
+            this.sendHistory(lineData);
 
             this.paint(this.prevPos, currOffset);
         }
@@ -78,6 +79,10 @@ class Canvas extends React.Component{
         this.canvas.width = 300;
         this.canvas.height = 300;
         this.ctx = this.canvas.getContext('2d');
+    }
+
+    sendHistory(lineData) {
+        this.props.historyCallback(lineData);
     }
 
     render() {

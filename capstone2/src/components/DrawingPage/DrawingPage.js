@@ -24,7 +24,18 @@ class DrawingPage extends React.Component {
                 purple: "#bb4bf0",
             },
             currentColor: "",
+            lineHistory: [],
         }
+    }
+
+    handleHistoryCallback = (childData) => {
+        this.setState({
+            lineHistory: [...this.state.lineHistory, childData]
+        });
+        //this is the history of line movement
+        //all the moves theyve made!
+        //will be useful for playback probably hopefully lol
+        //console.log(this.state.lineHistory);
     }
 
     changeColor(i) {
@@ -42,7 +53,7 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
-                <Canvas strokeColor={this.state.currentColor}></Canvas>
+                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback}></Canvas>
                 {this.renderColorPicker('red')}
                 {this.renderColorPicker('white')}
                 {this.renderColorPicker('black')}
