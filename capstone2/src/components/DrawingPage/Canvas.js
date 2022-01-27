@@ -61,6 +61,27 @@ class Canvas extends React.Component{
         this.isPainting = false;
     }
 
+    erase(currentPos)
+    {
+        var x = currentPos.offsetX;
+        var y = currentPos.offsetY;
+
+        this.ctx.globalCompositeOperation = 'destination-out';
+
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, 10, 0, 2 *Math.PI);
+        this.ctx.fill();
+
+        this.ctx.lineWidth = 20;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.prevPos.x, this.prevPos.y);
+        this.ctx.lineTo(x, y);
+        this.ctx.stroke();
+
+        this.prevPos = {x: x, y: y};
+
+    }
+
     paint(prevPos, currPos) {
         const {offsetX, offsetY} = currPos;
         const {offsetX:x, offsetY:y} = prevPos;
