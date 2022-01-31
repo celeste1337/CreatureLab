@@ -2,12 +2,11 @@
 //todo lol
 
 import React from 'react';
-import { render } from 'react-dom';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
+import Button from '../Button';
 
 class DrawingPage extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -27,6 +26,8 @@ class DrawingPage extends React.Component {
             lineHistory: [],
         }
     }
+
+    undoTriggered = false;
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -50,10 +51,30 @@ class DrawingPage extends React.Component {
         )
     }
 
+    renderUndoButton() {
+        return (
+            <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
+        )
+    }
+
+    removeLastLine() {
+        this.undoTriggered = !this.undoTriggered;
+        let tempArr = this.state.lineHistory;
+        //make it look like its actually doing stuff lmfaooooo
+        for(let i = 0; i < 5; i++) {
+            tempArr.pop();
+        }
+        this.setState({
+            lineHistory: tempArr,
+        })
+    }
+
+
     render() {
         return(
             <div className="drawingPage">
-                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback}></Canvas>
+                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory}></Canvas>
+                {this.renderUndoButton()}
                 {this.renderColorPicker('red')}
                 {this.renderColorPicker('white')}
                 {this.renderColorPicker('black')}

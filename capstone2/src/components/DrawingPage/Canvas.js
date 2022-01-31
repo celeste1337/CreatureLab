@@ -81,8 +81,27 @@ class Canvas extends React.Component{
         this.ctx = this.canvas.getContext('2d');
     }
 
+    componentDidUpdate(prevProps) {
+        if(prevProps.undoTrigger !== this.props.undoTrigger) {
+            this.undoLastLine();
+        }
+    }
+
     sendHistory(lineData) {
         this.props.historyCallback(lineData);
+    }
+
+    undoLastLine() {
+        console.log("undo last lineeeee")
+        this.redrawAllFromData(this.props.lineHistory);
+    }
+
+    redrawAllFromData(lineData) {
+        //clear the canvas and redraw it all lol
+        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+        lineData.map(line => {
+            this.paint(line.start, line.end)
+        })
     }
 
     render() {
@@ -93,7 +112,8 @@ class Canvas extends React.Component{
             onMouseMove={this.onMouseMove}
             onMouseLeave={this.onMouseLeave}
             onMouseUp={this.onMouseUp}
-            style={{border: "1px solid black"}}></canvas>
+            style={{border: "1px solid black"}}
+            ></canvas>
         );
     }
 }
