@@ -25,6 +25,7 @@ class DrawingPage extends React.Component {
             currentColor: "",
             lineHistory: [],
         }
+        this.removeLastLine = this.removeLastLine.bind(this);
     }
 
     undoTriggered = false;
@@ -59,6 +60,7 @@ class DrawingPage extends React.Component {
 
     removeLastLine() {
         this.undoTriggered = !this.undoTriggered;
+
         let tempArr = this.state.lineHistory;
         //make it look like its actually doing stuff lmfaooooo
         for(let i = 0; i < 5; i++) {

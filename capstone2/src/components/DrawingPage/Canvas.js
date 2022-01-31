@@ -21,7 +21,7 @@ class Canvas extends React.Component{
     }
 
     onMouseDown({nativeEvent}) {
-        console.log("mouse down");
+        //console.log("mouse down");
         //grab mouse x and y from native event
         const {offsetX, offsetY} = nativeEvent;
         this.isPainting = true;
@@ -30,13 +30,13 @@ class Canvas extends React.Component{
     }
 
     onMouseUp({nativeEvent}) {
-        console.log("mouse up");
+        //console.log("mouse up");
         this.isPainting = false;
     }
 
     onMouseMove({nativeEvent}) {
         if(this.isPainting) {
-            console.log("mouse move within canvas")
+            //console.log("mouse move within canvas")
             //grab x and y again
             const {offsetX, offsetY} = nativeEvent;
             //but these are the CURRENT x and y
@@ -49,27 +49,31 @@ class Canvas extends React.Component{
                 start: {...this.prevPos},
                 //clone curroffset to the end as the end point :)
                 end: {...currOffset},
+                strokeColor: this.props.strokeColor,
             }
             this.sendHistory(lineData);
 
-            this.paint(this.prevPos, currOffset);
+            this.paint(this.prevPos, currOffset, lineData.strokeColor);
         }
     }
 
     onMouseLeave() {
-        console.log("mouse left canvas");
+        //console.log("mouse left canvas");
         this.isPainting = false;
     }
 
-    paint(prevPos, currPos) {
+    paint(prevPos, currPos, strokeColor) {
         const {offsetX, offsetY} = currPos;
         const {offsetX:x, offsetY:y} = prevPos;
+        this.ctx.save();
 
         this.ctx.beginPath();
         this.ctx.moveTo(offsetX, offsetY);
         this.ctx.lineTo(x, y);
-        this.ctx.strokeStyle = this.props.strokeColor;
+        this.ctx.strokeStyle = strokeColor;
         this.ctx.stroke();
+
+        this.ctx.restore();
         
         this.prevPos = {offsetX, offsetY};
     }
@@ -98,9 +102,10 @@ class Canvas extends React.Component{
 
     redrawAllFromData(lineData) {
         //clear the canvas and redraw it all lol
+        console.log(lineData);
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
         lineData.map(line => {
-            this.paint(line.start, line.end)
+            this.paint(line.start, line.end, line.strokeColor)
         })
     }
 
