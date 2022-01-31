@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { render } from 'react-dom';
+import DrawingPage from './DrawingPage';
 
 class Canvas extends React.Component{
     constructor(props) {
@@ -18,6 +19,11 @@ class Canvas extends React.Component{
    // mouse functions
     changeMousePosition = ({x,y}) => {
         //setMousePos(x, y);
+    }
+
+    lastThree(history) {
+        //console.log(history[0, 1, 2]);
+        return history[0, 1, 2];
     }
 
     onMouseDown({nativeEvent}) {
@@ -52,7 +58,10 @@ class Canvas extends React.Component{
             }
             this.sendHistory(lineData);
 
-            this.paint(this.prevPos, currOffset);
+            const lastThreePoints = this.lastThree(lineData);
+            console.log(lastThreePoints);
+            //this.paint(this.prevPos, currOffset);
+            this.paintSmooth(lastThreePoints);
         }
     }
 
@@ -72,6 +81,16 @@ class Canvas extends React.Component{
         this.ctx.stroke();
         
         this.prevPos = {offsetX, offsetY};
+    }
+
+    paintSmooth(lineData) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(lineData[2].end);
+        this.ctx.quadraticCurveTo(lineData[1].end, lineData[0].end);
+        this.ctx.strokeStyle = this.props.strokeColor;
+        this.ctx.stroke();
+        
+        this.prevPos = lineData[1].end;
     }
 
     componentDidMount() {

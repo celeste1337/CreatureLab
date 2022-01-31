@@ -35,7 +35,7 @@ class DrawingPage extends React.Component {
         //this is the history of line movement
         //all the moves theyve made!
         //will be useful for playback probably hopefully lol
-        //console.log(this.state.lineHistory);
+        console.log(this.state.lineHistory);
     }
 
     changeColor(i) {
