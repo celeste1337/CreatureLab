@@ -16,14 +16,21 @@ class Canvas extends React.Component{
     prevPos = {offsetX : 0,
          offsetY : 0};
 
+    // return the least three points that the user drew
+    // for line smoothing
+    getHistory(lineHistory) {
+        const lastThree = [];
+
+        for (var i = 0; i < 3; i++) {
+            lastThree.push(lineHistory.pop());
+        }
+
+        return lastThree;
+    }
+
    // mouse functions
     changeMousePosition = ({x,y}) => {
         //setMousePos(x, y);
-    }
-
-    lastThree(history) {
-        //console.log(history[0, 1, 2]);
-        return history[0, 1, 2];
     }
 
     onMouseDown({nativeEvent}) {
@@ -59,7 +66,7 @@ class Canvas extends React.Component{
             }
             this.sendHistory(lineData);
 
-            const lastThreePoints = this.lastThree(lineData);
+            const lastThreePoints = this.getHistory(this.props.lineHistory);
             console.log(lastThreePoints);
             //this.paint(this.prevPos, currOffset);
             this.paintSmooth(lastThreePoints);
@@ -87,10 +94,11 @@ class Canvas extends React.Component{
         this.prevPos = {offsetX, offsetY};
     }
 
+    //paint a smooth line to reduce user jitter
     paintSmooth(lineData) {
         this.ctx.beginPath();
-        this.ctx.moveTo(lineData[2].end);
-        this.ctx.quadraticCurveTo(lineData[1].end, lineData[0].end);
+        this.ctx.moveTo(lineData[2].end.offsetX, lineData[2].end.offsetY); //the third most recent point
+        this.ctx.quadraticCurveTo(lineData[1].end.offsetX, lineData[1].end.offsetY, lineData[0].end.offsetX, lineData[0].end.offsetY);
         this.ctx.strokeStyle = this.props.strokeColor;
         this.ctx.stroke();
         
