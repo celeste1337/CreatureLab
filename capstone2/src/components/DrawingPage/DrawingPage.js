@@ -5,6 +5,7 @@ import React from 'react';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
+import Popup from '../Popup';
 
 class DrawingPage extends React.Component {
     constructor(props) {
@@ -24,8 +25,10 @@ class DrawingPage extends React.Component {
             },
             currentColor: "",
             lineHistory: [],
+            promptList: ["Draw a creature that lives underwater.", "Draw a creature that lives in the forest."],
         }
         this.removeLastLine = this.removeLastLine.bind(this);
+        this.setPrompt();
     }
 
     undoTriggered = false;
@@ -71,6 +74,21 @@ class DrawingPage extends React.Component {
         })
     }
 
+    setPrompt() {
+        const randomPrompt = this.state.promptList[Math.ceil(Math.random()*this.state.promptList.length)];
+        return randomPrompt;
+    }
+
+    renderPromptPopup() {
+        let prompt = this.setPrompt();
+        return (
+            <Popup className={"hi"} popupText={prompt} buttonText={"Close"} ></Popup>
+        )
+    }
+
+    componentDidMount() {
+
+    }
 
     render() {
         return(
@@ -87,6 +105,7 @@ class DrawingPage extends React.Component {
                 {this.renderColorPicker('lightblue')}
                 {this.renderColorPicker('darkblue')}
                 {this.renderColorPicker('purple')}
+                {this.renderPromptPopup()}
             </div>
         );
     }
