@@ -27,6 +27,7 @@ class DrawingPage extends React.Component {
             lineHistory: [],
         }
         this.removeLastLine = this.removeLastLine.bind(this);
+        
     }
 
     undoTriggered = false;
@@ -40,16 +41,13 @@ class DrawingPage extends React.Component {
         //all the moves theyve made!
         //will be useful for playback probably hopefully lol
         //console.log(this.state.lineHistory);
+
     }
 
     handleEraser = () =>
     {
-        if(this.eraseTriggered)
-        {
-            this.eraseTriggered = false;
-        }else{
-            this.eraseTriggered  = true;
-        }
+        this.eraseTriggered = !this.eraseTriggered;
+        
         //this.erase();
         console.log(this.eraseTriggered);
     }
@@ -97,7 +95,10 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
-                <Canvas strokeColor={this.state.currentColor} eraserCallback={this.handleHistoryCallback} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory}></Canvas>
+                <Canvas strokeColor={this.state.currentColor} 
+                    erasingTrigger = {this.eraseTriggered} eraserCallback={this.handleHistoryCallback} 
+                        historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} 
+                        lineHistory={this.state.lineHistory}></Canvas>
                 {this.renderUndoButton()}
                 {this.renderEraseButton()}
                 {this.renderColorPicker('red')}

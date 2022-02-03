@@ -15,7 +15,7 @@ class Canvas extends React.Component{
     prevPos = {offsetX : 0,
          offsetY : 0};
 
-    isErasing = false;
+    isErasing = this.props.eraseTriggered;
 
    // mouse functions
     changeMousePosition = ({x,y}) => {
@@ -94,7 +94,7 @@ class Canvas extends React.Component{
 
     erase()
     {
-        this.isErasing = this.props.eraseTriggered;
+        console.log("In erase");
         var x = this.currPos.offsetX;
         var y = this.currPos.offsetY;
 
