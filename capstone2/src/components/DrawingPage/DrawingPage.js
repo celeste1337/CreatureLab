@@ -44,6 +44,13 @@ class DrawingPage extends React.Component {
 
     }
 
+    handleEraserCallback = (childData) => {
+        this.setState({
+            lineHistory: [...this.state.lineHistory, childData]
+        });
+
+    }
+
     handleEraser = () =>
     {
         this.eraseTriggered = !this.eraseTriggered;
@@ -95,10 +102,14 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
-                <Canvas strokeColor={this.state.currentColor} 
-                    erasingTrigger = {this.eraseTriggered} eraserCallback={this.handleHistoryCallback} 
-                        historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} 
-                        lineHistory={this.state.lineHistory}></Canvas>
+                <Canvas 
+                    strokeColor={this.state.currentColor} 
+                    erasingTrigger = {this.eraseTriggered} 
+                    historyCallback={this.handleHistoryCallback} 
+                    undoTrigger={this.undoTriggered} 
+                    lineHistory={this.state.lineHistory}>
+
+                </Canvas>
                 {this.renderUndoButton()}
                 {this.renderEraseButton()}
                 {this.renderColorPicker('red')}

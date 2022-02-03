@@ -15,7 +15,7 @@ class Canvas extends React.Component{
     prevPos = {offsetX : 0,
          offsetY : 0};
 
-    isErasing = this.props.eraseTriggered;
+    isErasing = false;
 
    // mouse functions
     changeMousePosition = ({x,y}) => {
@@ -26,12 +26,14 @@ class Canvas extends React.Component{
         //console.log("mouse down");
         //grab mouse x and y from native event
         const {offsetX, offsetY} = nativeEvent;
-        if(this.isErasing ==true)
+        if(this.isErasing == true)
         {
             this.isPainting = false;
         }else{
             this.isPainting = true;
         }
+        this.isPainting = true;
+        
         
         //chuck it into prevPos
         this.prevPos = {offsetX, offsetY};
@@ -40,7 +42,7 @@ class Canvas extends React.Component{
     onMouseUp({nativeEvent}) {
         //console.log("mouse up");
         this.isPainting = false;
-        this.isErasing = false;
+        //this.isErasing = true;
     }
 
     onMouseMove({nativeEvent}) {
@@ -65,24 +67,23 @@ class Canvas extends React.Component{
             this.paint(this.prevPos, currOffset, lineData.strokeColor);
         }
         if(this.isErasing) {
-            //console.log("mouse move within canvas")
             //grab x and y again
             const {offsetX, offsetY} = nativeEvent;
-            //but these are the CURRENT x and y
-            //and we want to make a line from the previous position to the current one
+            
             const currOffset = {offsetX, offsetY};
 
-            //we kinda dont need this yet lol but eventually we add all the linedata to an array and send it off to the server :)
             const lineData = {
-                //clone prevPos to start so our data is all nice n immutable:)
+                
                 start: {...this.prevPos},
-                //clone curroffset to the end as the end point :)
+                
                 end: {...currOffset},
+                
                 strokeColor: this.props.strokeColor,
             }
-            this.sendEraser(lineData);
 
-            this.erase();
+            this.sendHistory(lineData);
+
+            this.erase(this.prevPos);
         }
     }
 
@@ -92,11 +93,11 @@ class Canvas extends React.Component{
         this.isErasing = false;
     }
 
-    erase()
+    erase(currentPos)
     {
         console.log("In erase");
-        var x = this.currPos.offsetX;
-        var y = this.currPos.offsetY;
+        var x = currentPos.offsetX;
+        var y = currentPos.offsetY;
 
         this.ctx.globalCompositeOperation = 'destination-out';
 
@@ -145,10 +146,6 @@ class Canvas extends React.Component{
 
     sendHistory(lineData) {
         this.props.historyCallback(lineData);
-    }
-
-    sendEraser(lineData) {
-        this.props.eraserCallback(lineData);
     }
 
     undoLastLine() {
