@@ -42,6 +42,7 @@ class Canvas extends React.Component{
     onMouseUp({nativeEvent}) {
         //console.log("mouse up");
         this.isPainting = false;
+        this.isErasing = false;
         //this.isErasing = true;
     }
 
