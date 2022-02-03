@@ -32,8 +32,7 @@ class Canvas extends React.Component{
         }else{
             this.isPainting = true;
         }
-        this.isPainting = true;
-        
+        //this.isPainting = true;
         
         //chuck it into prevPos
         this.prevPos = {offsetX, offsetY};
