@@ -80,7 +80,7 @@ class Canvas extends React.Component{
                 end: {...currOffset},
                 strokeColor: this.props.strokeColor,
             }
-            this.sendHistory(lineData);
+            this.sendEraser(lineData);
 
             this.erase();
         }
@@ -89,10 +89,12 @@ class Canvas extends React.Component{
     onMouseLeave() {
         //console.log("mouse left canvas");
         this.isPainting = false;
+        this.isErasing = false;
     }
 
     erase()
     {
+        this.isErasing = this.props.eraseTriggered;
         var x = this.currPos.offsetX;
         var y = this.currPos.offsetY;
 
@@ -143,6 +145,10 @@ class Canvas extends React.Component{
 
     sendHistory(lineData) {
         this.props.historyCallback(lineData);
+    }
+
+    sendEraser(lineData) {
+        this.props.eraserCallback(lineData);
     }
 
     undoLastLine() {
