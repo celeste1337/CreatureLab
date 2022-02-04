@@ -58,6 +58,12 @@ class DrawingPage extends React.Component {
         )
     }
 
+    renderSmoothButton() {
+        return (
+            <Button onClick={() => this.toggleSmooth()} buttonText={"Smooth"} />
+        )
+    }
+
     removeLastLine() {
         this.undoTriggered = !this.undoTriggered;
 
@@ -71,12 +77,18 @@ class DrawingPage extends React.Component {
         })
     }
 
+    toggleSmooth() {
+        this.props.smooth = !this.props.smooth;
+        console.log(this.props.smooth);
+    }
+
 
     render() {
         return(
             <div className="drawingPage">
                 <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory}></Canvas>
                 {this.renderUndoButton()}
+                {this.renderSmoothButton()}
                 {this.renderColorPicker('red')}
                 {this.renderColorPicker('white')}
                 {this.renderColorPicker('black')}

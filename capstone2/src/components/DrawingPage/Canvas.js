@@ -9,6 +9,7 @@ class Canvas extends React.Component{
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
+        this.smooth = false;
         //this.endPaintEvent = this.endPaintEvent.bind(this);
     }
     //variables
@@ -19,13 +20,13 @@ class Canvas extends React.Component{
     // return the least three points that the user drew
     // for line smoothing
     getHistory(lineHistory) {
-        const lastThree = [];
+        const lastFour = [];
 
-        for (var i = 0; i < 3; i++) {
-            lastThree.push(lineHistory.pop());
+        for (var i = 0; i < 4; i++) {
+            lastFour.push(lineHistory.pop());
         }
 
-        return lastThree;
+        return lastFour;
     }
 
    // mouse functions
@@ -44,7 +45,10 @@ class Canvas extends React.Component{
 
     onMouseUp({nativeEvent}) {
         //console.log("mouse up");
+        const {offsetX, offsetY} = nativeEvent;
         this.isPainting = false;
+        //chuck it into prevPos
+        this.prevPos = {offsetX, offsetY};
     }
 
     onMouseMove({nativeEvent}) {
@@ -68,8 +72,12 @@ class Canvas extends React.Component{
 
             const lastThreePoints = this.getHistory(this.props.lineHistory);
             console.log(lastThreePoints);
-            //this.paint(this.prevPos, currOffset);
-            this.paintSmooth(lastThreePoints);
+
+            //if (this.smooth) {
+            //    this.paint(this.prevPos, currOffset);
+            //} else {
+                if (this.props.lineHistory.length % 3 == 0) this.paintSmooth(lastThreePoints);
+            //}
         }
     }
 
@@ -85,6 +93,7 @@ class Canvas extends React.Component{
 
         this.ctx.beginPath();
         this.ctx.moveTo(offsetX, offsetY);
+        this.ctx.lineCap = 'round';
         this.ctx.lineTo(x, y);
         this.ctx.strokeStyle = strokeColor;
         this.ctx.stroke();
@@ -97,8 +106,9 @@ class Canvas extends React.Component{
     //paint a smooth line to reduce user jitter
     paintSmooth(lineData) {
         this.ctx.beginPath();
-        this.ctx.moveTo(lineData[2].end.offsetX, lineData[2].end.offsetY); //the third most recent point
-        this.ctx.quadraticCurveTo(lineData[1].end.offsetX, lineData[1].end.offsetY, lineData[0].end.offsetX, lineData[0].end.offsetY);
+        this.ctx.moveTo(lineData[3].end.offsetX, lineData[3].end.offsetY); //the third most recent point
+        this.ctx.lineCap = 'round';
+        this.ctx.bezierCurveTo(lineData[2].end.offsetX, lineData[2].end.offsetY, lineData[1].end.offsetX, lineData[1].end.offsetY, lineData[0].end.offsetX, lineData[0].end.offsetY);
         this.ctx.strokeStyle = this.props.strokeColor;
         this.ctx.stroke();
         
