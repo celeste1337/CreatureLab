@@ -51,11 +51,10 @@ class DrawingPage extends React.Component {
 
     }
 
-    handleEraser = () =>
+    handleEraser()
     {
         this.eraseTriggered = !this.eraseTriggered;
         
-        //this.erase();
         console.log(this.eraseTriggered);
     }
     
@@ -104,7 +103,7 @@ class DrawingPage extends React.Component {
             <div className="drawingPage">
                 <Canvas 
                     strokeColor={this.state.currentColor} 
-                    erasingTrigger = {this.eraseTriggered} 
+                    eraseTrigger = {this.eraseTriggered} 
                     historyCallback={this.handleHistoryCallback} 
                     undoTrigger={this.undoTriggered} 
                     lineHistory={this.state.lineHistory}>

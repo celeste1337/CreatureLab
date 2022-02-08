@@ -142,9 +142,15 @@ class Canvas extends React.Component{
         if(prevProps.undoTrigger !== this.props.undoTrigger) {
             this.undoLastLine();
         }
+        if(prevProps.eraseTrigger !== this.props.eraseTrigger){
+            console.log("Eraser triggered");
+            this.erase(this.prevPos);
+        }
+
     }
 
     sendHistory(lineData) {
+        
         this.props.historyCallback(lineData);
     }
 
