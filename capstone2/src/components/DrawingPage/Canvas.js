@@ -5,9 +5,13 @@ class Canvas extends React.Component{
     constructor(props) {
         super(props);
         this.onMouseDown = this.onMouseDown.bind(this);
+        this.onTouchStart = this.onTouchStart.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
+        this.onTouchMove = this.onTouchMove.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
+        this.onTouchEnd = this.onTouchEnd.bind(this);
+
         //this.endPaintEvent = this.endPaintEvent.bind(this);
     }
     //variables
@@ -34,7 +38,43 @@ class Canvas extends React.Component{
         this.isPainting = false;
     }
 
+    onTouchEnd({nativeEvent}) {
+        //console.log("mouse up");
+        this.isPainting = false;
+    }
+
+    onTouchStart({nativeEvent})
+{
+    const {offsetX, offsetY} = nativeEvent;
+        this.isPainting = true;
+        //chuck it into prevPos
+        this.prevPos = {offsetX, offsetY};
+}
+
     onMouseMove({nativeEvent}) {
+        if(this.isPainting) {
+            //console.log("mouse move within canvas")
+            //grab x and y again
+            const {offsetX, offsetY} = nativeEvent;
+            //but these are the CURRENT x and y
+            //and we want to make a line from the previous position to the current one
+            const currOffset = {offsetX, offsetY};
+
+            //we kinda dont need this yet lol but eventually we add all the linedata to an array and send it off to the server :)
+            const lineData = {
+                //clone prevPos to start so our data is all nice n immutable:)
+                start: {...this.prevPos},
+                //clone curroffset to the end as the end point :)
+                end: {...currOffset},
+                strokeColor: this.props.strokeColor,
+            }
+            this.sendHistory(lineData);
+
+            this.paint(this.prevPos, currOffset, lineData.strokeColor);
+        }
+    }
+
+    onTouchMove({nativeEvent}) {
         if(this.isPainting) {
             //console.log("mouse move within canvas")
             //grab x and y again
@@ -117,6 +157,9 @@ class Canvas extends React.Component{
             onMouseMove={this.onMouseMove}
             onMouseLeave={this.onMouseLeave}
             onMouseUp={this.onMouseUp}
+            onTouchStart = {this.onTouchStart}
+            onTouchMove = {this.onTouchMove}
+            onTouchEnd = {this.onTouchEnd}
             style={{border: "1px solid black"}}
             ></canvas>
         );
