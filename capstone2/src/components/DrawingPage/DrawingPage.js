@@ -29,6 +29,8 @@ class DrawingPage extends React.Component {
     }
 
     undoTriggered = false;
+    eraseTriggered = false;
+    paintTriggered = false;
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -41,9 +43,18 @@ class DrawingPage extends React.Component {
     }
 
     changeColor(i) {
+        this.paintTriggered = true;
+        this.eraseTriggered = false;
         this.setState({
             currentColor: i
         });
+    }
+
+    handleEraser()
+    {
+        this.eraseTriggered = !this.eraseTriggered;
+        
+        console.log(this.eraseTriggered);
     }
 
     renderColorPicker(i) {
@@ -57,6 +68,12 @@ class DrawingPage extends React.Component {
             <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
         )
     }
+    renderEraseButton() {
+        return (
+            <Button onClick={() => this.handleEraser()} buttonText={"Erase"} />
+        )
+    }
+
 
     removeLastLine() {
         this.undoTriggered = !this.undoTriggered;
@@ -75,8 +92,16 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
-                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory}></Canvas>
+                <Canvas strokeColor={this.state.currentColor} 
+                historyCallback={this.handleHistoryCallback} 
+                undoTrigger={this.undoTriggered} 
+                lineHistory={this.state.lineHistory}
+                eraseTrigger = {this.eraseTriggered} 
+                paintTriggered = {this.paintTriggered}>
+                </Canvas>
+
                 {this.renderUndoButton()}
+                {this.renderEraseButton()}
                 {this.renderColorPicker('red')}
                 {this.renderColorPicker('white')}
                 {this.renderColorPicker('black')}
