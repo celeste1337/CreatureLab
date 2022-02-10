@@ -25,13 +25,20 @@ class DrawingPage extends React.Component {
             },
             currentColor: "",
             lineHistory: [],
-            promptList: ["Draw a creature that lives underwater.", "Draw a creature that lives in the forest."],
+            prompt: {
+                promptList: ["Draw a creature that lives underwater.", "Draw a creature that lives in the forest.","Draw a little guyyyy","Draw something that likes fishing"],
+                curPrompt: "",
+            },
         }
         this.removeLastLine = this.removeLastLine.bind(this);
-        this.setPrompt();
     }
 
     undoTriggered = false;
+
+    componentDidMount() {
+        //on initial mount
+        this.setPrompt();
+    }
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -74,21 +81,27 @@ class DrawingPage extends React.Component {
         })
     }
 
-    setPrompt() {
-        const randomPrompt = this.state.promptList[Math.ceil(Math.random()*this.state.promptList.length)];
-        return randomPrompt;
-    }
+    //
+    // PROMPT STUFF & HOW TO USE POPUP COMPONENT
+    //
 
-    renderPromptPopup() {
-        let prompt = this.setPrompt();
+    setPrompt = (e) => {
+        this.setState({
+            curPrompt: this.state.prompt.promptList[Math.floor(Math.random()*this.state.prompt.promptList.length)]
+        });
+    };
+
+    renderPromptPopup(e) {
         return (
-            <Popup className={"hi"} popupText={prompt} buttonText={"Close"} ></Popup>
+            //we pass in this.setPrompt ^^^^^ as the onclick but do NOT PASS IN WITH PARENTHESES
+            
+            <Popup popupText={this.state.curPrompt} button1Text={"Get a new prompt."} onButton1Click={this.setPrompt}></Popup>
         )
     }
 
-    componentDidMount() {
-
-    }
+    //
+    // RENDER
+    //
 
     render() {
         return(
