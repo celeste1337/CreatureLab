@@ -76,10 +76,6 @@ class Canvas extends React.Component{
             const lastFourPoints = this.getHistory(this.props.lineHistory);
             console.log(lastFourPoints);
 
-            for (var t = 0; t < 1; t += 0.01) {
-                var point = bspline
-            }
-
             //if (this.smooth) {
             //    this.paint(this.prevPos, currOffset);
             //} else {
@@ -115,10 +111,7 @@ class Canvas extends React.Component{
         this.ctx.beginPath();
         this.ctx.moveTo(lineData[3].x, lineData[3].y); //the third most recent point
         this.ctx.lineCap = 'round';
-        for (var t = 0; t < 1; t += 0.01) {
-            var line = bspline(t, 3, lineData);
-        }
-        //this.ctx.bezierCurveTo(lineData[2].end.offsetX, lineData[2].end.offsetY, lineData[1].end.offsetX, lineData[1].end.offsetY, lineData[0].end.offsetX, lineData[0].end.offsetY);
+        this.ctx.bezierCurveTo(lineData[2].end.offsetX, lineData[2].end.offsetY, lineData[1].end.offsetX, lineData[1].end.offsetY, lineData[0].end.offsetX, lineData[0].end.offsetY);
         this.ctx.strokeStyle = this.props.strokeColor;
         this.ctx.stroke();
         
