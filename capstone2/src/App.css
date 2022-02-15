@@ -9,3 +9,8 @@
 .open {
   display: block;
 }
+
+.popupComponentWrapper {
+  display: block;
+  z-index: 2;
+}

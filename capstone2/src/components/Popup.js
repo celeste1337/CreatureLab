@@ -8,7 +8,8 @@ function Popup(props) {
     const popupStyle = {
         border: '1px solid black',
         padding: '15px',
-        width: '50vw',
+        left: '',
+        top: '5px',
     }
 
     const toggleOpenClose = () => {setIsOpen(!isOpen)};
@@ -20,8 +21,8 @@ function Popup(props) {
     const setExit = () => isOpen ? '' : 'animate__animated animate__zoomOut';
 
     return(
-        <div className={`popupComponentWrapper ` + setClass() + " " + setExit()}>
-            <div className="popupComponent" style={popupStyle}>
+        <div className={`popupComponentWrapper ` + setClass() + " " + setExit()} style={popupStyle}>
+            <div className="popupComponent">
                 <Button styleBtn={"primary"} className="closeButton" buttonText="Close" onClick={toggleOpenClose}></Button> 
 
                 <h2>{props.popupTitleText}</h2>
