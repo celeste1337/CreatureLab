@@ -88,7 +88,6 @@ class DrawingPage extends React.Component {
             <div className="drawingPage">
                 <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory}></Canvas>
                 {this.renderUndoButton()}
-                {this.renderSmoothButton()}
                 {this.renderColorPicker('red')}
                 {this.renderColorPicker('white')}
                 {this.renderColorPicker('black')}

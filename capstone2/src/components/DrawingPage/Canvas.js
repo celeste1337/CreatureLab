@@ -17,13 +17,15 @@ class Canvas extends React.Component{
     prevPos = {offsetX : 0,
          offsetY : 0};
 
-    // return the least three points that the user drew
+    // return the least four points that the user drew
     // for line smoothing
+    // allows for bezier in future
     getHistory(lineHistory) {
         const lastFour = [];
+        //console.log(lineHistory);
 
         for (var i = 0; i < 4; i++) {
-            lastFour.push(lineHistory.pop());
+            lastFour.push(lineHistory.pop().end);
         }
 
         return lastFour;
@@ -45,20 +47,21 @@ class Canvas extends React.Component{
 
     onMouseUp({nativeEvent}) {
         //console.log("mouse up");
-        const {offsetX, offsetY} = nativeEvent;
-        this.isPainting = false;
-        //chuck it into prevPos
-        this.prevPos = {offsetX, offsetY};
+        if(this.isPainting) {
+            const {offsetX, offsetY} = nativeEvent;
+            this.prevPos = {offsetX, offsetY};
+            this.isPainting = false;
+        }
     }
 
     onMouseMove({nativeEvent}) {
         if(this.isPainting) {
             //console.log("mouse move within canvas")
             //grab x and y again
-            const {offsetX, offsetY} = nativeEvent;
+            const {x, y} = nativeEvent;
             //but these are the CURRENT x and y
             //and we want to make a line from the previous position to the current one
-            const currOffset = {offsetX, offsetY};
+            const currOffset = {x, y};
 
             //we kinda dont need this yet lol but eventually we add all the linedata to an array and send it off to the server :)
             const lineData = {
@@ -70,13 +73,17 @@ class Canvas extends React.Component{
             }
             this.sendHistory(lineData);
 
-            const lastThreePoints = this.getHistory(this.props.lineHistory);
-            console.log(lastThreePoints);
+            const lastFourPoints = this.getHistory(this.props.lineHistory);
+            console.log(lastFourPoints);
+
+            for (var t = 0; t < 1; t += 0.01) {
+                var point = bspline
+            }
 
             //if (this.smooth) {
             //    this.paint(this.prevPos, currOffset);
             //} else {
-                if (this.props.lineHistory.length % 3 == 0) this.paintSmooth(lastThreePoints);
+            if (this.props.lineHistory.length % 3 == 0) this.paintSmooth(lastFourPoints);
             //}
         }
     }
@@ -106,13 +113,16 @@ class Canvas extends React.Component{
     //paint a smooth line to reduce user jitter
     paintSmooth(lineData) {
         this.ctx.beginPath();
-        this.ctx.moveTo(lineData[3].end.offsetX, lineData[3].end.offsetY); //the third most recent point
+        this.ctx.moveTo(lineData[3].x, lineData[3].y); //the third most recent point
         this.ctx.lineCap = 'round';
-        this.ctx.bezierCurveTo(lineData[2].end.offsetX, lineData[2].end.offsetY, lineData[1].end.offsetX, lineData[1].end.offsetY, lineData[0].end.offsetX, lineData[0].end.offsetY);
+        for (var t = 0; t < 1; t += 0.01) {
+            var line = bspline(t, 3, lineData);
+        }
+        //this.ctx.bezierCurveTo(lineData[2].end.offsetX, lineData[2].end.offsetY, lineData[1].end.offsetX, lineData[1].end.offsetY, lineData[0].end.offsetX, lineData[0].end.offsetY);
         this.ctx.strokeStyle = this.props.strokeColor;
         this.ctx.stroke();
         
-        this.prevPos = lineData[1].end;
+        //this.prevPos = lineData[1].end;
     }
 
     componentDidMount() {
