@@ -1,4 +1,15 @@
 function Button(props) {
+    const buttonStylePushable = {
+        display: 'inline-block',
+        cursor: 'pointer',
+        outlineOffset: '4px'
+    }
+    const buttonStyleFront = {
+        cursor: 'pointer',
+        display: 'block',
+        padding: '5px 10px',
+        borderRadius: '5px'
+    }
     const buttonStylePrimary = {
         border: '1px solid red',
     }
@@ -7,6 +18,10 @@ function Button(props) {
     }
     const buttonStyleTertiary = {
         border: '1px solid black'
+    }
+    //onclick
+    const buttonStyleActive = {
+
     }
 
     const stylePicker = (styleName) => {
@@ -26,7 +41,9 @@ function Button(props) {
     };
 
     return(
-        <button style={stylePicker(props.styleBtn)} onClick={(e) => props.onClick(e)}>{props.buttonText}</button>
+        <div style={buttonStylePushable}>
+            <button style={Object.assign({}, stylePicker(props.styleBtn), buttonStyleFront)} onClick={(e) => props.onClick(e)}>{props.buttonText}</button>
+        </div>
     );
 }
 

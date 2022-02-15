@@ -31,7 +31,11 @@ class Canvas extends React.Component{
 
     onMouseUp({nativeEvent}) {
         //console.log("mouse up");
-        this.isPainting = false;
+        if(this.isPainting) {
+            const {offsetX, offsetY} = nativeEvent;
+            this.prevPos = {offsetX, offsetY};
+            this.isPainting = false;
+        }
     }
 
     onMouseMove({nativeEvent}) {

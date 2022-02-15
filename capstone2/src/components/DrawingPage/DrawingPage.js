@@ -95,7 +95,7 @@ class DrawingPage extends React.Component {
         return (
             //we pass in this.setPrompt ^^^^^ as the onclick but do NOT PASS IN WITH PARENTHESES
             
-            <Popup popupText={this.state.curPrompt} button1Text={"Get a new prompt."} onButton1Click={this.setPrompt}></Popup>
+            <Popup popupTitleText={"Instructions"} popupText={this.state.curPrompt} button1Text={"Get a new prompt."} onButton1Click={this.setPrompt}></Popup>
         )
     }
 
