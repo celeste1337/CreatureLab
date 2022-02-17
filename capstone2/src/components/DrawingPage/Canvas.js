@@ -37,6 +37,7 @@ class Canvas extends React.Component{
         {
             this.isErasing = false;
         }else{
+            this.isPainting = false;
             this.isErasing = true;
         }
         //chuck it into prevPos
@@ -49,13 +50,14 @@ class Canvas extends React.Component{
             const {offsetX, offsetY} = nativeEvent;
             this.prevPos = {offsetX, offsetY};
             this.isPainting = false;
-            //this.isErasing = false;
+            this.isErasing = false;
         }
         if(this.isErasing)
         {
             const {offsetX, offsetY} = nativeEvent;
             this.prevPos = {offsetX, offsetY};
-            this.isErasing=false;
+            this.isErasing = false;
+            this.isPainting = false;
         }
         
     } 
@@ -115,7 +117,7 @@ class Canvas extends React.Component{
             }
 
             this.sendHistory(lineData);
-            this.erase(this.prevPos, currOffset);
+            this.erase(this.prevPos);
 
         }
     }
@@ -229,7 +231,7 @@ class Canvas extends React.Component{
 
         this.ctx.lineWidth = 20;
         this.ctx.beginPath();
-        this.ctx.strokeStyle = 'black';
+        this.ctx.strokeStyle = 'white';
         this.ctx.moveTo(this.prevPos.x, this.prevPos.y);
         this.ctx.lineTo(x, y);
         this.ctx.stroke();

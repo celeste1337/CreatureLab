@@ -21,6 +21,7 @@ class DrawingPage extends React.Component {
                 lightblue: "#84b5fe",
                 darkblue: "#1f32de",
                 purple: "#bb4bf0",
+                erase: 'white',
             },
             currentColor: "",
             lineHistory: [],
@@ -31,6 +32,8 @@ class DrawingPage extends React.Component {
     undoTriggered = false;
     eraseTriggered = false;
     paintTriggered = false;
+    bColor = 'white';
+    textColor = 'black';
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -44,11 +47,14 @@ class DrawingPage extends React.Component {
 
     changeColor(i) {
         this.paintTriggered = true;
-        this.eraseTriggered = false;
+        //this.eraseTriggered = false;
         //console.log(this.paintTriggered);
+        
         this.setState({
             currentColor: i
         });
+        
+        
     }
 
     handleEraser()
@@ -56,6 +62,16 @@ class DrawingPage extends React.Component {
         this.eraseTriggered = !this.eraseTriggered;
         
         console.log(this.eraseTriggered);
+
+        if(this.bColor === 'red'? this.bColor ='white' : this.bColor = 'red');
+        /*{
+            //change background color of button
+            this.bColor = 'red';
+            this.textColor = 'white';
+        }else{
+            this.bColor = 'white';
+            this.textColor = 'black';
+        }*/
     }
 
     renderColorPicker(i) {
@@ -71,7 +87,7 @@ class DrawingPage extends React.Component {
     }
     renderEraseButton() {
         return (
-            <Button onClick={() => this.handleEraser()} buttonText={"Erase"} />
+            <Button onClick={() => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
         )
     }
 
