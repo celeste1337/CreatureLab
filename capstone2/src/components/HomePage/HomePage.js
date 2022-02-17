@@ -10,7 +10,10 @@ class HomePage extends React.Component {
 
     render() {
         return(
-            <Link to="/draw"><Button buttonText="Lets goooooo"></Button></Link>
+            <div className="routes">
+                <Link to="/draw"><Button buttonText="Lets goooooo"></Button></Link>
+                <Link to="/gallery"><Button buttonText="gallery"></Button></Link>
+            </div>
         );
     }
 }
