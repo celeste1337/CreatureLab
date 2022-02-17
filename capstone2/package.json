@@ -38,6 +38,7 @@
   "devDependencies": {
     "express": "^4.17.2",
     "merge-images": "^2.0.0",
-    "mongodb": "^4.3.0"
+    "mongodb": "^4.3.0",
+    "react-router-dom": "^6.2.1"
   }
 }
