@@ -285,7 +285,6 @@ class Canvas extends React.Component{
 
         if(prevProps.doneTriggered === true)
         {
-            console.log('done was triggered');
             this.saveImg();
         }
 
@@ -311,8 +310,7 @@ class Canvas extends React.Component{
 
     saveImg() {
         let canvas = document.querySelector('canvas');
-        console.log("save img");
-        let link = document.createElement("Creature Creation");
+        let link = document.createElement("a");
         link.download = "download.png";
         link.href = canvas.toDataURL();
         link.click();
