@@ -45,6 +45,7 @@ class DrawingPage extends React.Component {
     changeColor(i) {
         this.paintTriggered = true;
         this.eraseTriggered = false;
+        //console.log(this.paintTriggered);
         this.setState({
             currentColor: i
         });
