@@ -1,12 +1,14 @@
 import './App.css';
+import {Link} from "react-router-dom";
 import DrawingPage from './components/DrawingPage/DrawingPage';
-import Gallery from './components/GalleryPage/Gallery';
+import HomePage from './components/HomePage/HomePage';
 
 function App() {
   //note the Test component is in here
   return (
     <div className="App">
-      <Gallery></Gallery>
+
+      <HomePage></HomePage>
 
     </div>
   );
