@@ -32,6 +32,8 @@ class DrawingPage extends React.Component {
     undoTriggered = false;
     eraseTriggered = false;
     paintTriggered = false;
+    doneTriggered = false;
+    
     bColor = 'white';
     textColor = 'black';
 
@@ -64,14 +66,16 @@ class DrawingPage extends React.Component {
         console.log(this.eraseTriggered);
 
         if(this.bColor === 'red'? this.bColor ='white' : this.bColor = 'red');
-        /*{
-            //change background color of button
-            this.bColor = 'red';
-            this.textColor = 'white';
-        }else{
-            this.bColor = 'white';
-            this.textColor = 'black';
-        }*/
+        
+    }//handle eraser
+
+    handleDone()
+    {
+        //Done btn was triggered.
+        //save the image 
+        console.log('handle done');
+        this.doneTriggered = !this.doneTriggered;
+        
     }
 
     renderColorPicker(i) {
@@ -88,6 +92,12 @@ class DrawingPage extends React.Component {
     renderEraseButton() {
         return (
             <Button onClick={() => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
+        )
+    }
+
+    renderDoneButton(){
+        return(
+            <Button onClick={() => this.handleDone()} buttonText={"Done"} />
         )
     }
 
@@ -114,11 +124,14 @@ class DrawingPage extends React.Component {
                 undoTrigger={this.undoTriggered} 
                 lineHistory={this.state.lineHistory}
                 eraseTrigger = {this.eraseTriggered} 
-                paintTriggered = {this.paintTriggered}>
+                paintTriggered = {this.paintTriggered}
+                doneTriggered = {this.doneTriggered}
+                >
                 </Canvas>
 
                 {this.renderUndoButton()}
                 {this.renderEraseButton()}
+                {this.renderDoneButton()}
                 {this.renderColorPicker('red')}
                 {this.renderColorPicker('white')}
                 {this.renderColorPicker('black')}

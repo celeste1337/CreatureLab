@@ -283,6 +283,12 @@ class Canvas extends React.Component{
             }
         }
 
+        if(prevProps.doneTriggered === true)
+        {
+            console.log('done was triggered');
+            this.saveImg();
+        }
+
     }
 
     sendHistory(lineData) {
@@ -301,6 +307,15 @@ class Canvas extends React.Component{
         lineData.map(line => {
             this.paint(line.start, line.end, line.strokeColor)
         })
+    }
+
+    saveImg() {
+        let canvas = document.querySelector('canvas');
+        console.log("save img");
+        let link = document.createElement("Creature Creation");
+        link.download = "download.png";
+        link.href = canvas.toDataURL();
+        link.click();
     }
 
     render() {
