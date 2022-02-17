@@ -6,17 +6,31 @@ class Gallery extends React.Component {
         super(props);
     }
 
+    // get the images from the database
+    retrieveImages() {
+        const imgArray = [
+            {key="080910", src="../../public/"},
+        ];
+        return imgArray;
+    }
+
     renderImages() {
-        return (
-            <GalleryImg ></GalleryImg>
-        )
+        const images = retrieveImages();
+
+        const galleryImages = images.map(({key, src}) => {
+            return <GalleryImg key={key} img={src} alt={key}></GalleryImg>
+        });
+
+        return galleryImages;
     }
 
     render() {
         return(
             <div className="galleryPage">
                 {this.renderImages()}
-            </div>
+            </div> 
         );
     }
 }
+
+export default galleryPage;
