@@ -1,22 +1,13 @@
-import React, {useState, useRef, useEffect} from 'react';
-import { render } from 'react-dom';
+import React from "react";
 
-class Gallery extends React.Component {
+
+class GalleryPage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+        }
+        this.images = require.context('../../public/test-game', true);
     }
 
-    renderImages() {
-        return (
-            <GalleryImg ></GalleryImg>
-        )
-    }
-
-    render() {
-        return(
-            <div className="galleryPage">
-                {this.renderImages()}
-            </div>
-        );
-    }
+    
 }
