@@ -5,17 +5,23 @@ import Creature1 from '../../data/creature1.PNG';
 class GalleryPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        }
 
         this.onMouseDown = this.onMouseDown.bind(this);
+        this.onMouseMove = this.onMouseMove.bind(this);
+        this.onMouseUp = this.onMouseUp.bind(this);
         
         this.pos = {top: 0, left: 0, x: 0, y: 0};
         this.scrollTop = 100;
         this.scrollLeft = 150;
+
+        
     }
 
+    isScrolling = false;
+
     onMouseDown({nativeEvent}) {
+        console.log("Mouse down");
+
         const {offsetX, offsetY} = nativeEvent;
 
         this.pos = {
@@ -26,24 +32,25 @@ class GalleryPage extends React.Component {
             y: offsetY
         }
 
-        this.onMouseMove = this.onMouseMove.bind(this);
-        this.onMouseUp = this.onMouseUp.bind(this);
+        this.isScrolling = true;
     }
 
     // scroll handlers
     onMouseMove() {
-        const dx = this.clientX - this.pos.x;
-        const dy = this.clientY - this.pos.y;
+        if (this.isScrolling) {
+            console.log("mouse move");
+            const dx = this.clientX - this.pos.x;
+            const dy = this.clientY - this.pos.y;
 
-        this.scrollTop = this.pos.top - dy;
-        this.scrollLeft = this.pos.left - dx;
+            this.scrollTop = this.pos.top - dy;
+            this.scrollLeft = this.pos.left - dx;
+        }
     }
 
     onMouseUp() {
-        this.onMouseMove = this.onMouseMove.unbind(this);
-        this.onMouseUp = this.onMouseUp.unbind(this);
+        console.log("mouse up");
 
-        
+        this.isScrolling = false;
     }
 
     // get the images from the database
@@ -71,7 +78,12 @@ class GalleryPage extends React.Component {
 
     render() {
         return(
-            <div className="galleryPage">
+            <div 
+            className="galleryPage"
+            onMouseDown={this.onMouseDown}
+            onMouseMove={this.onMouseMove}
+            onMouseUp={this.onMouseUp}
+            >
                 {this.renderImages()}
             </div> 
         );

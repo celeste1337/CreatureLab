@@ -47,4 +47,6 @@
 
   cursor: grab;
   overflow: auto;
+
+  width: 10000px;
 }
