@@ -1,6 +1,6 @@
 function Button(props) {
     return(
-        <button onClick={props.onClick}>{props.buttonText}</button>
+        <button className={props.className} onClick={props.onClick} style={props.style}>{props.buttonText}</button>
     );
 }
 
