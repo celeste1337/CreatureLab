@@ -35,8 +35,8 @@ class DrawingPage extends React.Component {
                 { size: 'Large',
                 width: '12'}
             ],
-            currentColor: "",
-            currentWidth: "",
+            currentColor: "#333333",
+            currentWidth: "7",
             lineHistory: [],
         }
         this.removeLastLine = this.removeLastLine.bind(this);
@@ -51,7 +51,6 @@ class DrawingPage extends React.Component {
         //this is the history of line movement
         //all the moves theyve made!
         //will be useful for playback probably hopefully lol
-        //console.log(this.state.lineHistory);
     }
 
     changeColor(i) {
@@ -105,10 +104,9 @@ class DrawingPage extends React.Component {
         this.undoTriggered = !this.undoTriggered;
 
         let tempArr = this.state.lineHistory;
-        //make it look like its actually doing stuff lmfaooooo
-        for(let i = 0; i < 5; i++) {
-            tempArr.pop();
-        }
+
+        tempArr.pop();
+
         this.setState({
             lineHistory: tempArr,
         })
