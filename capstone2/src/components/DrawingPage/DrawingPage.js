@@ -7,6 +7,8 @@ import Colorpicker from './Colorpicker';
 import Button from '../Button';
 import LineWidthPicker from './LineWidthPicker';
 
+import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
+
 class DrawingPage extends React.Component {
     constructor(props) {
         super(props);
@@ -40,6 +42,10 @@ class DrawingPage extends React.Component {
             lineHistory: [],
         }
         this.removeLastLine = this.removeLastLine.bind(this);
+
+        this.indicatorStyle = {
+            backgroundColor: this.state.currentColor,
+        }
     }
 
     undoTriggered = false;
@@ -127,6 +133,7 @@ class DrawingPage extends React.Component {
                 </div>
 
                 <div className="colorpickerWrapper">
+                    <CurrentColorIndicator fill={this.state.currentColor}/>
                     {this.renderColorPicker()}
                 </div>
 
