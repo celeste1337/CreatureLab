@@ -5,6 +5,7 @@ import React from 'react';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
+import LineWidthPicker from './LineWidthPicker';
 
 class DrawingPage extends React.Component {
     constructor(props) {
@@ -22,7 +23,20 @@ class DrawingPage extends React.Component {
                 {color: "#1f32de"}, //darkblue
                 {color: "#bb4bf0"}, //purple
             ],
+            lineWidths: [
+                {
+                    size: 'Small',
+                    width: '3'
+                },
+                {
+                    size: 'Medium',
+                    width: '7'
+                },
+                { size: 'Large',
+                width: '12'}
+            ],
             currentColor: "",
+            currentWidth: "",
             lineHistory: [],
         }
         this.removeLastLine = this.removeLastLine.bind(this);
@@ -46,6 +60,13 @@ class DrawingPage extends React.Component {
         });
     }
 
+    changeWidth(i) {
+        this.setState({
+            currentWidth: i
+        });
+    }
+
+
     renderColorPicker() {
         //loop thru object
         let pickers = [];
@@ -62,6 +83,17 @@ class DrawingPage extends React.Component {
         return (
             <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
         )
+    }
+
+    renderLineWidthPicker() {
+        //loop thru object
+        let widths = [];
+        this.state.lineWidths.map((i) => {
+            widths.push(
+                <LineWidthPicker key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i.width)} buttonText={i.size}/>
+            )
+        });
+        return widths;
     }
 
     removeLastLine() {
@@ -81,13 +113,20 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
-                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory}></Canvas>
+                <div className="linewidthpickerWrapper">
+                    <h2>Brush Stroke</h2>
+                    {this.renderLineWidthPicker()}
+                </div>
 
-                {this.renderUndoButton()}
-                
                 <div className="colorpickerWrapper">
                     {this.renderColorPicker()}
                 </div>
+
+                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory} lineWidth={this.state.currentWidth} ></Canvas>
+
+                {this.renderUndoButton()}
+                
+                
                 
 
 
