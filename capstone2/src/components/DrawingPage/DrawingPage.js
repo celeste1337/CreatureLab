@@ -5,24 +5,38 @@ import React from 'react';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
+import LineWidthPicker from './LineWidthPicker';
 
 class DrawingPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            colors: {
-                red: "#eb2727",
-                black: "#333333",
-                white: "#ffffff",
-                orange: "#f89c14",
-                yellow: "#f1de2d",
-                lightgreen: "#82de57",
-                darkgreen: "#51ad42",
-                lightblue: "#84b5fe",
-                darkblue: "#1f32de",
-                purple: "#bb4bf0",
-            },
+            colors: [
+                {color: "#eb2727"}, //red
+                {color: "#333333"}, //black
+                {color: "#ffffff"}, //white
+                {color: "#f89c14"}, //orange
+                {color: "#f1de2d"}, //yellow
+                {color: "#82de57"}, //lightgreen
+                {color: "#51ad42"}, //darkgreen
+                {color: "#84b5fe"}, //lightblue
+                {color: "#1f32de"}, //darkblue
+                {color: "#bb4bf0"}, //purple
+            ],
+            lineWidths: [
+                {
+                    size: 'Small',
+                    width: '3'
+                },
+                {
+                    size: 'Medium',
+                    width: '7'
+                },
+                { size: 'Large',
+                width: '12'}
+            ],
             currentColor: "",
+            currentWidth: "",
             lineHistory: [],
         }
         this.removeLastLine = this.removeLastLine.bind(this);
@@ -46,10 +60,23 @@ class DrawingPage extends React.Component {
         });
     }
 
-    renderColorPicker(i) {
-        return (
-            <Colorpicker value={this.state.colors[i]} onClick={() => this.changeColor(this.state.colors[i])} />
-        )
+    changeWidth(i) {
+        this.setState({
+            currentWidth: i
+        });
+    }
+
+
+    renderColorPicker() {
+        //loop thru object
+        let pickers = [];
+        this.state.colors.map((i) => {
+            pickers.push(
+                <Colorpicker key={i.color.toString()} value={i.color} onClick={() => this.changeColor(i.color)} />
+            )
+        });
+           
+        return pickers;
     }
 
     renderUndoButton() {
@@ -62,6 +89,16 @@ class DrawingPage extends React.Component {
         return (
             <Button onClick={() => this.toggleSmooth()} buttonText={"Smooth"} />
         )
+    }
+    renderLineWidthPicker() {
+        //loop thru object
+        let widths = [];
+        this.state.lineWidths.map((i) => {
+            widths.push(
+                <LineWidthPicker key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i.width)} buttonText={i.size}/>
+            )
+        });
+        return widths;
     }
 
     removeLastLine() {
@@ -86,18 +123,23 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
-                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory}></Canvas>
+                <div className="linewidthpickerWrapper">
+                    <h2>Brush Stroke</h2>
+                    {this.renderLineWidthPicker()}
+                </div>
+
+                <div className="colorpickerWrapper">
+                    {this.renderColorPicker()}
+                </div>
+
+                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory} lineWidth={this.state.currentWidth} ></Canvas>
+
                 {this.renderUndoButton()}
-                {this.renderColorPicker('red')}
-                {this.renderColorPicker('white')}
-                {this.renderColorPicker('black')}
-                {this.renderColorPicker('orange')}
-                {this.renderColorPicker('yellow')}
-                {this.renderColorPicker('lightgreen')}
-                {this.renderColorPicker('darkgreen')}
-                {this.renderColorPicker('lightblue')}
-                {this.renderColorPicker('darkblue')}
-                {this.renderColorPicker('purple')}
+                
+                
+                
+
+
             </div>
         );
     }
