@@ -114,16 +114,19 @@ class DrawingPage extends React.Component {
         return(
             <div className="drawingPage">
                 <div className="linewidthpickerWrapper">
+                    <h2>Brush Stroke</h2>
                     {this.renderLineWidthPicker()}
+                </div>
+
+                <div className="colorpickerWrapper">
+                    {this.renderColorPicker()}
                 </div>
 
                 <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory} lineWidth={this.state.currentWidth} ></Canvas>
 
                 {this.renderUndoButton()}
                 
-                <div className="colorpickerWrapper">
-                    {this.renderColorPicker()}
-                </div>
+                
                 
 
 

@@ -57,6 +57,7 @@
 
 
 .drawingPage .colorpickerWrapper > button {
-  width: 100%;
-  height: 10%;
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
 }
