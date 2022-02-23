@@ -1,5 +1,4 @@
 import './App.css';
-import {Link} from "react-router-dom";
 import DrawingPage from './components/DrawingPage/DrawingPage';
 import HomePage from './components/HomePage/HomePage';
 
