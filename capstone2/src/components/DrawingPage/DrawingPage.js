@@ -34,8 +34,7 @@ class DrawingPage extends React.Component {
     paintTriggered = false;
     doneTriggered = false;
     
-    bColor = 'white';
-    textColor = 'black';
+    
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -49,9 +48,8 @@ class DrawingPage extends React.Component {
 
     changeColor(i) {
         this.paintTriggered = true;
-        //this.eraseTriggered = false;
-        //console.log(this.paintTriggered);
-        
+        this.eraseTriggered = false; 
+
         this.setState({
             currentColor: i
         });
@@ -61,9 +59,9 @@ class DrawingPage extends React.Component {
 
     handleEraser()
     {
-        this.eraseTriggered = !this.eraseTriggered;
+        this.eraseTriggered = true;
         
-        console.log(this.eraseTriggered);
+        //console.log(this.eraseTriggered);
 
         if(this.bColor === 'red'? this.bColor ='white' : this.bColor = 'red');
         

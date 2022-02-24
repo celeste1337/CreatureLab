@@ -46,19 +46,10 @@ class Canvas extends React.Component{
 
     onMouseUp({nativeEvent}) {
         //console.log("mouse up");
-        if(this.isPainting) {
-            const {offsetX, offsetY} = nativeEvent;
-            this.prevPos = {offsetX, offsetY};
-            this.isPainting = false;
-            this.isErasing = false;
-        }
-        if(this.isErasing)
-        {
-            const {offsetX, offsetY} = nativeEvent;
-            this.prevPos = {offsetX, offsetY};
-            this.isErasing = false;
-            this.isPainting = false;
-        }
+        const {offsetX, offsetY} = nativeEvent;
+        this.prevPos = {offsetX, offsetY};
+        this.isPainting = false;
+        this.isErasing = false;
         
     } 
 
@@ -71,6 +62,7 @@ class Canvas extends React.Component{
     onTouchStart({nativeEvent})
     {
         const {offsetX, offsetY} = nativeEvent;
+
         if(this.isPainting = true)
         {
             this.isErasing = false;
@@ -117,7 +109,7 @@ class Canvas extends React.Component{
             }
 
             this.sendHistory(lineData);
-            this.erase(this.prevPos, currOffset, lineData.strokeColor);
+            this.erase(this.prevPos, currOffset);
 
         }
     }
@@ -195,9 +187,9 @@ class Canvas extends React.Component{
         this.prevPos = {offsetX, offsetY};
     }
 
-    erase(prevPos, currPos, strokeColor)
+    erase(prevPos, currPos)
     {
-        //console.log("In erase" + this.isErasing);
+        console.log("In erase" + this.isErasing);
 
         const {offsetX, offsetY} = currPos;
         const {offsetX:x, offsetY:y} = prevPos;
@@ -207,7 +199,6 @@ class Canvas extends React.Component{
         this.ctx.globalCompositeOperation = 'destination-out';
 
         this.ctx.lineWidth = 20;
-        //this.ctx.strokeStyle = 'black';
         
         this.ctx.beginPath();
         
@@ -235,7 +226,10 @@ class Canvas extends React.Component{
             this.undoLastLine();
         }
 
-        if(prevProps.eraseTrigger!== this.props.eraseTrigger){
+        //if the erase trigger changed,
+        if(prevProps.eraseTrigger){//!== this.props.eraseTrigger){
+            
+            //check to see if its true
             if(this.props.eraseTrigger)
             {
                 //true so erase
@@ -250,11 +244,14 @@ class Canvas extends React.Component{
             
         }
 
+        //check if painting trigger changed 
         if(prevProps.paintTrigger!== this.props.paintTrigger)
         {
+            
+            //if its true
             if(this.props.paintTrigger)
             {
-                //true so erase
+                //true so paint
                 this.isPainting = true;
                 this.isErasing = false; 
                 
@@ -291,6 +288,7 @@ class Canvas extends React.Component{
     }
 
     saveImg() {
+        //save the image locally as a png file (temporary)
         let canvas = document.querySelector('canvas');
         let link = document.createElement("a");
         link.download = "download.png";
