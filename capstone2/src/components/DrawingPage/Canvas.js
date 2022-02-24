@@ -91,10 +91,11 @@ class Canvas extends React.Component{
                 end: {...currOffset},
                 strokeColor: this.props.strokeColor,
                 lineWidth: this.props.lineWidth,
+                globalCompositeOperation: 'source-over',
             }
             this.sendHistory(lineData);
             
-            this.paint(this.prevPos, currOffset, lineData.strokeColor);
+            this.paint(this.prevPos, currOffset, lineData.strokeColor, lineData.lineWidth, lineData.globalCompositeOperation);
 
         }if(this.isErasing)
         {
@@ -108,12 +109,14 @@ class Canvas extends React.Component{
                 
                 end: {...currOffset},
                 
-                strokeColor: this.props.strokeColor,
+                //strokeColor: this.props.strokeColor,
+
+                globalCompositeOperation: 'destination-out',
             }
 
             this.sendHistory(lineData);
            
-            this.erase(this.prevPos, currOffset);
+            this.erase(this.prevPos, currOffset, lineData.globalCompositeOperation);
 
         }
     }
@@ -126,26 +129,39 @@ class Canvas extends React.Component{
 
         const currOffset = {offsetX, offsetY};
 
-        const lineData = {
-            //clone prevPos to start so our data is all nice n immutable:)
-            start: {...this.prevPos},
-            //clone curroffset to the end as the end point :)
-            end: {...currOffset},
-            strokeColor: this.props.strokeColor,
-        }
-        this.sendHistory(lineData);
-
         
         if(this.isPainting) {
         
             //console.log("current offset " + currOffset.offsetX + "\n" + currOffset.offsetY)
-            
-            this.paint(this.prevPos, currOffset, lineData.strokeColor);
+            const lineData = {
+                //clone prevPos to start so our data is all nice n immutable:)
+                start: {...this.prevPos},
+                //clone curroffset to the end as the end point :)
+                end: {...currOffset},
+                strokeColor: this.props.strokeColor,
+                lineWidth: this.props.lineWidth,
+                globalCompositeOperation: 'source-over',
+            }
+            this.sendHistory(lineData);
+            this.paint(this.prevPos, currOffset, lineData.strokeColor, lineData.lineWidth, lineData.globalCompositeOperation);
+
         }
 
         if(this.isErasing)
         {
-            this.erase(this.prevPos, currOffset);
+            const lineData = {
+                
+                start: {...this.prevPos},
+                
+                end: {...currOffset},
+                
+                //strokeColor: this.props.strokeColor,
+
+                globalCompositeOperation: 'destination-out',
+            }
+
+            this.sendHistory(lineData);
+            this.erase(this.prevPos, currOffset, lineData.globalCompositeOperation);
         }
     }
 
@@ -155,16 +171,23 @@ class Canvas extends React.Component{
         this.isErasing = false;
     }
 
-    paint(prevPos, currPos, strokeColor, lineWidth) {
+    paint(prevPos, currPos, strokeColor, lineWidth, globalCompOp) {
         const {offsetX, offsetY} = currPos;
         const {offsetX:x, offsetY:y} = prevPos;
 
         this.ctx.save();
 
-        this.ctx.globalCompositeOperation = 'source-over';
+        this.ctx.globalCompositeOperation = globalCompOp;
 
-        this.ctx.lineWidth = 2;
+        if(globalCompOp === 'source-over')
+        {
+            this.ctx.lineWidth = lineWidth;
         this.ctx.strokeStyle = strokeColor;
+        }else{
+            this.ctx.lineWidth = 20;
+            this.ctx.strokeStyle = 'white';
+        }
+        
         
         this.ctx.beginPath();
         
@@ -178,7 +201,7 @@ class Canvas extends React.Component{
         this.prevPos = {offsetX, offsetY};
     }
 
-    erase(prevPos, currentPos)
+    erase(prevPos, currentPos, globalCompOp)
     {
         console.log("In erase");
 
@@ -187,7 +210,7 @@ class Canvas extends React.Component{
 
         this.ctx.save();
 
-        this.ctx.globalCompositeOperation = 'destination-out';
+        this.ctx.globalCompositeOperation = globalCompOp;
 
         this.ctx.beginPath();
         this.ctx.arc(x, y, 10, 0, 2 *Math.PI);
@@ -202,27 +225,6 @@ class Canvas extends React.Component{
         this.ctx.restore();
         
         this.prevPos = {offsetX, offsetY};
-
-/*
-        var x = currentPos.offsetX;
-        var y = currentPos.offsetY;
-
-        this.ctx.save();
-
-        this.ctx.globalCompositeOperation = 'destination-out';
-
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 10, 0, 2 *Math.PI);
-        this.ctx.fill();
-
-        this.ctx.lineWidth = 20;
-        this.ctx.beginPath();
-        this.ctx.strokeStyle = 'white';
-        this.ctx.moveTo(this.prevPos.x, this.prevPos.y);
-        this.ctx.lineTo(x, y);
-        this.ctx.stroke();
-
-        this.prevPos = {x: x, y: y};*/
 
     }
 
@@ -290,7 +292,7 @@ class Canvas extends React.Component{
         console.log(lineData);
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
         lineData.map(line => {
-            this.paint(line.start, line.end, line.strokeColor, line.lineWidth)
+            this.paint(line.start, line.end, line.strokeColor, line.lineWidth, line.globalCompositeOperation)
         })
     }
 
