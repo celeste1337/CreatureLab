@@ -35,7 +35,6 @@ class DrawingPage extends React.Component {
                 { size: 'Large',
                 width: '12'}
             ],
-          
             currentColor: "",
             currentWidth: "",
             lineHistory: [],
@@ -76,8 +75,6 @@ class DrawingPage extends React.Component {
         this.eraseTriggered = true;
         
         //console.log(this.eraseTriggered);
-
-        //if(this.bColor === 'red'? this.bColor ='white' : this.bColor = 'red');
         
     }//handle eraser
 
@@ -90,7 +87,6 @@ class DrawingPage extends React.Component {
         
     }
 
-  
     changeWidth(i) {
         this.setState({
             currentWidth: i
@@ -112,20 +108,22 @@ class DrawingPage extends React.Component {
 
     renderUndoButton() {
         return (
-            <Button onClick={(e) => this.removeLastLine()} buttonText={"Undo"} />
+            <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
         )
     }
     renderEraseButton() {
         return (
-            <Button value = {this.eraseTriggered} onClick={(e) => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
+            <Button value = {this.eraseTriggered} onClick={() => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
         )
     }
-    
+
     renderDoneButton(){
         return(
             <Button onClick={() => this.handleDone()} buttonText={"Done"} />
         )
     }
+
+
     renderLineWidthPicker() {
         //loop thru object
         let widths = [];
@@ -154,7 +152,6 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
-    
                 <div className="linewidthpickerWrapper">
                     <h2>Brush Stroke</h2>
                     {this.renderLineWidthPicker()}
@@ -164,11 +161,21 @@ class DrawingPage extends React.Component {
                     {this.renderColorPicker()}
                 </div>
 
-                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory} lineWidth={this.state.currentWidth} ></Canvas>
+                <Canvas strokeColor={this.state.currentColor} 
+                historyCallback={this.handleHistoryCallback} 
+                undoTrigger={this.undoTriggered} 
+                lineHistory={this.state.lineHistory} 
+                lineWidth={this.state.currentWidth} 
+                eraseTrigger = {this.eraseTriggered} 
+                paintTriggered = {this.paintTriggered}
+                doneTriggered = {this.doneTriggered}>
+
+                </Canvas>
 
                 {this.renderUndoButton()}
-               {this.renderEraseButton()}
+                {this.renderEraseButton()}
                 {this.renderDoneButton()}
+
             </div>
         );
     }
