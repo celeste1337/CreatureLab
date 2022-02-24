@@ -117,7 +117,7 @@ class Canvas extends React.Component{
             }
 
             this.sendHistory(lineData);
-            this.erase(this.prevPos);
+            this.erase(this.prevPos, currOffset, lineData.strokeColor);
 
         }
     }
@@ -195,48 +195,30 @@ class Canvas extends React.Component{
         this.prevPos = {offsetX, offsetY};
     }
 
-    erase(currentPos)
+    erase(prevPos, currPos, strokeColor)
     {
-        console.log("In erase");
+        //console.log("In erase" + this.isErasing);
 
-        /*const {offsetX, offsetY} = currentPos;
+        const {offsetX, offsetY} = currPos;
         const {offsetX:x, offsetY:y} = prevPos;
-
-        this.ctx.save();
-
-        this.ctx.globalCompositeOperation = 'source-out';
-
-        
-        this.ctx.beginPath();
-        this.ctx.moveTo(offsetX, offsetY);
-        this.ctx.lineTo(x, y);
-        this.ctx.strokeStyle = 'black';
-        this.ctx.stroke();        
-
-        this.ctx.restore();
-        
-        this.prevPos = {offsetX, offsetY};
-*/
-
-        var x = currentPos.offsetX;
-        var y = currentPos.offsetY;
 
         this.ctx.save();
 
         this.ctx.globalCompositeOperation = 'destination-out';
 
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 10, 0, 2 *Math.PI);
-        this.ctx.fill();
-
         this.ctx.lineWidth = 20;
+        //this.ctx.strokeStyle = 'black';
+        
         this.ctx.beginPath();
-        this.ctx.strokeStyle = 'white';
-        this.ctx.moveTo(this.prevPos.x, this.prevPos.y);
+        
+        this.ctx.moveTo(offsetX, offsetY);
         this.ctx.lineTo(x, y);
-        this.ctx.stroke();
+        
+        this.ctx.stroke();        
 
-        this.prevPos = {x: x, y: y};
+        this.ctx.restore();
+        
+        this.prevPos = {offsetX, offsetY};
 
     }
 
