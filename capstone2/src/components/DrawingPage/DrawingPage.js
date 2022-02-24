@@ -35,6 +35,7 @@ class DrawingPage extends React.Component {
                 { size: 'Large',
                 width: '12'}
             ],
+          
             currentColor: "",
             currentWidth: "",
             lineHistory: [],
@@ -43,6 +44,11 @@ class DrawingPage extends React.Component {
     }
 
     undoTriggered = false;
+    eraseTriggered = false;
+    paintTriggered = false;
+    doneTriggered = false;
+    
+    
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -55,11 +61,36 @@ class DrawingPage extends React.Component {
     }
 
     changeColor(i) {
+        this.paintTriggered = true;
+        this.eraseTriggered = false; 
+
         this.setState({
             currentColor: i
         });
+        
+        
     }
 
+    handleEraser()
+    {
+        this.eraseTriggered = true;
+        
+        //console.log(this.eraseTriggered);
+
+        //if(this.bColor === 'red'? this.bColor ='white' : this.bColor = 'red');
+        
+    }//handle eraser
+
+    handleDone()
+    {
+        //Done btn was triggered.
+        //save the image 
+        //console.log('handle done');
+        this.doneTriggered = !this.doneTriggered;
+        
+    }
+
+  
     changeWidth(i) {
         this.setState({
             currentWidth: i
@@ -81,10 +112,20 @@ class DrawingPage extends React.Component {
 
     renderUndoButton() {
         return (
-            <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
+            <Button onClick={(e) => this.removeLastLine()} buttonText={"Undo"} />
         )
     }
-
+    renderEraseButton() {
+        return (
+            <Button value = {this.eraseTriggered} onClick={(e) => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
+        )
+    }
+    
+    renderDoneButton(){
+        return(
+            <Button onClick={() => this.handleDone()} buttonText={"Done"} />
+        )
+    }
     renderLineWidthPicker() {
         //loop thru object
         let widths = [];
@@ -113,6 +154,7 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
+    
                 <div className="linewidthpickerWrapper">
                     <h2>Brush Stroke</h2>
                     {this.renderLineWidthPicker()}
@@ -125,11 +167,8 @@ class DrawingPage extends React.Component {
                 <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} undoTrigger={this.undoTriggered} lineHistory={this.state.lineHistory} lineWidth={this.state.currentWidth} ></Canvas>
 
                 {this.renderUndoButton()}
-                
-                
-                
-
-
+               {this.renderEraseButton()}
+                {this.renderDoneButton()}
             </div>
         );
     }
