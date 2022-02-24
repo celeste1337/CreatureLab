@@ -16,14 +16,17 @@ class Canvas extends React.Component{
         this.onMouseUp = this.onMouseUp.bind(this);
         this.onTouchEnd = this.onTouchEnd.bind(this);
         this.onTouchMove = this.onTouchMove.bind(this);
+
         this.smooth = false;
         this.isPainting = false;
         this.isErasing = false;
         this.prevPos = {x : 0,
         y : 0};
         this.pointsBetween = [];
-    }
 
+        //either drawing or erasing
+        this.status = this.props.status;
+    }
 
     // return the least four points that the user drew
     // for line smoothing
@@ -38,14 +41,52 @@ class Canvas extends React.Component{
         return lastFour;
     }
 
-    buildLineData(start,between,end) {
+    buildLineData(start,between,end, status) {
         return {
             start: {...start},
             pointsBetween: [...between],
             end: {...end},
             lineWidth: this.props.lineWidth,
             strokeColor: this.props.strokeColor,
+            //whether or not its draw or eraser
+            status: status,
         }
+    }
+
+    completeLineDataMouse(nativeEvent) {
+        //this is the current point, which is the end
+        const {offsetX:prevX, offsetY:prevY} = nativeEvent;
+        const currentEnd = {prevX, prevY};
+
+        //grab previous position
+        const currentStart = this.prevPos;
+
+        //send everything to the line data builder
+        const lineData = this.buildLineData(currentStart, this.pointsBetween, currentEnd, this.props.status);
+
+        this.sendHistory(lineData);
+
+        //reset
+        this.isPainting = false;
+        this.pointsBetween = [];
+    }
+
+    completeLineDataTouch(nativeEvent) {
+        //this is the current point, which is the end
+        const {offsetX:prevX, offsetY:prevY} = nativeEvent;
+        const currentEnd = {prevX, prevY};
+
+        //grab previous position
+        const currentStart = this.prevPos;
+
+        //send everything to the line data builder
+        const lineData = this.buildLineData(currentStart, this.pointsBetween, currentEnd, this.props.status);
+
+        this.sendHistory(lineData);
+
+        //reset
+        this.isPainting = false;
+        this.pointsBetween = [];
     }
 
     buildPointsBetween(points) {
@@ -57,58 +98,34 @@ class Canvas extends React.Component{
         //console.log("mouse down");
         //grab mouse x and y from native event
         const {offsetX:prevX, offsetY:prevY} = nativeEvent;
-        if(this.isPainting = true)
-        {
-            this.isErasing = false;
-        }else{
-            this.isErasing = true;
-        }
+        this.isPainting = true;
         //chuck it into prevPos
         this.prevPos = {prevX, prevY};
     }
 
     onMouseUp({nativeEvent}) {
-        //console.log("mouse up");
         if(this.isPainting) {
-            //this is the current point, which is the end
-            const {offsetX:prevX, offsetY:prevY} = nativeEvent;
-            const currentEnd = {prevX, prevY};
-
-            //grab previous position
-            const currentStart = this.prevPos;
-
-            //send everything to the line data builder
-            const lineData = this.buildLineData(currentStart, this.pointsBetween, currentEnd);
-
-            this.sendHistory(lineData);
-
-            //reset
-            this.isPainting = false;
-            this.isErasing = false;
-            this.pointsBetween = [];
+            this.completeLineDataMouse(nativeEvent);
         }
 
     }
 
     onTouchEnd({nativeEvent}) {
-        //console.log("mouse up");
-        this.isPainting = false;
-        this.isErasing = false;
+        if(this.isPainting) {
+            this.completeLineDataTouch(nativeEvent);
+        }
     }
 
     onTouchStart({nativeEvent})
     {
-        const offsetX = nativeEvent.touches[0].clientX;
-        const offsetY = nativeEvent.touches[0].clientY;
+        console.log("you are touching");
+        const prevX = nativeEvent.touches[0].clientX;
+        const prevY = nativeEvent.touches[0].clientY;
+
+        this.isPainting = true;
         
-        if(this.isPainting = true)
-        {
-            this.isErasing = false;
-        }else{
-            this.isErasing = true;
-        }
         //chuck it into prevPos
-        this.prevPos = {offsetX, offsetY};
+        this.prevPos = {prevX, prevY};
     }
 
     onMouseMove({nativeEvent}) {
@@ -125,73 +142,47 @@ class Canvas extends React.Component{
                 start: {...previousPos},
                 end: {...currPos},
                 strokeColor: this.props.strokeColor,
-                lineWidth: this.props.lineWidth
+                lineWidth: this.props.lineWidth,
+                status: this.props.status,
             };
-            //console.log(tempData);
             
             this.paint(tempData);
             this.prevPos = tempData.end;
 
             this.buildPointsBetween(tempData);
-            //console.log(this.pointsBetween);
-
-        }if(this.isErasing) {
-            const {offsetX, offsetY} = nativeEvent;
-            
-            const currOffset = {offsetX, offsetY};
-
-            const lineData = {
-                
-                start: {...this.prevPos},
-                
-                end: {...currOffset},
-                
-                strokeColor: this.props.strokeColor,
-            }
-
-            this.sendHistory(lineData);
-           
-            this.erase(this.prevPos, currOffset);
-
         }
     }
 
     onTouchMove({nativeEvent}) {
-        //console.log("touch moving");
-
-        const offsetX = nativeEvent.touches[0].clientX;
-        const offsetY = nativeEvent.touches[0].clientY;
-
-        const currOffset = {offsetX, offsetY};
-
-        const lineData = {
-            //clone prevPos to start so our data is all nice n immutable:)
-            start: {...this.prevPos},
-            //clone curroffset to the end as the end point :)
-            end: {...currOffset},
-            strokeColor: this.props.strokeColor,
-        }
-        this.sendHistory(lineData);
-
-        
         if(this.isPainting) {
-        
-            //console.log("current offset " + currOffset.offsetX + "\n" + currOffset.offsetY)
-   
-          this.paint(this.prevPos, currOffset, lineData.strokeColor, lineData.lineWidth);
+            const bcr = nativeEvent.target.getBoundingClientRect();
+            let currX = nativeEvent.targetTouches[0].clientX - bcr.x;
+            let currY = nativeEvent.targetTouches[0].clientY - bcr.y;
+
+            const currOffset = {currX, currY};
+
+            let tempData = {
+                //clone prevPos to start so our data is all nice n immutable:)
+                start: {...this.prevPos},
+                //clone curroffset to the end as the end point :)
+                end: {...currOffset},
+                strokeColor: this.props.strokeColor,
+                lineWidth: this.props.lineWidth,
+                status: this.props.status
+            }
+            this.paint(tempData);
+            this.prevPos = tempData.end;
+
+            this.buildPointsBetween(tempData);
 
         }
 
-        if(this.isErasing)
-        {
-            this.erase(this.prevPos, currOffset);
-        }
     }
 
-    onMouseLeave() {
-        //console.log("mouse left canvas");
-        this.isPainting = false;
-        this.isErasing = false;
+    onMouseLeave({nativeEvent}) {
+        if(this.isPainting) {
+            this.completeLineDataMouse(nativeEvent);
+        }
     }
 
     paint(lineData) {
@@ -200,17 +191,17 @@ class Canvas extends React.Component{
 
         this.ctx.save();
 
-        this.ctx.globalCompositeOperation = 'source-over';
-
-        this.ctx.lineWidth = 2;
-        this.ctx.strokeStyle = lineData.strokeColor;
+        if(lineData.status === true) {
+            //if true, paint normally
+            this.ctx.globalCompositeOperation = 'source-over';
+        } else {
+            //else paint as the eraser
+            this.ctx.globalCompositeOperation = 'destination-out';
+        }
         
         this.ctx.beginPath();
         this.ctx.moveTo(prevX, prevY);
         this.ctx.lineCap = 'round';
-
-        //paintsmooth with points between?
-        //loop thru points as groups of 4 - start, cp1, cp2, end
 
         this.ctx.lineTo(currX,currY);
         this.ctx.lineCap = "round";
@@ -224,27 +215,6 @@ class Canvas extends React.Component{
         this.ctx.restore();
     }
 
-    erase(prevPos, currentPos) {
-        console.log("In erase");
-
-        const {offsetX, offsetY} = currentPos;
-        const {offsetX:x, offsetY:y} = prevPos;
-
-        this.ctx.save();
-
-        this.ctx.globalCompositeOperation = 'destination-out';
-
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 10, 0, 2 *Math.PI);
-        this.ctx.fill();
-        
-        this.ctx.beginPath();
-        this.ctx.moveTo(offsetX, offsetY);
-        this.ctx.lineTo(x, y);
-        this.ctx.strokeStyle = 'white';
-        this.ctx.stroke();  
-        this.ctx.restore();   
-    }
 
     //paint a smooth line to reduce user jitter
     paintSmooth(lineData) {
@@ -271,36 +241,6 @@ class Canvas extends React.Component{
             this.undoLastLine();
         }
 
-        if(prevProps.eraseTrigger){//!== this.props.eraseTrigger){
-            if(this.props.eraseTrigger)
-            {
-                //true so erase
-                this.isPainting = false;
-                this.isErasing = true;
-                this.erase(this.prevPos);   
-            }else
-            {
-                this.isErasing = false;
-                this.isPainting = true;
-            }
-            
-        }
-
-        if(prevProps.paintTrigger!== this.props.paintTrigger)
-        {
-            if(this.props.paintTrigger)
-            {
-                //true so erase
-                this.isPainting = true;
-                this.isErasing = false; 
-                
-            }else
-            {
-                this.isErasing = true;
-                this.isPainting = false;
-            }
-        }
-
         if(prevProps.doneTriggered === true)
         {
             this.saveImg();
@@ -314,12 +254,14 @@ class Canvas extends React.Component{
 
     undoLastLine() {
         console.log("undo last lineeeee");
+        console.log(this.props.lineHistory);
         this.redrawAllFromData(this.props.lineHistory);
     }
 
     redrawAllFromData(lineData) {
         //clear the canvas and redraw it all lol
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+
         lineData.map(line => {
             line.pointsBetween.map(lineBetween => {
                 this.paint(lineBetween);
@@ -341,13 +283,12 @@ class Canvas extends React.Component{
                 <canvas 
                 ref={(ref) => (this.canvas = ref)}
                 onMouseDown={this.onMouseDown}
-            onMouseMove={this.onMouseMove}
-            onMouseLeave={this.onMouseLeave}
-            onMouseUp={this.onMouseUp}
-            onTouchStart = {this.onTouchStart}
-            onTouchMove = {this.onTouchMove}
-            onTouchEnd = {this.onTouchEnd}
-            style={{border: "1px solid black"}}
+                onMouseMove={this.onMouseMove}
+                onMouseLeave={this.onMouseLeave}
+                onMouseUp={this.onMouseUp}
+                onTouchStart = {this.onTouchStart}
+                onTouchMove = {this.onTouchMove}
+                onTouchEnd = {this.onTouchEnd}
                 ></canvas>
             </div>
 
