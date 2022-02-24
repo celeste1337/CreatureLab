@@ -221,11 +221,6 @@ class Canvas extends React.Component{
         this.ctx.lineTo(x, y);
         this.ctx.strokeStyle = 'white';
         this.ctx.stroke();        
-        this.ctx.lineCap = "round";
-        this.ctx.strokeStyle = strokeColor;
-        this.ctx.lineWidth = lineWidth;
-        this.ctx.stroke();
-
 
         this.ctx.restore();
         
