@@ -63,7 +63,7 @@ class DrawingPage extends React.Component {
         
         //console.log(this.eraseTriggered);
 
-        if(this.bColor === 'red'? this.bColor ='white' : this.bColor = 'red');
+        //if(this.bColor === 'red'? this.bColor ='white' : this.bColor = 'red');
         
     }//handle eraser
 
