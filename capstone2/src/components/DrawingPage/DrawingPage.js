@@ -7,6 +7,9 @@ import Colorpicker from './Colorpicker';
 import Button from '../Button';
 import LineWidthPicker from './LineWidthPicker';
 
+import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
+import Switch from '../Switch';
+
 class DrawingPage extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +17,6 @@ class DrawingPage extends React.Component {
             colors: [
                 {color: "#eb2727"}, //red
                 {color: "#333333"}, //black
-                {color: "#ffffff"}, //white
                 {color: "#f89c14"}, //orange
                 {color: "#f1de2d"}, //yellow
                 {color: "#82de57"}, //lightgreen
@@ -35,19 +37,22 @@ class DrawingPage extends React.Component {
                 { size: 'Large',
                 width: '12'}
             ],
-            currentColor: "",
-            currentWidth: "",
+            currentColor: "#333333",
+            currentWidth: "7",
             lineHistory: [],
+            //true means we are drawing
+            status: true,
         }
         this.removeLastLine = this.removeLastLine.bind(this);
+        this.handleToolChange = this.handleToolChange.bind(this);
+
+        this.indicatorStyle = {
+            backgroundColor: this.state.currentColor,
+        }
     }
 
     undoTriggered = false;
-    eraseTriggered = false;
-    paintTriggered = false;
     doneTriggered = false;
-    
-    
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -56,27 +61,20 @@ class DrawingPage extends React.Component {
         //this is the history of line movement
         //all the moves theyve made!
         //will be useful for playback probably hopefully lol
-        //console.log(this.state.lineHistory);
     }
 
     changeColor(i) {
-        this.paintTriggered = true;
-        this.eraseTriggered = false; 
-
         this.setState({
             currentColor: i
         });
-        
-        
     }
 
-    handleEraser()
-    {
-        this.eraseTriggered = true;
-        
-        //console.log(this.eraseTriggered);
-        
-    }//handle eraser
+    changeStatus(i) {
+        //change the status of painting or erasing in here
+        this.setState({
+            status: i
+        });
+    }
 
     handleDone()
     {
@@ -85,6 +83,18 @@ class DrawingPage extends React.Component {
         //console.log('handle done');
         this.doneTriggered = !this.doneTriggered;
         
+    }
+
+    handleToolChange(e) {
+        console.log("tool changed");
+        //change the tool
+        this.changeTool(!this.state.status);
+    }
+
+    changeTool(i) {
+        this.setState({
+            status: i
+        })
     }
 
     changeWidth(i) {
@@ -123,6 +133,11 @@ class DrawingPage extends React.Component {
         )
     }
 
+    renderSmoothButton() {
+        return (
+            <Button onClick={() => this.toggleSmooth()} buttonText={"Smooth"} />
+        )
+    }
 
     renderLineWidthPicker() {
         //loop thru object
@@ -139,15 +154,19 @@ class DrawingPage extends React.Component {
         this.undoTriggered = !this.undoTriggered;
 
         let tempArr = this.state.lineHistory;
-        //make it look like its actually doing stuff lmfaooooo
-        for(let i = 0; i < 5; i++) {
-            tempArr.pop();
-        }
+        console.log(tempArr);
+
+        tempArr.pop();
+
         this.setState({
             lineHistory: tempArr,
         })
     }
 
+    toggleSmooth() {
+        this.props.smooth = !this.props.smooth;
+        console.log(this.props.smooth);
+    }
 
     render() {
         return(
@@ -158,22 +177,17 @@ class DrawingPage extends React.Component {
                 </div>
 
                 <div className="colorpickerWrapper">
+                    <CurrentColorIndicator fill={this.state.currentColor}/>
                     {this.renderColorPicker()}
                 </div>
 
-                <Canvas strokeColor={this.state.currentColor} 
-                historyCallback={this.handleHistoryCallback} 
-                undoTrigger={this.undoTriggered} 
-                lineHistory={this.state.lineHistory} 
-                lineWidth={this.state.currentWidth} 
-                eraseTrigger = {this.eraseTriggered} 
-                paintTriggered = {this.paintTriggered}
-                doneTriggered = {this.doneTriggered}>
+                <Switch checked={this.state.status} onChange={
+                    this.handleToolChange}></Switch>
 
-                </Canvas>
+                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} eraseTrigger={this.eraseTriggered} undoTrigger={this.undoTriggered} paintTrigger={this.paintTriggered} lineHistory={this.state.lineHistory} lineWidth={this.state.currentWidth} status={this.state.status}></Canvas>
 
                 {this.renderUndoButton()}
-                {this.renderEraseButton()}
+
                 {this.renderDoneButton()}
 
             </div>

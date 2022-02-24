@@ -6,6 +6,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import HomePage from './components/HomePage/HomePage';
 import DrawingPage from './components/DrawingPage/DrawingPage';
+import GalleryPage from './components/GalleryPage/Gallery';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/draw" element={<DrawingPage/>}/>
+        <Route path="/gallery" element={<GalleryPage/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

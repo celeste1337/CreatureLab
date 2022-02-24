@@ -37,6 +37,19 @@
   }
 }
 
+/**
+* Gallery page CSS
+*/
+
+.galleryPage {
+  background-image: "";
+  background-color: #c785c6;
+
+  cursor: grab;
+  overflow: auto;
+
+  width: 10000px;
+}
 
 .drawingPage {
   display: flex;
