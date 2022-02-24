@@ -90,6 +90,7 @@ class Canvas extends React.Component{
                 //clone curroffset to the end as the end point :)
                 end: {...currOffset},
                 strokeColor: this.props.strokeColor,
+                lineWidth: this.props.lineWidth,
             }
             this.sendHistory(lineData);
             
@@ -138,8 +139,9 @@ class Canvas extends React.Component{
         if(this.isPainting) {
         
             //console.log("current offset " + currOffset.offsetX + "\n" + currOffset.offsetY)
-            
-            this.paint(this.prevPos, currOffset, lineData.strokeColor);
+   
+          this.paint(this.prevPos, currOffset, lineData.strokeColor, lineData.lineWidth);
+
         }
 
         if(this.isErasing)
@@ -154,7 +156,7 @@ class Canvas extends React.Component{
         this.isErasing = false;
     }
 
-    paint(prevPos, currPos, strokeColor) {
+    paint(prevPos, currPos, strokeColor, lineWidth) {
         const {offsetX, offsetY} = currPos;
         const {offsetX:x, offsetY:y} = prevPos;
 
@@ -197,6 +199,11 @@ class Canvas extends React.Component{
         this.ctx.lineTo(x, y);
         this.ctx.strokeStyle = 'white';
         this.ctx.stroke();        
+        this.ctx.lineCap = "round";
+        this.ctx.strokeStyle = strokeColor;
+        this.ctx.lineWidth = lineWidth;
+        this.ctx.stroke();
+
 
         this.ctx.restore();
         
@@ -228,8 +235,8 @@ class Canvas extends React.Component{
 
     componentDidMount() {
         //you can change these they were just kinda big on my monitor lmao
-        this.canvas.width = 300;
-        this.canvas.height = 300;
+        this.canvas.width = 800;
+        this.canvas.height = 500;
         this.ctx = this.canvas.getContext('2d');
     }
 
@@ -289,7 +296,7 @@ class Canvas extends React.Component{
         console.log(lineData);
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
         lineData.map(line => {
-            this.paint(line.start, line.end, line.strokeColor)
+            this.paint(line.start, line.end, line.strokeColor, line.lineWidth)
         })
     }
 
@@ -303,9 +310,10 @@ class Canvas extends React.Component{
 
     render() {
         return(
-            <canvas 
-            ref={(ref) => (this.canvas = ref)}
-            onMouseDown={this.onMouseDown}
+            <div className="canvasComponent">
+                <canvas 
+                ref={(ref) => (this.canvas = ref)}
+                onMouseDown={this.onMouseDown}
             onMouseMove={this.onMouseMove}
             onMouseLeave={this.onMouseLeave}
             onMouseUp={this.onMouseUp}
@@ -313,7 +321,9 @@ class Canvas extends React.Component{
             onTouchMove = {this.onTouchMove}
             onTouchEnd = {this.onTouchEnd}
             style={{border: "1px solid black"}}
-            ></canvas>
+                ></canvas>
+            </div>
+
         );
     }
 }
