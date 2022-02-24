@@ -1,16 +1,14 @@
+import Button from "../Button";
+
 function Colorpicker(props) {
     const buttonStyle = {
         backgroundColor: props.value,
-        padding: '0px',
-        width: '20px',
-        height: '20px',
-        borderRadius: '10px',
         border: '1px solid darkgrey',
         cursor: 'pointer',
     };
 
     return(
-        <button className="colorOption" onClick={props.onClick} style={buttonStyle}></button>
+        <Button className="colorOption" onClick={props.onClick} style={buttonStyle}></Button>
     );
 }
 

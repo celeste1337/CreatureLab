@@ -5,6 +5,7 @@ import React from 'react';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
+import LineWidthPicker from './LineWidthPicker';
 
 class DrawingPage extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class DrawingPage extends React.Component {
                 erase: 'white',
             },
             currentColor: "",
+            currentWidth: "",
             lineHistory: [],
         }
         this.removeLastLine = this.removeLastLine.bind(this);
@@ -99,6 +101,17 @@ class DrawingPage extends React.Component {
         )
     }
 
+
+    renderLineWidthPicker() {
+        //loop thru object
+        let widths = [];
+        this.state.lineWidths.map((i) => {
+            widths.push(
+                <LineWidthPicker key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i.width)} buttonText={i.size}/>
+            )
+        });
+        return widths;
+    }
 
     removeLastLine() {
         this.undoTriggered = !this.undoTriggered;

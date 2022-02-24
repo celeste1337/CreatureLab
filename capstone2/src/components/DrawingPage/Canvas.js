@@ -63,7 +63,7 @@ class Canvas extends React.Component{
     {
         const offsetX = nativeEvent.touches[0].clientX;
         const offsetY = nativeEvent.touches[0].clientY;
-        
+
         if(this.isPainting = true)
         {
             this.isErasing = false;
@@ -90,6 +90,7 @@ class Canvas extends React.Component{
                 //clone curroffset to the end as the end point :)
                 end: {...currOffset},
                 strokeColor: this.props.strokeColor,
+                lineWidth: this.props.lineWidth,
             }
             this.sendHistory(lineData);
             
@@ -154,7 +155,7 @@ class Canvas extends React.Component{
         this.isErasing = false;
     }
 
-    paint(prevPos, currPos, strokeColor) {
+    paint(prevPos, currPos, strokeColor, lineWidth) {
         const {offsetX, offsetY} = currPos;
         const {offsetX:x, offsetY:y} = prevPos;
 
@@ -228,8 +229,8 @@ class Canvas extends React.Component{
 
     componentDidMount() {
         //you can change these they were just kinda big on my monitor lmao
-        this.canvas.width = 300;
-        this.canvas.height = 300;
+        this.canvas.width = 800;
+        this.canvas.height = 500;
         this.ctx = this.canvas.getContext('2d');
     }
 
@@ -289,7 +290,7 @@ class Canvas extends React.Component{
         console.log(lineData);
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
         lineData.map(line => {
-            this.paint(line.start, line.end, line.strokeColor)
+            this.paint(line.start, line.end, line.strokeColor, line.lineWidth)
         })
     }
 
