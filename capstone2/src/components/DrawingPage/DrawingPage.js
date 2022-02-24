@@ -96,7 +96,7 @@ class DrawingPage extends React.Component {
             status: i
         })
     }
-  
+
     changeWidth(i) {
         this.setState({
             currentWidth: i
@@ -118,15 +118,15 @@ class DrawingPage extends React.Component {
 
     renderUndoButton() {
         return (
-            <Button onClick={(e) => this.removeLastLine()} buttonText={"Undo"} />
+            <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
         )
     }
     renderEraseButton() {
         return (
-            <Button value = {this.eraseTriggered} onClick={(e) => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
+            <Button value = {this.eraseTriggered} onClick={() => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
         )
     }
-    
+
     renderDoneButton(){
         return(
             <Button onClick={() => this.handleDone()} buttonText={"Done"} />
@@ -171,7 +171,6 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
-    
                 <div className="linewidthpickerWrapper">
                     <h2>Brush Stroke</h2>
                     {this.renderLineWidthPicker()}
@@ -190,6 +189,7 @@ class DrawingPage extends React.Component {
                 {this.renderUndoButton()}
 
                 {this.renderDoneButton()}
+
             </div>
         );
     }

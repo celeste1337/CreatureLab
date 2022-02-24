@@ -118,12 +118,10 @@ class Canvas extends React.Component{
 
     onTouchStart({nativeEvent})
     {
-        console.log("you are touching");
         const prevX = nativeEvent.touches[0].clientX;
         const prevY = nativeEvent.touches[0].clientY;
 
         this.isPainting = true;
-        
         //chuck it into prevPos
         this.prevPos = {prevX, prevY};
     }
@@ -176,7 +174,6 @@ class Canvas extends React.Component{
             this.buildPointsBetween(tempData);
 
         }
-
     }
 
     onMouseLeave({nativeEvent}) {
