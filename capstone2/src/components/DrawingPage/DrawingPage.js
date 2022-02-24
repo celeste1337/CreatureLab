@@ -16,7 +16,6 @@ class DrawingPage extends React.Component {
             colors: [
                 {color: "#eb2727"}, //red
                 {color: "#333333"}, //black
-                {color: "#ffffff"}, //white
                 {color: "#f89c14"}, //orange
                 {color: "#f1de2d"}, //yellow
                 {color: "#82de57"}, //lightgreen
