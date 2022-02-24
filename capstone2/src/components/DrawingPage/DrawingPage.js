@@ -71,25 +71,25 @@ class DrawingPage extends React.Component {
     {
         //Done btn was triggered.
         //save the image 
-        console.log('handle done');
+        //console.log('handle done');
         this.doneTriggered = !this.doneTriggered;
         
     }
 
     renderColorPicker(i) {
         return (
-            <Colorpicker value={this.state.colors[i]} onClick={() => this.changeColor(this.state.colors[i])} />
+            <Colorpicker value={this.state.colors[i]} onClick={(e) => this.changeColor(this.state.colors[i])} />
         )
     }
 
     renderUndoButton() {
         return (
-            <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
+            <Button onClick={(e) => this.removeLastLine()} buttonText={"Undo"} />
         )
     }
     renderEraseButton() {
         return (
-            <Button onClick={() => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
+            <Button value = {this.eraseTriggered} onClick={(e) => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
         )
     }
 
