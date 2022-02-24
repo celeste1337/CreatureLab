@@ -11,6 +11,7 @@ class DrawingPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+<<<<<<< HEAD
             colors: {
                 red: "#eb2727",
                 black: "#333333",
@@ -24,6 +25,33 @@ class DrawingPage extends React.Component {
                 purple: "#bb4bf0",
                 erase: 'white',
             },
+=======
+            colors: [
+                {color: "#eb2727"}, //red
+                {color: "#333333"}, //black
+                {color: "#ffffff"}, //white
+                {color: "#f89c14"}, //orange
+                {color: "#f1de2d"}, //yellow
+                {color: "#82de57"}, //lightgreen
+                {color: "#51ad42"}, //darkgreen
+                {color: "#84b5fe"}, //lightblue
+                {color: "#1f32de"}, //darkblue
+                {color: "#bb4bf0"}, //purple
+            ],
+            lineWidths: [
+                {
+                    size: 'Small',
+                    width: '3'
+                },
+                {
+                    size: 'Medium',
+                    width: '7'
+                },
+                { size: 'Large',
+                width: '12'}
+            ],
+          
+>>>>>>> 252bdc1cf357d57660127631e524b97674d44d77
             currentColor: "",
             currentWidth: "",
             lineHistory: [],
@@ -94,14 +122,12 @@ class DrawingPage extends React.Component {
             <Button value = {this.eraseTriggered} onClick={(e) => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
         )
     }
-
+    
     renderDoneButton(){
         return(
             <Button onClick={() => this.handleDone()} buttonText={"Done"} />
         )
     }
-
-
     renderLineWidthPicker() {
         //loop thru object
         let widths = [];
