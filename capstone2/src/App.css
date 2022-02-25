@@ -53,6 +53,7 @@
 
 .drawingPage {
   display: flex;
+  touch-action: none;
 }
 
 .drawingPage .canvasComponent {
