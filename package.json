@@ -1,1 +1,10 @@
-{}
+{
+  "name":"capstone~",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
