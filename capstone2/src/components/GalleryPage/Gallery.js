@@ -1,6 +1,7 @@
 import React from "react";
 import GalleryImg from './GalleryImg';
 import Creature1 from '../../data/creature1.PNG';
+import ScrollContainer from 'react-indiana-drag-scroll';
 
 class GalleryPage extends React.Component {
     constructor(props) {
@@ -78,14 +79,14 @@ class GalleryPage extends React.Component {
 
     render() {
         return(
-            <div 
+            <ScrollContainer 
             className="galleryPage"
             onMouseDown={this.onMouseDown}
             onMouseMove={this.onMouseMove}
             onMouseUp={this.onMouseUp}
             >
                 {this.renderImages()}
-            </div> 
+            </ScrollContainer> 
         );
     }
 }
