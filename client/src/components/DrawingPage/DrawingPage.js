@@ -42,6 +42,7 @@ class DrawingPage extends React.Component {
             lineHistory: [],
             //true means we are drawing
             status: true,
+            finished: false,
         }
         this.removeLastLine = this.removeLastLine.bind(this);
         this.handleToolChange = this.handleToolChange.bind(this);
@@ -53,6 +54,7 @@ class DrawingPage extends React.Component {
 
     undoTriggered = false;
     doneTriggered = false;
+    dataURL = '';
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -76,13 +78,18 @@ class DrawingPage extends React.Component {
         });
     }
 
-    handleDone()
+    handleDone = (childData) => 
     {
-        //Done btn was triggered.
-        //save the image 
-        //console.log('handle done');
+        //handle imagedata in here
+        this.dataURL = childData;
+    }
+
+    initiateDone() {
         this.doneTriggered = !this.doneTriggered;
         
+        this.setState({
+            finished: this.doneTriggered,
+        })
     }
 
     handleToolChange(e) {
@@ -102,7 +109,6 @@ class DrawingPage extends React.Component {
             currentWidth: i
         });
     }
-
 
     renderColorPicker() {
         //loop thru object
@@ -129,7 +135,7 @@ class DrawingPage extends React.Component {
 
     renderDoneButton(){
         return(
-            <Button onClick={() => this.handleDone()} buttonText={"Done"} />
+            <Button onClick={() => this.initiateDone()} buttonText={"Done"} />
         )
     }
 
@@ -154,7 +160,6 @@ class DrawingPage extends React.Component {
         this.undoTriggered = !this.undoTriggered;
 
         let tempArr = this.state.lineHistory;
-        console.log(tempArr);
 
         tempArr.pop();
 
@@ -184,11 +189,25 @@ class DrawingPage extends React.Component {
                 <Switch checked={this.state.status} onChange={
                     this.handleToolChange}></Switch>
 
-                <Canvas strokeColor={this.state.currentColor} historyCallback={this.handleHistoryCallback} eraseTrigger={this.eraseTriggered} undoTrigger={this.undoTriggered} paintTrigger={this.paintTriggered} lineHistory={this.state.lineHistory} lineWidth={this.state.currentWidth} status={this.state.status}></Canvas>
+                <Canvas strokeColor={this.state.currentColor}
+                    historyCallback={this.handleHistoryCallback}
+                    eraseTrigger={this.eraseTriggered}
+                    undoTrigger={this.undoTriggered}
+                    paintTrigger={this.paintTriggered}
+
+                    doneTrigger={this.doneTriggered}
+                    doneCallback={this.handleDone}
+
+                    lineHistory={this.state.lineHistory}
+                    lineWidth={this.state.currentWidth}
+                    status={this.state.status}>
+                </Canvas>
 
                 {this.renderUndoButton()}
 
                 {this.renderDoneButton()}
+
+                <img src={`${this.dataURL}`}></img>
 
             </div>
         );

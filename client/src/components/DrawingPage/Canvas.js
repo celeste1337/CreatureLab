@@ -107,7 +107,6 @@ class Canvas extends React.Component{
         if(this.isPainting) {
             this.completeLineDataMouse(nativeEvent);
         }
-
     }
 
     onTouchEnd({nativeEvent}) {
@@ -208,7 +207,6 @@ class Canvas extends React.Component{
 
         this.ctx.stroke();
 
-
         this.ctx.restore();
     }
 
@@ -238,9 +236,9 @@ class Canvas extends React.Component{
             this.undoLastLine();
         }
 
-        if(prevProps.doneTriggered === true)
+        if(this.props.doneTrigger === true)
         {
-            this.saveImg();
+            this.saveCanvas();
         }
 
     }
@@ -266,12 +264,16 @@ class Canvas extends React.Component{
         })
     }
 
-    saveImg() {
-        let canvas = document.querySelector('canvas');
-        let link = document.createElement("a");
-        link.download = "download.png";
-        link.href = canvas.toDataURL();
-        link.click();
+    saveCanvas() {
+        //first we save the image as a base64 image
+        //then were going to use sendCanvasData to send it back
+        //to the main drawingpage
+        let dataURL = this.canvas.toDataURL();
+        this.sendCanvasData(dataURL);
+    }
+
+    sendCanvasData(image) {
+        this.props.doneCallback(image);
     }
 
     render() {
