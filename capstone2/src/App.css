@@ -41,7 +41,11 @@
 * Gallery page CSS
 */
 
-.container {
+.scrollContainer {
+  vertical: true;
+}
+
+.galleryExplore {
   background-image: "";
   background-color: #c785c6;
 
@@ -51,6 +55,7 @@
   overflow-x: scroll; */
 
   width: 10000px;
+  height: 10000px;
 }
 
 .scrolling {
