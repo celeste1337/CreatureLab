@@ -41,7 +41,7 @@
 * Gallery page CSS
 */
 
-.galleryPage {
+#galleryExplore {
   background-image: "";
   background-color: #c785c6;
 
@@ -49,4 +49,15 @@
   overflow: auto;
 
   width: 10000px;
+}
+
+.scrolling {
+  cursor: grabbing;
+  overflow: auto;
+  user-select: none;
+}
+
+.notScrolling {
+  cursor: grab;
+  overflow: auto;
 }

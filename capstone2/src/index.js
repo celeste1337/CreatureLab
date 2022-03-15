@@ -6,7 +6,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import HomePage from './components/HomePage/HomePage';
 import DrawingPage from './components/DrawingPage/DrawingPage';
-import GalleryPage from './components/GalleryPage/Gallery';
+import GalleryPage from './components/GalleryPage/GalleryPage';
 
 ReactDOM.render(
   <React.StrictMode>
