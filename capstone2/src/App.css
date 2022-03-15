@@ -41,12 +41,14 @@
 * Gallery page CSS
 */
 
-#galleryExplore {
+.container {
   background-image: "";
   background-color: #c785c6;
 
-  cursor: grab;
+  /* cursor: grab;
   overflow: auto;
+
+  overflow-x: scroll; */
 
   width: 10000px;
 }
