@@ -1,8 +1,10 @@
 {
   "name":"capstone~",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server/",
+    "nodemon": "nodemon server/server.js"
+
   },
   "dependencies": {
     "express": "^4.17.3"
