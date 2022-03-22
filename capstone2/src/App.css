@@ -43,19 +43,17 @@
 
 .scrollContainer {
   height: 100vh;
+  width: 200vw;
 }
 
 .galleryExplore {
   background-image: "";
   background-color: #c785c6;
 
-  /* cursor: grab;
-  overflow: auto;
+}
 
-  overflow-x: scroll; */
-
-  width: 10000px;
-  height: 10000px;
+.galleryImage {
+  padding: 100px;
 }
 
 .scrolling {
