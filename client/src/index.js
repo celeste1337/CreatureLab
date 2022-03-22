@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import HomePage from './components/HomePage/HomePage';
+import DrawingPage from './components/DrawingPage/DrawingPage';
+import GalleryPage from './components/GalleryPage/GalleryPage';
 
 ReactDOM.render(
   <React.StrictMode>
