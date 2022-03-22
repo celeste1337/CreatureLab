@@ -11,6 +11,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-indiana-drag-scroll": "^2.1.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-native-grid-image-viewer-with-caption": "^1.0.5",
     "react-router": "^6.2.1",
     "react-scripts": "5.0.0",

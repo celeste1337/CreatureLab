@@ -8,7 +8,7 @@ class GalleryPage extends React.Component {
     constructor(props) {
         super(props);
         this.ref = React.createRef();
-    }
+    } 
     
     
     componentDidMount() {
