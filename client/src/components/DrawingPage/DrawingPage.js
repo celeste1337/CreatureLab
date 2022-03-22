@@ -9,6 +9,7 @@ import LineWidthPicker from './LineWidthPicker';
 
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
 import Switch from '../Switch';
+import { randomNumber } from '../../utilities/util';
 
 class DrawingPage extends React.Component {
     constructor(props) {
@@ -50,11 +51,37 @@ class DrawingPage extends React.Component {
         this.indicatorStyle = {
             backgroundColor: this.state.currentColor,
         }
+
+        this.undoTriggered = false;
+        this.doneTriggered = false;
+        this.dataURL = '';
+        this.bodyPart = '';
+
+        //sets body part for dataobj and display
+        this.setBodyPart();
     }
 
-    undoTriggered = false;
-    doneTriggered = false;
-    dataURL = '';
+    setBodyPart() {
+        let part = randomNumber(3);
+        switch (part) {
+            case 0:
+                this.bodyPart = "Head";
+                break;
+            case 1: 
+                this.bodyPart = "Body";
+                break;
+            case 2:
+                this.bodyPart = "Legs";
+                break;
+            default:
+                this.bodyPart = "Head";
+                break;
+        }
+    }
+
+    setId() {
+
+    }
 
     handleHistoryCallback = (childData) => {
         this.setState({
@@ -82,6 +109,18 @@ class DrawingPage extends React.Component {
     {
         //handle imagedata in here
         this.dataURL = childData;
+        console.log(this.dataURL);
+
+        //start building save object
+        let dataObj = {
+            id: '',
+            type: this.bodyPart,
+            data: {
+                imageData: this.dataURL,
+                borderColor: ''
+            },
+            createdOn: Date.now()
+        };
     }
 
     initiateDone() {
@@ -212,11 +251,11 @@ class DrawingPage extends React.Component {
                     status={this.state.status}>
                 </Canvas>
 
+                <p>{this.bodyPart}</p>
+
                 {this.renderUndoButton()}
 
                 {this.renderDoneButton()}
-
-                <img src={`${this.dataURL}`}></img>
 
             </div>
         );

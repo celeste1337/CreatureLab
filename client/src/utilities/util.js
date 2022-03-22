@@ -1,3 +1,3 @@
 export function randomNumber(maxNum) {
-    return Math.random() * maxNum;
+    return parseInt(Math.random() * maxNum);
 }
