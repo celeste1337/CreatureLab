@@ -10,11 +10,13 @@ import LineWidthPicker from './LineWidthPicker';
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
+import { nanoid } from 'nanoid';
 
 class DrawingPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            creatureId: '',
             colors: [
                 {color: "#eb2727"}, //red
                 {color: "#333333"}, //black
@@ -59,6 +61,11 @@ class DrawingPage extends React.Component {
 
         //sets body part for dataobj and display
         this.setBodyPart();
+
+    }
+    
+    componentDidMount() {
+        this.setId();
     }
 
     setBodyPart() {
@@ -80,7 +87,10 @@ class DrawingPage extends React.Component {
     }
 
     setId() {
-
+        const id = nanoid();
+        this.setState({
+            creatureId: id
+        });
     }
 
     handleHistoryCallback = (childData) => {
@@ -110,7 +120,7 @@ class DrawingPage extends React.Component {
         //handle imagedata in here
         this.dataURL = childData;
         console.log(this.dataURL);
-
+        console.log(this.state);
         //start building save object
         let dataObj = {
             id: '',
