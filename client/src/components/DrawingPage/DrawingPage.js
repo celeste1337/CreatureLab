@@ -58,13 +58,10 @@ class DrawingPage extends React.Component {
         this.doneTriggered = false;
         this.dataURL = '';
         this.bodyPart = '';
-
-        //sets body part for dataobj and display
-        this.setBodyPart();
-
     }
-    
+
     componentDidMount() {
+        this.setBodyPart();
         this.setId();
     }
 
@@ -87,7 +84,7 @@ class DrawingPage extends React.Component {
     }
 
     setId() {
-        const id = nanoid();
+        const id = nanoid(4);
         this.setState({
             creatureId: id
         });
@@ -99,7 +96,6 @@ class DrawingPage extends React.Component {
         });
         //this is the history of line movement
         //all the moves theyve made!
-        //will be useful for playback probably hopefully lol
     }
 
     changeColor(i) {
@@ -119,11 +115,10 @@ class DrawingPage extends React.Component {
     {
         //handle imagedata in here
         this.dataURL = childData;
-        console.log(this.dataURL);
-        console.log(this.state);
+
         //start building save object
-        let dataObj = {
-            id: '',
+        const dataObj = {
+            id: this.state.creatureId,
             type: this.bodyPart,
             data: {
                 imageData: this.dataURL,
@@ -131,6 +126,8 @@ class DrawingPage extends React.Component {
             },
             createdOn: Date.now()
         };
+
+        console.log(dataObj);
     }
 
     initiateDone() {
