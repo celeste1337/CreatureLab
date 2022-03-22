@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import HomePage from './components/HomePage/HomePage';
 import DrawingPage from './components/DrawingPage/DrawingPage';
 import GalleryPage from './components/GalleryPage/Gallery';
+import CombinationPage from './components/CombinationPage/combination';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.render(
         <Route path="/" element={<HomePage/>}/>
         <Route path="/draw" element={<DrawingPage/>}/>
         <Route path="/gallery" element={<GalleryPage/>}/>
+        <Route path="/combine" element={<CombinationPage/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

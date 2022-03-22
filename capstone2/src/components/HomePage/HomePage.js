@@ -13,6 +13,7 @@ class HomePage extends React.Component {
             <div className="routes">
                 <Link to="/draw"><Button buttonText="Lets goooooo"></Button></Link>
                 <Link to="/gallery"><Button buttonText="gallery"></Button></Link>
+                <Link to="/combine"><Button buttonText="combine"></Button></Link>
             </div>
         );
     }
