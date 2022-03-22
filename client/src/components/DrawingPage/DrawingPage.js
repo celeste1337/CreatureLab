@@ -189,6 +189,15 @@ class DrawingPage extends React.Component {
                 <Switch checked={this.state.status} onChange={
                     this.handleToolChange}></Switch>
 
+                <div className="sliderDiv">
+                    <label className="switchTool" >
+                        <input type="checkbox"
+                               checked={this.state.status}
+                               onChange={this.handleToolChange} ></input>
+                        <span className="slider round"></span>
+                </label>
+                </div>
+
                 <Canvas strokeColor={this.state.currentColor}
                     historyCallback={this.handleHistoryCallback}
                     eraseTrigger={this.eraseTriggered}
