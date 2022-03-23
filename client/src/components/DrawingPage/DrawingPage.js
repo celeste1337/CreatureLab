@@ -10,11 +10,13 @@ import LineWidthPicker from './LineWidthPicker';
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
+import { nanoid } from 'nanoid';
 
 class DrawingPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            creatureId: '',
             colors: [
                 {color: "#eb2727"}, //red
                 {color: "#333333"}, //black
@@ -56,9 +58,11 @@ class DrawingPage extends React.Component {
         this.doneTriggered = false;
         this.dataURL = '';
         this.bodyPart = '';
+    }
 
-        //sets body part for dataobj and display
+    componentDidMount() {
         this.setBodyPart();
+        this.setId();
     }
 
     setBodyPart() {
@@ -80,7 +84,10 @@ class DrawingPage extends React.Component {
     }
 
     setId() {
-
+        const id = nanoid(4);
+        this.setState({
+            creatureId: id
+        });
     }
 
     handleHistoryCallback = (childData) => {
@@ -89,7 +96,6 @@ class DrawingPage extends React.Component {
         });
         //this is the history of line movement
         //all the moves theyve made!
-        //will be useful for playback probably hopefully lol
     }
 
     changeColor(i) {
@@ -109,11 +115,10 @@ class DrawingPage extends React.Component {
     {
         //handle imagedata in here
         this.dataURL = childData;
-        console.log(this.dataURL);
 
         //start building save object
-        let dataObj = {
-            id: '',
+        const dataObj = {
+            id: this.state.creatureId,
             type: this.bodyPart,
             data: {
                 imageData: this.dataURL,
@@ -121,6 +126,8 @@ class DrawingPage extends React.Component {
             },
             createdOn: Date.now()
         };
+
+        console.log(dataObj);
     }
 
     initiateDone() {

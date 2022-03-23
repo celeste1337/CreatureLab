@@ -22,7 +22,8 @@ class HomePage extends React.Component {
     render() {
         return(
             <div className="routes">
-                <Link to="/draw"><Button buttonText="Lets goooooo"></Button></Link>
+                <h2>Explore your creativity</h2>
+                <Link to="/draw">Draw</Link>
                 <Link to="/gallery"><Button buttonText="gallery"></Button></Link>
                     <p>{this.state.testcall}</p>
             </div>

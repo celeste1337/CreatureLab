@@ -1,5 +1,5 @@
 {
-  "name":"capstone~",
+  "name": "capstone~",
   "main": "server.js",
   "scripts": {
     "start": "node server/",
@@ -7,5 +7,8 @@
   },
   "dependencies": {
     "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "mongodb": "^4.4.1"
   }
 }
