@@ -9,7 +9,7 @@ class HomePage extends React.Component {
     }
 
     async componentDidMount() {
-        const res = await fetch('/getAll');
+        const res = await fetch('http://localhost:5000/getAll');
         const msg = await res.json();
         console.log(msg);
     }
