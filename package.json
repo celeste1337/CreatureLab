@@ -1,1 +1,14 @@
-{}
+{
+  "name": "capstone~",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/",
+    "nodemon": "nodemon server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "mongodb": "^4.4.1"
+  }
+}

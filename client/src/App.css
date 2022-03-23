@@ -1,0 +1,161 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/**
+* Gallery page CSS
+*/
+
+.scrollContainer {
+
+}
+
+.galleryExplore {
+  background-image: "";
+  background-color: #c785c6;
+
+  /* cursor: grab;
+  overflow: auto;
+
+  overflow-x: scroll; */
+
+  width: 10000px;
+}
+
+.drawingPage {
+  display: flex;
+  touch-action: none;
+}
+
+.drawingPage .canvasComponent {
+  height: 100vh;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, lightgrey 1px, transparent 1px),
+    linear-gradient(to bottom, lightgrey 1px, transparent 1px);
+}
+
+.drawingPage canvas {
+  border-top: 3px dotted darkgrey;
+  border-bottom: 3px dotted darkgrey;
+}
+
+
+.drawingPage .colorpickerWrapper > button {
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.scrolling {
+  cursor: grabbing;
+  overflow: auto;
+  user-select: none;
+}
+
+.notScrolling {
+  cursor: grab;
+  overflow: auto;
+}
+
+/*
+* The following CSS from
+* https://www.w3schools.com/howto/howto_css_switch.asp
+*/
+
+/* The switch - the box around the slider */
+.switchTool {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  background-color: #3E4043;
+  border-radius: 5px;
+}
+
+/* Hide default HTML checkbox */
+.switchTool input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #7F3AD7;
+  -webkit-transition: .4s;
+  transition: .4s;
+
+  border-radius: 5px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  background-image: url("./pencil-thumb.png");
+  -webkit-transition: .4s;
+  transition: .4s;
+
+  border-radius: 5px;
+}
+
+input:checked + .slider {
+  background-color: #3E4043;
+  background-image: "/eraser.png";
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
