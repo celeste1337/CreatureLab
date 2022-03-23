@@ -74,13 +74,20 @@
   height: 50px;
 }
 
-.combinePage {
-  background-color: white;
-}
-
 #combinedImage {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
+}
+.combinePage img {
+  width: 500px;
+}
+
+.combinePage {
+  text-align: center;
+}
+
+canvas {
+  display: inline;
 }

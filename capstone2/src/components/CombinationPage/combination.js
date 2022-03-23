@@ -114,7 +114,7 @@ class CombinePage extends React.Component {
             Image: loadImage
           })
             .then((b64) => {
-                    document.querySelector('img.abc').src = b64;
+                    document.querySelector('img').src = b64;
         })
         .catch(error => console.log(error))
         
