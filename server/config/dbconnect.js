@@ -1,6 +1,7 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const pw = "L5J1QMP3s6arJ6dh";
 
-const uri = "mongodb+srv://dbadmin:L5J1QMP3s6arJ6dh@cluster0.soskd.mongodb.net/CreatureLab?retryWrites=true&w=majority";
+const uri = "mongodb+srv://dbadmin:" +pw +"@cluster0.soskd.mongodb.net/CreatureLab?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
