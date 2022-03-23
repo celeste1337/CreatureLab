@@ -1,28 +1,40 @@
 //EXPRESS STUFF IN HERE :)
-
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
+const dbconnect = require('./config/dbconnect');
 
+const port = process.env.PORT || 5000;
 const app = express();
 
 //serveeeeee
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(cors());
+app.use(express.json());
+app.use(require('./routes/endpoints'));
 
-//test endpoint
-app.get('/api/test', (req, res) => {
-    let test = "hi bestie!";
-    res.json(test);
-    console.log('sent test message');
-});
-
-
-
-// Handles any requests that don't match the ones above - defaults to index.html
-app.get('*', (req,res) =>{
+app.use(express.static(path.join(__dirname, '../client/build/')));
+app.get('/', (req,res) =>{
+    //res.json("hi")
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
-const port = process.env.PORT || 5000;
-app.listen(port);
+//err handling
+app.use(function(err, _req, res, next) {
+    console.error(err.stack);
+    res.status(500).send("Something went wrong.");
+});
 
-console.log('app is listening on port '+port);
+dbconnect.connectToServer(function(err) {
+    if(err) {
+        console.error(err);
+        process.exit();
+    }
+
+   
+
+    //start server
+    app.listen(port, () => {
+        console.log('app is listening on port '+port)
+    })
+});
+
