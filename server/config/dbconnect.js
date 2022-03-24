@@ -1,28 +1,25 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+const pw = "L5J1QMP3s6arJ6dh";
 
-const connectionStr = process.env.ATLAS_URI;
+const uri = "mongodb+srv://dbadmin:" +pw +"@cluster0.soskd.mongodb.net/CreatureLab?retryWrites=true&w=majority";
 
-const client = new MongoClient(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-let dbConnection;
+async function run() {
+  try {
+    await client.connect();
 
-module.exports = {
-    //try to connect to the db
-    connectToServer: function(callback) {
-        client.connect(function(err, db) {
-            //if db connection is bad
-            if(err || !db) {
-                return callback(err);
-            }
+    const database = client.db('CreatureLab');
+    const parts = database.collection('bodyparts');
 
-            //connect to OUR db
-            dbConnection = db.db("CreatureLab");
-            console.log("successfully connected qB)");
-            return callback();
-        })
-    },
-    getDb: () => dbConnection,
+    // Query for a movie that has the title 'Back to the Future'
+    const query = { creatureId: 'Tq5g' };
+    const test = await parts.findOne(query);
+
+    console.log(test);
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
 }
-
+run().catch(console.dir);
