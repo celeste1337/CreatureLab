@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { render } from 'react-dom';
-import Canvas from '../DrawingPage/Canvas';
+//import Canvas from '../DrawingPage/Canvas';
 import mergeImages from 'merge-images';
 //import mergeImages from 'merge-base64';
 //import Creature1 from '../../data/creature2_head.png';
@@ -16,12 +16,12 @@ class ComboPage extends React.Component {
 
 
     componentDidMount() {
-        //you can change these they were just kinda big on my monitor lmao
-        
+        console.log(this.canvas);
         this.canvas.width = 300;
         this.canvas.height = 600;
         this.ctx = this.canvas.getContext('2d');
 
+        this.getRandomImages();
     }//comp did mount
 
     getRandomInteger()
@@ -102,7 +102,7 @@ class ComboPage extends React.Component {
             };*/
         });
 
-        //console.log(this.canvas.width);
+        
         //this.saveFinal();
 
         this.saveCanvas(images);
@@ -112,14 +112,16 @@ class ComboPage extends React.Component {
     saveCanvas(images) {
         
         /*
-        mergedImage will return a promise.. not 100%  how to get the data url from it
+        mergedImage will return a promise.. not 100%  how to 
+        //get the data url from it
+
         const mergedImage = mergeImages(
             [
             {src: images[0].src}, 
             {src: images[1].src},
             {src: images[2].src}
         ]).then(b64 => document.querySelector('img').src = b64);
-*/
+        */
         //console.log(mergedImage);
 
         let creatureId = '0';
@@ -141,7 +143,7 @@ class ComboPage extends React.Component {
     {
         //This code has a null error when reading toDataURL
         //let canvas = document.querySelector('canvas');
-        /*let link = document.createElement("a");
+        let link = document.createElement("a");
         link.download = `Final-Canvas-Image-${creatureId}`;
         link.href = this.canvas.toDataURL();
         link.click();
@@ -157,7 +159,7 @@ class ComboPage extends React.Component {
             createdOn: Date.now()
         };
 
-       console.log(dataObj);*/
+       console.log(dataObj);
     }
 
     render() {
@@ -167,9 +169,7 @@ class ComboPage extends React.Component {
             <canvas 
                 ref={canvas => this.canvas = canvas}
             ></canvas>
-            
-            {this.getRandomImages()}
-            
+                        
 
             </div> 
         );
