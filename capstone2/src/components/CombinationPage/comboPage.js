@@ -16,7 +16,7 @@ class ComboPage extends React.Component {
 
 
     componentDidMount() {
-        console.log(this.canvas);
+        //console.log(this.canvas);
         this.canvas.width = 300;
         this.canvas.height = 600;
         this.ctx = this.canvas.getContext('2d');
@@ -145,10 +145,10 @@ class ComboPage extends React.Component {
         //let canvas = document.querySelector('canvas');
         let link = document.createElement("a");
         link.download = `Final-Canvas-Image-${creatureId}`;
-        link.href = this.canvas.toDataURL();
-        link.click();
+        link.href = this.canvas.toDataURL();        
+        //link.click();
         
-
+        //store the info in an obj to save into the DB
         const dataObj = {
             id: creatureId,
             bType: 'fullCreature',
@@ -165,7 +165,6 @@ class ComboPage extends React.Component {
     render() {
         return(
             <div className="combinePage">
-            <img></img>
             <canvas 
                 ref={canvas => this.canvas = canvas}
             ></canvas>
