@@ -1,7 +1,7 @@
 import React from "react";
 import Button from '../Button';
 import {Link} from 'react-router-dom';
-
+import {config} from '../../utilities/constants';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -9,7 +9,7 @@ class HomePage extends React.Component {
     }
 
     async componentDidMount() {
-        const res = await fetch('http://localhost:5000/getAll');
+        const res = await fetch(config.url.API_URL + '/getAll');
         const msg = await res.json();
         console.log(msg);
     }
