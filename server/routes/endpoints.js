@@ -22,5 +22,20 @@ routes.route("/getAll").get(async function (req, res) {
         })
 })
 
+routes.route("/savePart").post(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    //console.log(req.body);
 
+    dbConnect.collection("bodyparts")
+        .insertOne({
+            creatureid: req.body.id,
+            type: req.body.type,
+            data: req.body.data,
+            createdOn: req.body.createdOn
+        });
+    
+    const cursor = dbConnect.collection('bodyparts').find({creatureId: req.body.id})
+    res.json(cursor);
+    //
+});
 module.exports = routes;
