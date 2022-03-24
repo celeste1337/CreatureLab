@@ -38,4 +38,3 @@ dbconnect.connectToServer(function(err) {
         console.log('app is listening on port '+port)
     })
 });
-
