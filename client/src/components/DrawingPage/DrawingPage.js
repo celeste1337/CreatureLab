@@ -11,6 +11,7 @@ import { ReactComponent as CurrentColorIndicator } from '../../data/assets/curre
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
+import {config} from '../../utilities/constants';
 
 class DrawingPage extends React.Component {
     constructor(props) {
@@ -127,7 +128,14 @@ class DrawingPage extends React.Component {
             createdOn: Date.now()
         };
 
-        console.log(dataObj);
+        let response = fetch(config.url.API_URL + '/savePart', {
+            method: 'POST',
+            body: JSON.stringify(dataObj),
+            headers: {
+                'Content-type':'application/json'
+            }
+        });
+        console.log(response);
     }
 
     initiateDone() {
