@@ -38,4 +38,21 @@ routes.route("/savePart").post(async function (req, res) {
     res.json(cursor);
     //
 });
+
+routes.route("/getAllCreatures").post(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    //console.log(req.body);
+
+    dbConnect.collection("completedcreatures")
+        .find({})
+        .toArray(function(err, result) {
+            if(err) {
+                res.status(400).send("error fetching the guys")
+            } else {
+                res.json(result);
+            }
+        })
+    //
+});
+
 module.exports = routes;
