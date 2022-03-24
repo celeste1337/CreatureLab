@@ -127,7 +127,14 @@ class DrawingPage extends React.Component {
             createdOn: Date.now()
         };
 
-        console.log(dataObj);
+        let response = fetch('http://localhost:5000/savePart', {
+            method: 'POST',
+            body: JSON.stringify(dataObj),
+            headers: {
+                'Content-type':'application/json'
+            }
+        });
+        console.log(response);
     }
 
     initiateDone() {
