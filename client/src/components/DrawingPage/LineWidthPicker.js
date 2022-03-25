@@ -6,7 +6,7 @@ function LineWidthPicker(props) {
     }
 
     return(
-        <Button className="lineWidthOption" onClick={props.onClick} style={buttonStyle} buttonText={props.buttonText}></Button>
+        <Button id={props.id} className={props.className} onClick={props.onClick} style={buttonStyle} buttonText={props.buttonText}></Button>
     );
 }
 

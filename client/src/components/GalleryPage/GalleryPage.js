@@ -1,7 +1,7 @@
 import React from 'react';
 import GalleryExplore from './GalleryExplore';
-//import GalleryGrid frmo './GalleryGrid';
-import ScrollContainer from 'react-indiana-drag-scroll';
+import GalleryGrid from './GalleryGrid';
+//import ScrollContainer from 'react-indiana-drag-scroll';
 
 class GalleryPage extends React.Component {
 
@@ -31,16 +31,16 @@ class GalleryPage extends React.Component {
         )
 
         // if gallery is in explore mode
-        return (
-            <ScrollContainer 
-                className="scrollContainer"
-                nativeMobileScroll={false}
-                ref={this.ref}>
-                <GalleryExplore>
+        // return (
+        //     <ScrollContainer 
+        //         className="scrollContainer"
+        //         nativeMobileScroll={false}
+        //         ref={this.ref}>
+        //         <GalleryExplore>
                 
-                </GalleryExplore>
-            </ScrollContainer>
-        )
+        //         </GalleryExplore>
+        //     </ScrollContainer>
+        // )
     }
 }
 

@@ -145,9 +145,12 @@
   border-radius: 5px;
 }
 
+.slider:after {
+  background-image: url("./eraser-thumb.PNG")
+}
+
 input:checked + .slider {
   background-color: #3E4043;
-  background-image: "/eraser.png";
 }
 
 input:focus + .slider {
@@ -159,3 +162,31 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
+
+/* Width Picker */
+.selected {
+  background-color: white;
+  color: #7F3AD7;
+  border: none;
+  border-radius: 50%;
+  height: 30px;
+}
+
+.widthButton {
+  background-color: #7F3AD7;
+  border: none;
+  color: white;
+}
+
+.linewidthpickerWrapper {
+  background-color: #7F3AD7;
+  height:min-content;
+  width: 100vw;
+  border-radius: 30px;
+
+  display: flex;
+  justify-content: space-evenly;
+
+  padding: 5px;
+}
+

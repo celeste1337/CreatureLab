@@ -1,4 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
+import Creature1 from '../../data/assets/creature1.PNG';
+import Creature2 from '../../data/assets/creature2.png';
+import Creature3 from '../../data/assets/creature3.png';
+import Creature4 from '../../data/assets/creature4.png';
+import Creature5 from '../../data/assets/creature5.png';
 
 class GalleryGrid extends React.Component {
     constructor(props) {
@@ -35,6 +40,17 @@ class GalleryGrid extends React.Component {
         }
     }
 
+    retrieveImages() {
+        // let response = fetch(config.url.API_URL + '/getAll', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-type':'application/json'
+        //     }
+        // });
+
+        
+    }
+ 
     renderGrid() {
         const gridImages = this.state.images.map(({key, src}) => {
             return <img className="galleryImage" key={key} src={src} alt={key}></img>

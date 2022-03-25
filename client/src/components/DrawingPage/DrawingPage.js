@@ -31,15 +31,20 @@ class DrawingPage extends React.Component {
             ],
             lineWidths: [
                 {
-                    size: 'Small',
-                    width: '3'
+                    size: 'S',
+                    width: '3',
+                    selected: false
                 },
                 {
-                    size: 'Medium',
-                    width: '7'
+                    size: 'M',
+                    width: '7',
+                    selected: true
                 },
-                { size: 'Large',
-                width: '12'}
+                { 
+                    size: 'L',
+                    width: '12',
+                    selected: false
+                }
             ],
             currentColor: "#333333",
             currentWidth: "7",
@@ -160,7 +165,7 @@ class DrawingPage extends React.Component {
 
     changeWidth(i) {
         this.setState({
-            currentWidth: i
+            currentWidth: i.width
         });
     }
 
@@ -202,9 +207,16 @@ class DrawingPage extends React.Component {
     renderLineWidthPicker() {
         //loop thru object
         let widths = [];
+        
         this.state.lineWidths.map((i) => {
+            let id = "widthButton";
+
+            if (i.width == this.state.currentWidth) {
+                id = "selected";
+            }
+
             widths.push(
-                <LineWidthPicker key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i.width)} buttonText={i.size}/>
+                <LineWidthPicker className={id} key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i)} buttonText={i.size}/>
             )
         });
         return widths;
@@ -230,8 +242,8 @@ class DrawingPage extends React.Component {
     render() {
         return(
             <div className="drawingPage">
+                <h2>Brush Stroke</h2>
                 <div className="linewidthpickerWrapper">
-                    <h2>Brush Stroke</h2>
                     {this.renderLineWidthPicker()}
                 </div>
 
