@@ -1,10 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
-import Creature1 from '../../data/creature1.PNG';
-import Creature2 from '../../data/creature2.PNG';
-import Creature3 from '../../data/creature3.PNG';
-import Creature4 from '../../data/creature4.PNG';
-import Creature5 from '../../data/creature5.PNG';
+import Creature1 from '../../data/test-game/creature1.PNG';
+import Creature2 from '../../data/test-game/creature2.PNG';
+import Creature3 from '../../data/test-game/creature3.PNG';
+import Creature4 from '../../data/test-game/creature4.PNG';
+import Creature5 from '../../data/test-game/creature5.PNG';
 
 class GalleryExplore extends React.Component {
     constructor(props) {
@@ -46,7 +46,7 @@ class GalleryExplore extends React.Component {
     // get the images from the database
     retrieveImages() {
         const imgArray = [
-            {key:"080910", src:"../../data/creature1.PNG"},
+            //{key:"080910", src:"../../data/creature1.PNG"},
         ];
         return imgArray;
     }

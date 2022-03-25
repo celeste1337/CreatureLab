@@ -138,7 +138,7 @@
   left: 4px;
   bottom: 4px;
   background-color: white;
-  background-image: url("./pencil-thumb.png");
+  background-image: url("./data/pencil-thumb.png");
   -webkit-transition: .4s;
   transition: .4s;
 
