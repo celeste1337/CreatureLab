@@ -67,6 +67,7 @@ class DrawingPage extends React.Component {
         this.doneTriggered = false;
         this.dataURL = '';
         this.bodyPart = '';
+        this.borderColor = '';
         
         cookies.getAll();
     }
@@ -74,6 +75,7 @@ class DrawingPage extends React.Component {
     componentDidMount() {
         this.setBodyPart();
         this.setId();
+        this.setBorderColor();
     }
 
     setBodyPart() {
@@ -92,6 +94,12 @@ class DrawingPage extends React.Component {
                 this.bodyPart = "Head";
                 break;
         }
+    }
+
+    setBorderColor() {
+        let color = this.state.colors[randomNumber(this.state.colors.length)].color;
+
+        this.borderColor = color;
     }
 
     setId() {
@@ -138,7 +146,7 @@ class DrawingPage extends React.Component {
             type: this.bodyPart,
             data: {
                 imageData: this.dataURL,
-                borderColor: ''
+                borderColor: this.borderColor
             },
             createdOn: Date.now()
         };

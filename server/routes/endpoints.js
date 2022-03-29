@@ -27,7 +27,7 @@ routes.route("/getPart/:id").get(async function (req, res) {
     
     dbConnect
         .collection("bodyparts")
-        .findOne({creatureId: req.params.id})
+        .findOne({creatureid: req.params.id})
         .then((result) => {
             res.json(result)})
         .catch(err => console.log(err))
@@ -45,7 +45,7 @@ routes.route("/savePart").post(async function (req, res) {
             createdOn: req.body.createdOn
         });
     
-    const cursor = dbConnect.collection('bodyparts').find({creatureId: req.body.id})
+    const cursor = dbConnect.collection('bodyparts').find({creatureid: req.body.id})
     res.json(cursor);
     //
 });
