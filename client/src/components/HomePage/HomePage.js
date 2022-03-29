@@ -1,7 +1,7 @@
 import React from "react";
 import Button from '../Button';
 import {Link} from 'react-router-dom';
-import {config} from '../../utilities/constants';
+import {config} from '../../utilities/constants.js';
 
 class HomePage extends React.Component {
     constructor(props) {
