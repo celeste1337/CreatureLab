@@ -226,8 +226,8 @@ class Canvas extends React.Component{
 
     componentDidMount() {
         //you can change these they were just kinda big on my monitor lmao
-        this.canvas.width = 800;
-        this.canvas.height = 500;
+        this.canvas.width = window.innerWidth * .63;
+        this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
     }
 

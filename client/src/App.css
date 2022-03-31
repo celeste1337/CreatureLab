@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap');
+
 .App {
   text-align: center;
 }
@@ -57,30 +59,7 @@
   width: 10000px;
 }
 
-.drawingPage {
-  display: flex;
-  touch-action: none;
-}
 
-.drawingPage .canvasComponent {
-  height: 100vh;
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, lightgrey 1px, transparent 1px),
-    linear-gradient(to bottom, lightgrey 1px, transparent 1px);
-}
-
-.drawingPage canvas {
-  border-top: 3px dotted darkgrey;
-  border-bottom: 3px dotted darkgrey;
-}
-
-
-.drawingPage .colorpickerWrapper > button {
-  border-radius: 50px;
-  width: 50px;
-  height: 50px;
-}
 
 .scrolling {
   cursor: grabbing;
@@ -94,18 +73,21 @@
 }
 
 /*
-* The following CSS from
+* The following CSS modified from
 * https://www.w3schools.com/howto/howto_css_switch.asp
 */
+.sliderDiv {
+  margin-top: 15px;
+}
 
 /* The switch - the box around the slider */
 .switchTool {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 150px;
+  height: 65px;
   background-color: #3E4043;
-  border-radius: 5px;
+  border-radius: 35px;
 }
 
 /* Hide default HTML checkbox */
@@ -127,26 +109,37 @@
   -webkit-transition: .4s;
   transition: .4s;
 
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
+  height: 50px;
+  width: 50px;
+  left: 8px;
+  bottom: 8px;
   background-color: white;
-  background-image: url("./pencil-thumb.png");
   -webkit-transition: .4s;
   transition: .4s;
 
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
-.slider:after {
+#eraser:before {
   background-image: url("./eraser-thumb.PNG")
+}
+
+#pencil:before {
+  background-image: url("./pencil-thumb.png")
+}
+
+#eraser-transition:before {
+  background-image: url("./transitiontoeraser.gif")
+}
+
+#pencil-transition:before {
+  background-image: url("./pencil-thumb.png")
 }
 
 input:checked + .slider {
@@ -158,35 +151,156 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(85px);
+  -ms-transform: translateX(85px);
+  transform: translateX(85px);
 }
 
 /* Width Picker */
+
+
 .selected {
   background-color: white;
   color: #7F3AD7;
-  border: none;
+  border: 5px solid #7F3AD7;
   border-radius: 50%;
-  height: 30px;
+  height: 50px;
+  width: 50px;
 }
 
 .widthButton {
   background-color: #7F3AD7;
   border: none;
   color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 40px;
 }
 
 .linewidthpickerWrapper {
   background-color: #7F3AD7;
-  height:min-content;
-  width: 100vw;
+  height: 30px;
+  width: 160px;
+  margin-bottom: 15px;
   border-radius: 30px;
 
-  display: flex;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 50 50 50;
 
   padding: 5px;
 }
 
+/* Drawing Page */
+.logo {
+  width: 180px;
+  margin-top: 20px;
+}
+
+.doneButton {
+  width: 100px;
+  height: 30px;
+  background-color: #7F3AD7;
+  border: none;
+  border-radius: 7px;
+  position: relative;
+  box-shadow: 3px 4px #56466A;
+  color: white;
+} 
+
+.doneButton:active {
+  top: 4px;
+  left: 3px;
+  background-color: #6F34D8;
+  box-shadow: none;
+}
+
+.undoButton {
+  background-color: #3E4043;
+  background-image: url('./undo-thumb.PNG');
+  background-size: contain;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.rightButton {
+  background-color: #3E4043;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+}
+
+.ideas {
+  background-color: #FBD449 !important;
+}
+
+.currentColor {
+  width: 80%;
+}
+
+.drawingPage {
+  display: flex;
+  touch-action: none;
+
+  background: linear-gradient(61.55deg, rgba(148, 75, 240, 0.04) 23.21%, rgba(113, 0, 255, 0) 88.59%),
+    linear-gradient(0deg, #FFFFFF, #FFFFFF);
+
+}
+
+.drawingPage .canvasComponent {
+  height: 100vh;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, lightgrey 1px, transparent 1px),
+    linear-gradient(to bottom, lightgrey 1px, transparent 1px);
+}
+
+.drawingPage canvas {
+  height: 100vh;
+  box-sizing: border-box;
+  border-top: 3px dotted darkgrey;
+  border-bottom: 3px dotted darkgrey;
+}
+.leftDrawing {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rightDrawing {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Color Picker */
+.colorpickerWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 130px;
+}
+
+.drawingPage .colorpickerWrapper > button {
+  border-radius: 50px;
+  border: none;
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+/* Text */
+.purpleP {
+  color: #7F3AD7;
+}
+
+h2 {
+  color: #3E4043;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+}

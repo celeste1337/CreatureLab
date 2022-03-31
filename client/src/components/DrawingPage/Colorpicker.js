@@ -3,8 +3,10 @@ import Button from "../Button";
 function Colorpicker(props) {
     const buttonStyle = {
         backgroundColor: props.value,
-        border: '1px solid darkgrey',
+        border: 'none',
         cursor: 'pointer',
+        width: '45px',
+        height: '45px'
     };
 
     return(

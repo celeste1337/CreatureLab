@@ -11,7 +11,9 @@ import { ReactComponent as CurrentColorIndicator } from '../../data/assets/curre
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
-import {config} from '../../utilities/constants';
+import { config } from '../../utilities/constants';
+//import "@lottiefiles/lottie-player";
+import logo from '../../data/assets/Logo.png';
 
 class DrawingPage extends React.Component {
     constructor(props) {
@@ -19,15 +21,16 @@ class DrawingPage extends React.Component {
         this.state = {
             creatureId: '',
             colors: [
-                {color: "#eb2727"}, //red
-                {color: "#333333"}, //black
-                {color: "#f89c14"}, //orange
-                {color: "#f1de2d"}, //yellow
-                {color: "#82de57"}, //lightgreen
-                {color: "#51ad42"}, //darkgreen
-                {color: "#84b5fe"}, //lightblue
-                {color: "#1f32de"}, //darkblue
-                {color: "#bb4bf0"}, //purple
+                { color: "#eb2727" }, //red
+                { color: "#333333" }, //black
+                { color: "#f89c14" }, //orange
+                { color: "#f1de2d" }, //yellow
+                { color: "#82de57" }, //lightgreen
+                { color: "#51ad42" }, //darkgreen
+                { color: "#84b5fe" }, //lightblue
+                { color: "#1f32de" }, //darkblue
+                { color: "#bb4bf0" }, //purple
+                { color: "#FC84CC" } //pink
             ],
             lineWidths: [
                 {
@@ -40,7 +43,7 @@ class DrawingPage extends React.Component {
                     width: '7',
                     selected: true
                 },
-                { 
+                {
                     size: 'L',
                     width: '12',
                     selected: false
@@ -50,7 +53,7 @@ class DrawingPage extends React.Component {
             currentWidth: "7",
             lineHistory: [],
             //true means we are drawing
-            status: true,
+            status: false,
             finished: false,
         }
         this.removeLastLine = this.removeLastLine.bind(this);
@@ -75,16 +78,16 @@ class DrawingPage extends React.Component {
         let part = randomNumber(3);
         switch (part) {
             case 0:
-                this.bodyPart = "Head";
+                this.bodyPart = "a Head";
                 break;
-            case 1: 
-                this.bodyPart = "Body";
+            case 1:
+                this.bodyPart = "a Body";
                 break;
             case 2:
                 this.bodyPart = "Legs";
                 break;
             default:
-                this.bodyPart = "Head";
+                this.bodyPart = "a Head";
                 break;
         }
     }
@@ -106,8 +109,9 @@ class DrawingPage extends React.Component {
 
     changeColor(i) {
         this.setState({
-            currentColor: i
+            currentColor: i.color
         });
+        
     }
 
     changeStatus(i) {
@@ -117,8 +121,7 @@ class DrawingPage extends React.Component {
         });
     }
 
-    handleDone = (childData) => 
-    {
+    handleDone = (childData) => {
         //handle imagedata in here
         this.dataURL = childData;
 
@@ -137,7 +140,7 @@ class DrawingPage extends React.Component {
             method: 'POST',
             body: JSON.stringify(dataObj),
             headers: {
-                'Content-type':'application/json'
+                'Content-type': 'application/json'
             }
         });
         console.log(response);
@@ -145,14 +148,14 @@ class DrawingPage extends React.Component {
 
     initiateDone() {
         this.doneTriggered = !this.doneTriggered;
-        
+
         this.setState({
             finished: this.doneTriggered,
         })
     }
 
-    handleToolChange(e) {
-        console.log("tool changed");
+    handleToolChange() {
+        //console.log("tool changed");
         //change the tool
         this.changeTool(!this.state.status);
     }
@@ -160,7 +163,19 @@ class DrawingPage extends React.Component {
     changeTool(i) {
         this.setState({
             status: i
-        })
+
+        });
+        const slider = document.getElementsByClassName("slider round")[0];
+        if (i) {
+            slider.id = "pencil";
+
+        } else slider.id = "eraser";
+        // window.setTimeout(() => {
+        //     if (i) {
+        //         slider.id = "eraser";
+
+        //     } else slider.id = "pencil";
+        // }, .4 * 1000);
     }
 
     changeWidth(i) {
@@ -174,27 +189,45 @@ class DrawingPage extends React.Component {
         let pickers = [];
         this.state.colors.map((i) => {
             pickers.push(
-                <Colorpicker key={i.color.toString()} value={i.color} onClick={() => this.changeColor(i.color)} />
+                <Colorpicker key={i.color.toString()} value={i.color} onClick={() => this.changeColor(i)} />
             )
         });
-           
+
         return pickers;
     }
 
     renderUndoButton() {
         return (
-            <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
+            <Button className="undoButton" onClick={() => this.removeLastLine()} />
         )
     }
     renderEraseButton() {
         return (
-            <Button value = {this.eraseTriggered} onClick={() => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
+            <Button value={this.eraseTriggered} onClick={() => this.handleEraser()} style={{ background: this.bColor, color: this.textColor }} buttonText={"Erase"} />
         )
     }
 
-    renderDoneButton(){
-        return(
-            <Button onClick={() => this.initiateDone()} buttonText={"Done"} />
+    renderDoneButton() {
+        return (
+            <Button className="doneButton" onClick={() => this.initiateDone()} buttonText={"I'm Finished!"} />
+        )
+    }
+
+    renderIdeasButton() {
+        return (
+            <Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={"!"} />
+        )
+    }
+
+    renderInstructionsButton() {
+        return (
+            <Button className="rightButton" id="instructions" onClick={() => this.initiateDone()} buttonText={"?"} />
+        )
+    }
+
+    renderClearButton() {
+        return (
+            <Button className="rightButton" id="clear" onClick={() => this.initiateDone()} buttonText={"T"} />
         )
     }
 
@@ -207,7 +240,7 @@ class DrawingPage extends React.Component {
     renderLineWidthPicker() {
         //loop thru object
         let widths = [];
-        
+
         this.state.lineWidths.map((i) => {
             let id = "widthButton";
 
@@ -216,7 +249,7 @@ class DrawingPage extends React.Component {
             }
 
             widths.push(
-                <LineWidthPicker className={id} key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i)} buttonText={i.size}/>
+                <LineWidthPicker className={id} key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i)} buttonText={i.size} />
             )
         });
         return widths;
@@ -240,28 +273,31 @@ class DrawingPage extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div className="drawingPage">
-                <h2>Brush Stroke</h2>
-                <div className="linewidthpickerWrapper">
-                    {this.renderLineWidthPicker()}
-                </div>
+                <div className='leftDrawing'>
+                    <img className='logo' src={logo} alt="CreatureLab"></img>
 
-                <div className="colorpickerWrapper">
-                    <CurrentColorIndicator fill={this.state.currentColor}/>
-                    {this.renderColorPicker()}
-                </div>
+                    <h2>Brush Stroke</h2>
 
-                <Switch checked={this.state.status} onChange={
-                    this.handleToolChange}></Switch>
+                    <div className="linewidthpickerWrapper">
+                        {this.renderLineWidthPicker()}
+                    </div>
 
-                <div className="sliderDiv">
-                    <label className="switchTool" >
-                        <input type="checkbox"
-                               checked={this.state.status}
-                               onChange={this.handleToolChange} ></input>
-                        <span className="slider round"></span>
-                </label>
+                    <CurrentColorIndicator className="currentColor" fill={this.state.currentColor} />
+                    <div className="colorpickerWrapper">
+
+                        {this.renderColorPicker()}
+                    </div>
+
+                    <div className="sliderDiv">
+                        <label className="switchTool" >
+                            <input type="checkbox"
+                                checked={!this.state.status}
+                                onChange={this.handleToolChange} ></input>
+                            <span className="slider round"></span>
+                        </label>
+                    </div>
                 </div>
 
                 <Canvas strokeColor={this.state.currentColor}
@@ -278,11 +314,35 @@ class DrawingPage extends React.Component {
                     status={this.state.status}>
                 </Canvas>
 
-                <p>{this.bodyPart}</p>
+                <div className="rightDrawing" >
+                    <div className='undoDiv'>
+                        {this.renderUndoButton()}
+                    </div>
 
-                {this.renderUndoButton()}
+                    <div className='taskDiv'>
+                        <h2>Task:</h2>
+                        <p>Please draw <p className="purpleP">{this.bodyPart}</p> for your creature!</p>
+                    </div>
 
-                {this.renderDoneButton()}
+                    <div className='ideasDiv'>
+                        <h2>Ideas</h2>
+                        {this.renderIdeasButton()}
+                    </div>
+
+                    <div className='instructionsDiv'>
+                        <h2>Instructions</h2>
+                        {this.renderInstructionsButton()}
+                    </div>
+
+                    <div className='clearDiv'>
+                        <h2>Clear All</h2>
+                        {this.renderClearButton()}
+                    </div>
+
+                    <div className='doneDiv'>
+                        {this.renderDoneButton()}
+                    </div>
+                </div>
 
             </div>
         );
