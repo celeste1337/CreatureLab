@@ -53,7 +53,7 @@ class DrawingPage extends React.Component {
             currentWidth: "7",
             lineHistory: [],
             //true means we are drawing
-            status: false,
+            status: true,
             finished: false,
         }
         this.removeLastLine = this.removeLastLine.bind(this);
@@ -295,7 +295,7 @@ class DrawingPage extends React.Component {
                             <input type="checkbox"
                                 checked={!this.state.status}
                                 onChange={this.handleToolChange} ></input>
-                            <span className="slider round"></span>
+                            <span className="slider round" id="pencil"></span>
                         </label>
                     </div>
                 </div>

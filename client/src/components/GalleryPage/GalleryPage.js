@@ -22,11 +22,11 @@ class GalleryPage extends React.Component {
     render() {
         // if gallery is in grid mode
         return (
-            <div ref={this.ref}
-            className="galleryGrid" >
+            <div ref={this.ref} className="galleryGrid" >
                 <GalleryGrid>
                     
                 </GalleryGrid>
+
             </div>
         )
 

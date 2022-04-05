@@ -107,7 +107,7 @@ class GalleryExplore extends React.Component {
         // const returnArray = imageArray.map(({key, src}) => {
         //     return <img key={key} src={src} alt={key}></img>
         // });
-
+ 
         return galleryImages;
     }
 
