@@ -7,11 +7,26 @@ const path = require('path');
 //instance of the router
 const routes = express.Router();
 
-routes.route("/getAll").get(async function (req, res) {
+routes.route("/getAllBodyParts").get(async function (req, res) {
     const dbConnect = dbo.getDb();
 
     dbConnect
         .collection("bodyparts")
+        .find({})
+        .toArray(function(err, result) {
+            if(err) {
+                res.status(400).send("error fetching the guys")
+            } else {
+                res.json(result);
+            }
+        })
+})
+
+routes.route("/getAllCreatures").get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+
+    dbConnect
+        .collection("completedcreatures")
         .find({})
         .toArray(function(err, result) {
             if(err) {
