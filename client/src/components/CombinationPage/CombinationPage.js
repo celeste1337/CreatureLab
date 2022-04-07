@@ -12,9 +12,11 @@ const mergeImages = require('merge-base64');
 
 function CombinationPage(props) {
     //were using react hooks just for fun/to learn about them here
-    const [cookies, setCookie, removeCookie] = useCookies(['creatureId'])
+    const [cookies, setCookie, removeCookie] = useCookies(['creatureId']);
     const [imageArray, updateImageArray] = useState([]);
+    const [idArray, setIdArray] = useState([]);
     const [finalImg, setFinalImg] = useState("");
+    const [borderColor, setBorderColor] = useState("");
     const firstRender = useFirstRender();
     const controller = new AbortController();
     const signal = controller.signal;
@@ -27,6 +29,7 @@ function CombinationPage(props) {
             //finalimg here is the src attribute of the final image
             mergeThem();
         }
+
         //cleanup :DDDDD
         return () => {
             controller.abort();
@@ -37,33 +40,31 @@ function CombinationPage(props) {
     
     const determineTypesLeft = (type) => ["Head", "Body", "Legs"].filter(item => type !== item);
 
-    const getType = (creatureObj) => creatureObj ? creatureObj.type : null;
+    const getType = (creatureObj) => creatureObj.type;
     
     const removeCookieOnDone = () => removeCookie('creatureId');
 
     const getImageByID = async (creatureId) => {
-        let initImg = await fetch(config.url.API_URL + '/getPart/' + creatureId, {signal});
-        let response = await initImg.json();
-        return response;
+        let img = await fetch(config.url.API_URL + '/getPart/' + creatureId, {signal});
+        return img.json();
     };
 
     const getImageRandomType = async (type) => {
         let img = await fetch(config.url.API_URL + '/getRandomPart/' + type, {signal});
-        let response = await img.json();
-        return response;
+        return img.json();
     };
 
-    const getOtherImages = async (arr) => arr.map(type => getImageRandomType(type));
-
-    const mergeThem = async () => {
+    const mergeThem = () => {
         if(imageArray && imageArray.length > 0) {
             mergeImages(imageArray, {
                 //options
                 //make it vertical
                 direction:true,
-                color: '#ffffff'
+                color: '#ffffff',
             }).then((img)=> {
-                setFinalImg(img)
+                setFinalImg(img);
+                //save to db :D
+                saveFinalImage(img);
             })
         }
     }
@@ -73,48 +74,61 @@ function CombinationPage(props) {
         console.log("fetching images :p");
 
         let tempArr = [];
+        let base64Images = [];
 
         //note the double awaits. there are a lot of promises going on
         //even tho the awaits are blocking it we kinda want them to
         //bc we need to get the first image (the one the user drew) before we get the others
         //bc we use initimg to determine other types
-        let initImg = await getImageByID(cookies.creatureId)
-        let firstImg = await initImg;
 
-        const otherTypes = determineTypesLeft(getType(firstImg));
-        const otherParts = await getOtherImages(otherTypes);
+        let initImg = await getImageByID(cookies.creatureId);
 
-        let otherImgs = await otherParts;
+        const otherTypes = determineTypesLeft(getType(initImg));
+        let otherparts = otherTypes.map(type => getImageRandomType(type))
+        Promise.all(otherparts).then(vals => {
+            tempArr = tempArr.concat(initImg, vals).flat()
 
-        Promise.all(otherImgs).then((val) => {
-            tempArr = [firstImg, ...val].flat();
-            
-            //now we have an array of all the images we use!! cool but its unordered :/
-            //we need to pass in base64 strings to merge them
-            let base64Images = [];
+            tempArr.forEach((creature) => {
+                //this kinda doesnt matter as long as it has a value -> itll rewrite itself but thats whatevs
+                setBorderColor(creature.data.borderColor);
+                setIdArray(prev=>[...prev, creature.creatureid])
 
-            //sorry this sucks i will rewrite this later, i just need the first part of the base64 taken out
-            const setMe = (input) => input.replace("data:image/png;base64,","")
-            
-            tempArr.map(imageObj => {
-                switch (getType(imageObj)) {
+                const setMe = (input) => input.replace("data:image/png;base64,","")
+
+                switch (getType(creature)) {
                     case 'Head':
-                        base64Images[0] = setMe(imageObj.data.imageData);
+                        base64Images[0] = setMe(creature.data.imageData);
                         break;
                     case 'Body':
-                        base64Images[1] = setMe(imageObj.data.imageData);
+                        base64Images[1] = setMe(creature.data.imageData);
                         break;
                     case 'Legs':
-                        base64Images[2] = setMe(imageObj.data.imageData);
+                        base64Images[2] = setMe(creature.data.imageData);
                         break;
                     default:
                         break;
                 }
-            })
-
+            });
             updateImageArray(base64Images);
         })
+        
+    }
 
+    const saveFinalImage = (finalImg) => {
+        //start building data obj to send to the db :)
+        if(idArray.length === 3) {
+            let finalBase64 = finalImg;
+            let finalCharCode = `${idArray[0]}-${idArray[1]}-${idArray[2]}`;
+            let dataObj = {
+                creatureid: finalCharCode,
+                creatures: idArray,
+                data: {
+                    imageData: finalBase64,
+                    borderColor: borderColor
+                }
+            }
+            console.log(dataObj);
+        }
     }
 
     const checkCookies = (obj) => Object.keys(obj).length !== 0; //if cookie return true

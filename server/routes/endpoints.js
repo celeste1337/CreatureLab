@@ -7,7 +7,7 @@ const path = require('path');
 //instance of the router
 const routes = express.Router();
 
-routes.route("/getAllBodyParts").get(async function (req, res) {
+routes.route("/getAllBodyParts").get(function (req, res) {
     const dbConnect = dbo.getDb();
 
     dbConnect
@@ -22,7 +22,7 @@ routes.route("/getAllBodyParts").get(async function (req, res) {
         })
 })
 
-routes.route("/getAllCreatures").get(async function (req, res) {
+routes.route("/getAllCreatures").get(function (req, res) {
     const dbConnect = dbo.getDb();
 
     dbConnect
@@ -37,19 +37,20 @@ routes.route("/getAllCreatures").get(async function (req, res) {
         })
 })
 
-routes.route("/getPart/:id").get(async function (req, res) {
+routes.get("/getPart/:id", (req, res, next) => {
     const dbConnect = dbo.getDb();
     
     dbConnect
         .collection("bodyparts")
         .findOne({creatureid: req.params.id})
         .then((result) => {
-            res.json(result)})
-        .catch(err => console.log(err))
-    
+            res.json(result);
+            next();
+        })
+        .catch(err => console.log(err));
 })
 
-routes.route("/savePart").post(async function (req, res) {
+routes.route("/savePart").post(function (req, res) {
     const dbConnect = dbo.getDb();
 
     dbConnect.collection("bodyparts")
@@ -65,22 +66,29 @@ routes.route("/savePart").post(async function (req, res) {
     //
 });
 
-routes.route("/getAllCreatures").get(async function (req, res) {
+routes.route("/saveComplete").post(function (req, res) {
     const dbConnect = dbo.getDb();
 
     dbConnect.collection("completedcreatures")
-        .find({})
-        .toArray(function(err, result) {
-            if(err) {
-                res.status(400).send("error fetching the guys")
-            } else {
-                res.json(result);
-            }
-        })
+        .insertOne({
+            creatureid: req.body.id,
+            data: req.body.data,
+            createdOn: req.body.createdOn
+        });
+    
+    const cursor = dbConnect.collection('completedcreatures').find({creatureid: req.body.id})
+    res.json(cursor);
     //
 });
 
-routes.route("/getRandomPart/:bodyPart").get(async function (req, res) {
+routes.route("/search").post((req, res) => {
+    const dbConnect = dbo.getDb();
+
+
+    //
+});
+
+routes.route("/getRandomPart/:bodyPart").get(function (req, res) {
     const dbConnect = dbo.getDb();
 
     dbConnect.collection("bodyparts")

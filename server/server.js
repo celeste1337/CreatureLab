@@ -30,9 +30,6 @@ dbconnect.connectToServer(function(err) {
         console.error(err);
         process.exit();
     }
-
-   
-
     //start server
     app.listen(port, () => {
         console.log('app is listening on port '+port)

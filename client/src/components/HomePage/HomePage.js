@@ -19,7 +19,8 @@ class HomePage extends React.Component {
     componentDidMount() {
         const {cookies} = this.props;
         if(cookies.get('creatureId')) {
-            alert('somethings fucked up')
+            //you have a cookie already set
+            cookies.remove('creatureId');
         }
     }
 
