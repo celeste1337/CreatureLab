@@ -8,6 +8,7 @@ const path = require('path');
 const routes = express.Router();
 
 routes.route("/getAll").get(async function (req, res) {
+    console.log("get called")
     const dbConnect = dbo.getDb();
 
     dbConnect
@@ -18,6 +19,7 @@ routes.route("/getAll").get(async function (req, res) {
                 res.status(400).send("error fetching the guys")
             } else {
                 res.json(result);
+                console.log("result sent")
             }
         })
 })

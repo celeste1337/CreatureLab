@@ -40,6 +40,10 @@ class GalleryGrid extends React.Component {
         return arr;
     }
 
+    componentDidMount() {
+        this.retrieveImages();
+    }
+
     // renderGrid(images) {
     //     const gridImages = this.retrieveImages();
 
@@ -51,7 +55,7 @@ class GalleryGrid extends React.Component {
     // }
 
     render() {
-        this.retrieveImages();
+        //this.retrieveImages();
         return (
             <div ref={this.ref} className="galleryGrid">
                 {this.isLoaded ? this.renderstuff(this.state.imageResponse) : []}
