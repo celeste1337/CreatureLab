@@ -66,12 +66,13 @@ routes.route("/savePart").post(function (req, res) {
     //
 });
 
-routes.route("/saveComplete").post(function (req, res) {
+routes.route("/saveCreature").post(function (req, res) {
     const dbConnect = dbo.getDb();
 
     dbConnect.collection("completedcreatures")
         .insertOne({
-            creatureid: req.body.id,
+            creatureid: req.body.creatureid,
+            creatures: req.body.creatures,
             data: req.body.data,
             createdOn: req.body.createdOn
         });

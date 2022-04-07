@@ -114,7 +114,7 @@ function CombinationPage(props) {
         
     }
 
-    const saveFinalImage = (finalImg) => {
+    const saveFinalImage = () => {
         //start building data obj to send to the db :)
         if(idArray.length === 3) {
             let finalBase64 = finalImg;
@@ -125,9 +125,17 @@ function CombinationPage(props) {
                 data: {
                     imageData: finalBase64,
                     borderColor: borderColor
-                }
+                },
+                createdOn: Date.now(),
             }
-            console.log(dataObj);
+            let response = fetch(config.url.API_URL + '/saveCreature', {
+                method: 'POST',
+                body: JSON.stringify(dataObj),
+                headers: {
+                    'Content-type':'application/json'
+                }
+            });
+            console.log(response);
         }
     }
 
