@@ -1,17 +1,27 @@
 import React from "react";
 import Button from '../Button';
 import {Link} from 'react-router-dom';
-import {config} from '../../utilities/constants';
+import {config} from '../../utilities/constants.js';
+import {instanceOf} from 'prop-types';
+import { Cookies, withCookies } from 'react-cookie';
 
 class HomePage extends React.Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     constructor(props) {
         super(props);
+        const {cookies} = props;
+        cookies.getAll();
     }
 
-    async componentDidMount() {
-        const res = await fetch(config.url.API_URL + '/getAll');
-        const msg = await res.json();
-        console.log(msg);
+    componentDidMount() {
+        const {cookies} = this.props;
+        if(cookies.get('creatureId')) {
+            //you have a cookie already set
+            cookies.remove('creatureId');
+        }
     }
 
     render() {
@@ -25,4 +35,4 @@ class HomePage extends React.Component {
     }
 }
 
-export default HomePage;
+export default withCookies(HomePage);

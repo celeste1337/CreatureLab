@@ -2,6 +2,7 @@
 //todo lol
 
 import React from 'react';
+import {instanceOf} from 'prop-types';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
@@ -14,10 +15,18 @@ import { nanoid } from 'nanoid';
 import { config } from '../../utilities/constants';
 //import "@lottiefiles/lottie-player";
 import logo from '../../data/assets/Logo.png';
+import {config} from '../../utilities/constants.js';
+import { Cookies, withCookies } from 'react-cookie/lib';
 
 class DrawingPage extends React.Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     constructor(props) {
         super(props);
+        const {cookies} = props;
+        
         this.state = {
             creatureId: '',
             colors: [
@@ -67,11 +76,15 @@ class DrawingPage extends React.Component {
         this.doneTriggered = false;
         this.dataURL = '';
         this.bodyPart = '';
+        this.borderColor = '';
+        
+        cookies.getAll();
     }
 
     componentDidMount() {
         this.setBodyPart();
         this.setId();
+        this.setBorderColor();
     }
 
     setBodyPart() {
@@ -92,11 +105,22 @@ class DrawingPage extends React.Component {
         }
     }
 
+    setBorderColor() {
+        let color = this.state.colors[randomNumber(this.state.colors.length)].color;
+
+        this.borderColor = color;
+    }
+
     setId() {
-        const id = nanoid(4);
+        const {cookies} = this.props;
+        //make an id - 5 for a little bit more security
+        const id = nanoid(5);
         this.setState({
             creatureId: id
         });
+        //set the cookie - we use this to reference in the combination pg
+        
+        cookies.set('creatureId', id, {path: '/'});
     }
 
     handleHistoryCallback = (childData) => {
@@ -131,7 +155,7 @@ class DrawingPage extends React.Component {
             type: this.bodyPart,
             data: {
                 imageData: this.dataURL,
-                borderColor: ''
+                borderColor: this.borderColor
             },
             createdOn: Date.now()
         };
@@ -350,4 +374,4 @@ class DrawingPage extends React.Component {
 
 }
 
-export default DrawingPage;
+export default withCookies(DrawingPage);
