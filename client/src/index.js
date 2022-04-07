@@ -3,14 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import HomePage from './components/HomePage/HomePage';
-import DrawingPage from './components/DrawingPage/DrawingPage';
-import GalleryPage from './components/GalleryPage/GalleryPage';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
-  <React.StrictMode>
+    <CookiesProvider>
       <App/>
-  </React.StrictMode>,
+      </CookiesProvider>,
   document.getElementById('root')
 );
 
