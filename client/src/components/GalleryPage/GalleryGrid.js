@@ -15,7 +15,7 @@ class GalleryGrid extends React.Component {
 
     async retrieveImages() {
 
-        const response = await fetch(config.url.API_URL + '/getAll').catch((err) => console.log(err));
+        const response = await fetch(config.url.API_URL + '/getAllCreatures').catch((err) => console.log(err));
         //debugger;
         console.log(response)
 
@@ -40,9 +40,9 @@ class GalleryGrid extends React.Component {
         return arr;
     }
 
-    componentDidMount() {
-        this.retrieveImages();
-    }
+    // componentDidMount() {
+    //     this.retrieveImages();
+    // }
 
     // renderGrid(images) {
     //     const gridImages = this.retrieveImages();
@@ -55,7 +55,7 @@ class GalleryGrid extends React.Component {
     // }
 
     render() {
-        //this.retrieveImages();
+        this.retrieveImages();
         return (
             <div ref={this.ref} className="galleryGrid">
                 {this.isLoaded ? this.renderstuff(this.state.imageResponse) : []}

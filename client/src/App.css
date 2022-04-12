@@ -34,6 +34,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -42,10 +43,6 @@
 /**
 * Gallery page CSS
 */
-
-.scrollContainer {
-  vertical: true;
-}
 
 .galleryExplore {
   background-image: "";
@@ -142,15 +139,15 @@
   background-image: url("./pencil-thumb.png")
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #3E4043;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(85px);
   -ms-transform: translateX(85px);
   transform: translateX(85px);
@@ -165,16 +162,19 @@ input:checked + .slider:before {
   border: 5px solid #7F3AD7;
   border-radius: 50%;
   height: 50px;
-  width: 50px;
+  width: 50px;  
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .widthButton {
   background-color: #7F3AD7;
+  border-radius: 35px;
   border: none;
   color: white;
   padding-left: 5px;
   padding-right: 5px;
-  width: 40px;
+  width: 50px;
 }
 
 .linewidthpickerWrapper {
@@ -184,10 +184,14 @@ input:checked + .slider:before {
   margin-bottom: 15px;
   border-radius: 30px;
 
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
   grid-template-columns: 50 50 50;
 
-  padding: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 /* Drawing Page */
@@ -197,21 +201,26 @@ input:checked + .slider:before {
 }
 
 .doneButton {
-  width: 100px;
-  height: 30px;
+  width: 150px;
+  height: 60px;
   background-color: #7F3AD7;
   border: none;
   border-radius: 7px;
   position: relative;
   box-shadow: 3px 4px #56466A;
   color: white;
-} 
+  margin-top: 15px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+
+}
 
 .doneButton:active {
   top: 4px;
   left: 3px;
   background-color: #6F34D8;
   box-shadow: none;
+  margin-top: 15px;
 }
 
 .undoButton {
@@ -253,7 +262,7 @@ input:checked + .slider:before {
 .drawingPage .canvasComponent {
   height: 100vh;
   background-size: 40px 40px;
-  background-image: 
+  background-image:
     linear-gradient(to right, lightgrey 1px, transparent 1px),
     linear-gradient(to bottom, lightgrey 1px, transparent 1px);
 }
@@ -264,6 +273,7 @@ input:checked + .slider:before {
   border-top: 3px dotted darkgrey;
   border-bottom: 3px dotted darkgrey;
 }
+
 .leftDrawing {
   width: 400px;
   display: flex;
@@ -278,6 +288,38 @@ input:checked + .slider:before {
   align-items: center;
 }
 
+.buttonDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.taskDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin-bottom: -10px;
+}
+
+.instructionsDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ideasDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clearDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Color Picker */
 .colorpickerWrapper {
   display: flex;
@@ -285,7 +327,7 @@ input:checked + .slider:before {
   width: 130px;
 }
 
-.drawingPage .colorpickerWrapper > button {
+.drawingPage .colorpickerWrapper>button {
   border-radius: 50px;
   border: none;
   width: 50px;
@@ -303,6 +345,7 @@ h2 {
   color: #3E4043;
   font-family: 'Outfit', sans-serif;
   font-weight: 500;
+  margin-bottom: 5px;
 }
 
 
@@ -311,6 +354,15 @@ h2 {
  * GALLERY PAGE
  */
 
- .galleryImg {
-   width: 300px;
- }
+.galleryImg {
+  width: 150px;
+  border: 20px solid lightgrey;
+  border-radius: 20px;
+  
+  margin: 10px;
+}
+
+.galleryGrid {
+  display: flex;
+  justify-content: space-between;
+}

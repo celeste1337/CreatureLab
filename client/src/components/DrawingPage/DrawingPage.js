@@ -2,12 +2,12 @@
 //todo lol
 
 import React from 'react';
-import {instanceOf} from 'prop-types';
+import { instanceOf } from 'prop-types';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
 import LineWidthPicker from './LineWidthPicker';
-
+import Popup from 'reactjs-popup';
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
@@ -15,7 +15,6 @@ import { nanoid } from 'nanoid';
 import { config } from '../../utilities/constants';
 //import "@lottiefiles/lottie-player";
 import logo from '../../data/assets/Logo.png';
-import {config} from '../../utilities/constants.js';
 import { Cookies, withCookies } from 'react-cookie/lib';
 
 class DrawingPage extends React.Component {
@@ -25,8 +24,8 @@ class DrawingPage extends React.Component {
 
     constructor(props) {
         super(props);
-        const {cookies} = props;
-        
+        const { cookies } = props;
+
         this.state = {
             creatureId: '',
             colors: [
@@ -77,7 +76,7 @@ class DrawingPage extends React.Component {
         this.dataURL = '';
         this.bodyPart = '';
         this.borderColor = '';
-        
+
         cookies.getAll();
     }
 
@@ -91,16 +90,16 @@ class DrawingPage extends React.Component {
         let part = randomNumber(3);
         switch (part) {
             case 0:
-                this.bodyPart = "a Head";
+                this.bodyPart = "head";
                 break;
             case 1:
-                this.bodyPart = "a Body";
+                this.bodyPart = "body";
                 break;
             case 2:
-                this.bodyPart = "Legs";
+                this.bodyPart = "legs";
                 break;
             default:
-                this.bodyPart = "a Head";
+                this.bodyPart = "head";
                 break;
         }
     }
@@ -112,15 +111,15 @@ class DrawingPage extends React.Component {
     }
 
     setId() {
-        const {cookies} = this.props;
+        const { cookies } = this.props;
         //make an id - 5 for a little bit more security
         const id = nanoid(5);
         this.setState({
             creatureId: id
         });
         //set the cookie - we use this to reference in the combination pg
-        
-        cookies.set('creatureId', id, {path: '/'});
+
+        cookies.set('creatureId', id, { path: '/' });
     }
 
     handleHistoryCallback = (childData) => {
@@ -135,7 +134,7 @@ class DrawingPage extends React.Component {
         this.setState({
             currentColor: i.color
         });
-        
+
     }
 
     changeStatus(i) {
@@ -220,6 +219,11 @@ class DrawingPage extends React.Component {
         return pickers;
     }
 
+    renderPopup() {
+        console.log("instructions");
+        return (Popup());
+    }
+
     renderUndoButton() {
         return (
             <Button className="undoButton" onClick={() => this.removeLastLine()} />
@@ -245,7 +249,13 @@ class DrawingPage extends React.Component {
 
     renderInstructionsButton() {
         return (
-            <Button className="rightButton" id="instructions" onClick={() => this.initiateDone()} buttonText={"?"} />
+            <div>
+                <Popup trigger={<Button className="rightButton" id="instructions" buttonText={"?"} />} position="top center">
+                    <div>Popup content here !!</div>
+                </Popup>
+
+
+            </div>
         )
     }
 
@@ -345,22 +355,24 @@ class DrawingPage extends React.Component {
 
                     <div className='taskDiv'>
                         <h2>Task:</h2>
-                        <p>Please draw <p className="purpleP">{this.bodyPart}</p> for your creature!</p>
+                        <p align="center">Draw the <span className="purpleP">{this.bodyPart}</span> for your creature!</p>
                     </div>
 
-                    <div className='ideasDiv'>
-                        <h2>Ideas</h2>
-                        {this.renderIdeasButton()}
-                    </div>
+                    <div className='buttonDiv'>
+                        <div className='ideasDiv'>
+                            <h2>Ideas</h2>
+                            {this.renderIdeasButton()}
+                        </div>
 
-                    <div className='instructionsDiv'>
-                        <h2>Instructions</h2>
-                        {this.renderInstructionsButton()}
-                    </div>
+                        <div className='instructionsDiv'>
+                            <h2>Instructions</h2>
+                            {this.renderInstructionsButton()}
+                        </div>
 
-                    <div className='clearDiv'>
-                        <h2>Clear All</h2>
-                        {this.renderClearButton()}
+                        <div className='clearDiv'>
+                            <h2>Clear All</h2>
+                            {this.renderClearButton()}
+                        </div>
                     </div>
 
                     <div className='doneDiv'>
