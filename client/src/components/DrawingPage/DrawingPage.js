@@ -6,6 +6,7 @@ import { instanceOf } from 'prop-types';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
+import DoneButton from './DoneButton';
 import LineWidthPicker from './LineWidthPicker';
 import Popup from 'reactjs-popup';
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
@@ -16,6 +17,7 @@ import { config } from '../../utilities/constants';
 //import "@lottiefiles/lottie-player";
 import logo from '../../data/assets/Logo.png';
 import { Cookies, withCookies } from 'react-cookie/lib';
+import {Link, unstable_HistoryRouter} from 'react-router-dom';
 
 class DrawingPage extends React.Component {
     static propTypes = {
@@ -131,10 +133,13 @@ class DrawingPage extends React.Component {
     }
 
     changeColor(i) {
+        console.log(i);
+
         this.setState({
             currentColor: i.color
         });
 
+        i.className = "selectedColor";
     }
 
     changeStatus(i) {
@@ -166,15 +171,22 @@ class DrawingPage extends React.Component {
                 'Content-type': 'application/json'
             }
         });
-        console.log(response);
+        
+        //response.then(() => {navigate("/combine")})
+        response.then(() => {return <Redirect to="/combine"></Redirect>})
+
+        
     }
 
     initiateDone() {
+        
         this.doneTriggered = !this.doneTriggered;
 
         this.setState({
             finished: this.doneTriggered,
-        })
+        });
+
+        //console.log("done finished");
     }
 
     handleToolChange() {
@@ -237,7 +249,8 @@ class DrawingPage extends React.Component {
 
     renderDoneButton() {
         return (
-            <Button className="doneButton" onClick={() => this.initiateDone()} buttonText={"I'm Finished!"} />
+            <Button className="doneButton" onClick={() => this.initiateDone()} buttonText="I'm Finished!"></Button>
+            //<DoneButton onClick={() => this.initiateDone}></DoneButton>
         )
     }
 
@@ -253,8 +266,6 @@ class DrawingPage extends React.Component {
                 <Popup trigger={<Button className="rightButton" id="instructions" buttonText={"?"} />} position="top center">
                     <div>Popup content here !!</div>
                 </Popup>
-
-
             </div>
         )
     }

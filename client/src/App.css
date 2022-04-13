@@ -336,6 +336,16 @@ input:checked+.slider:before {
   margin-top: 10px;
 }
 
+.selectedColor {
+  border-radius: 50px;
+  border-style: double;
+  border: 2px solid white;
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
 /* Text */
 .purpleP {
   color: #7F3AD7;

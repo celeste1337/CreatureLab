@@ -39,6 +39,7 @@ function CombinationPage(props) {
     [imageArray])
     
     const determineTypesLeft = (type) => ["Head", "Body", "Legs"].filter(item => type !== item);
+    
 
     const getType = (creatureObj) => creatureObj.type;
     
@@ -94,6 +95,8 @@ function CombinationPage(props) {
                 setIdArray(prev=>[...prev, creature.creatureid])
 
                 const setMe = (input) => input.replace("data:image/png;base64,","")
+
+                console.log(creature);
 
                 switch (getType(creature)) {
                     case 'Head':
