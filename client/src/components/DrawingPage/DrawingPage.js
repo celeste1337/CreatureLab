@@ -13,7 +13,7 @@ import { ReactComponent as CurrentColorIndicator } from '../../data/assets/curre
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
-import { config } from '../../utilities/constants';
+import { config } from '../../utilities/constants'; 
 //import "@lottiefiles/lottie-player";
 import logo from '../../data/assets/Logo.png';
 import { Cookies, withCookies } from 'react-cookie/lib';
@@ -31,14 +31,14 @@ class DrawingPage extends React.Component {
         this.state = {
             creatureId: '',
             colors: [
-                { color: "#eb2727" }, //red
                 { color: "#333333" }, //black
+                { color: "#eb2727" }, //red
                 { color: "#f89c14" }, //orange
                 { color: "#f1de2d" }, //yellow
-                { color: "#82de57" }, //lightgreen
                 { color: "#51ad42" }, //darkgreen
-                { color: "#84b5fe" }, //lightblue
+                { color: "#82de57" }, //lightgreen
                 { color: "#1f32de" }, //darkblue
+                { color: "#84b5fe" }, //lightblue
                 { color: "#bb4bf0" }, //purple
                 { color: "#FC84CC" } //pink
             ],
@@ -133,13 +133,11 @@ class DrawingPage extends React.Component {
     }
 
     changeColor(i) {
-        console.log(i);
+        //console.log(i);
 
         this.setState({
             currentColor: i.color
         });
-
-        i.className = "selectedColor";
     }
 
     changeStatus(i) {
@@ -173,7 +171,7 @@ class DrawingPage extends React.Component {
         });
         
         //response.then(() => {navigate("/combine")})
-        response.then(() => {return <Redirect to="/combine"></Redirect>})
+        //response.then(() => {return <Redirect to="/combine"></Redirect>})
 
         
     }
@@ -217,6 +215,8 @@ class DrawingPage extends React.Component {
         this.setState({
             currentWidth: i.width
         });
+
+        //document.querySelector('.currentWidth').style.backgroundImage
     }
 
     renderColorPicker() {
@@ -224,7 +224,7 @@ class DrawingPage extends React.Component {
         let pickers = [];
         this.state.colors.map((i) => {
             pickers.push(
-                <Colorpicker key={i.color.toString()} value={i.color} onClick={() => this.changeColor(i)} />
+                <Colorpicker className={i.color} key={i.color.toString()} value={i.color} onClick={() => this.changeColor(i)} />
             )
         });
 
@@ -323,10 +323,13 @@ class DrawingPage extends React.Component {
                 <div className='leftDrawing'>
                     <img className='logo' src={logo} alt="CreatureLab"></img>
 
-                    <h2>Brush Stroke</h2>
+                    <div className="lineWidthDiv">
+                    <h3>Brush Stroke</h3>
 
                     <div className="linewidthpickerWrapper">
                         {this.renderLineWidthPicker()}
+                    </div>
+
                     </div>
 
                     <CurrentColorIndicator className="currentColor" fill={this.state.currentColor} />

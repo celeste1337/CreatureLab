@@ -1,4 +1,4 @@
-import Button from "../Button";
+import RadioButton from "../RadioButton";
 
 function Colorpicker(props) {
     const buttonStyle = {
@@ -10,7 +10,7 @@ function Colorpicker(props) {
     };
 
     return(
-        <Button className="colorOption" onClick={props.onClick} style={buttonStyle}></Button>
+        <RadioButton className="colorOption" name="colorOption" onClick={props.onClick} style={buttonStyle}></RadioButton>
     );
 }
 

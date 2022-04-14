@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap');
-
+ 
 .App {
   text-align: center;
 }
@@ -201,13 +201,13 @@ input:checked+.slider:before {
 }
 
 .doneButton {
-  width: 150px;
-  height: 60px;
+  width: 13.5vw;
+  height: 7.9vh;
   background-color: #7F3AD7;
   border: none;
   border-radius: 7px;
   position: relative;
-  box-shadow: 3px 4px #56466A;
+  box-shadow: .62vw .83vh #56466A;
   color: white;
   margin-top: 15px;
   font-family: 'Outfit', sans-serif;
@@ -216,8 +216,8 @@ input:checked+.slider:before {
 }
 
 .doneButton:active {
-  top: 4px;
-  left: 3px;
+  top: .83vh;
+  left: .62vw;
   background-color: #6F34D8;
   box-shadow: none;
   margin-top: 15px;
@@ -236,8 +236,8 @@ input:checked+.slider:before {
 
 .rightButton {
   background-color: #3E4043;
-  width: 45px;
-  height: 45px;
+  width: 4.791vw;
+  height: 8.518vh;
   border: none;
   border-radius: 50%;
 }
@@ -282,10 +282,11 @@ input:checked+.slider:before {
 }
 
 .rightDrawing {
-  width: 300px;
+  width: 17.7%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 }
 
 .buttonDiv {
@@ -327,19 +328,25 @@ input:checked+.slider:before {
   width: 130px;
 }
 
-.drawingPage .colorpickerWrapper>button {
+.drawingPage .colorpickerWrapper>input {
   border-radius: 50px;
   border: none;
   width: 50px;
   height: 50px;
   margin-left: 10px;
   margin-top: 10px;
+
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.selectedColor {
+
+
+.drawingPage .colorpickerWrapper>input:checked {
   border-radius: 50px;
-  border-style: double;
-  border: 2px solid white;
+  box-sizing: border-box;
+  border-style: double !important;
+  border: 2px solid white !important;
   width: 50px;
   height: 50px;
   margin-left: 10px;
@@ -358,7 +365,12 @@ h2 {
   margin-bottom: 5px;
 }
 
-
+h3 {
+  color: #3E4043;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
 
 /* 
  * GALLERY PAGE
