@@ -209,7 +209,7 @@ input:checked+.slider:before {
   position: relative;
   box-shadow: .62vw .83vh #56466A;
   color: white;
-  margin-top: 15px;
+  
   font-family: 'Outfit', sans-serif;
   font-weight: 500;
 
@@ -220,7 +220,7 @@ input:checked+.slider:before {
   left: .62vw;
   background-color: #6F34D8;
   box-shadow: none;
-  margin-top: 15px;
+  
 }
 
 .undoButton {
@@ -236,10 +236,11 @@ input:checked+.slider:before {
 
 .rightButton {
   background-color: #3E4043;
-  width: 4.791vw;
-  height: 8.518vh;
+  width: 45px;
+  height: 45px;
   border: none;
   border-radius: 50%;
+  
 }
 
 .ideas {
@@ -247,7 +248,7 @@ input:checked+.slider:before {
 }
 
 .currentColor {
-  width: 80%;
+  
 }
 
 .drawingPage {
@@ -286,7 +287,7 @@ input:checked+.slider:before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content:space-around;
 }
 
 .buttonDiv {
@@ -300,7 +301,7 @@ input:checked+.slider:before {
   flex-direction: column;
   align-items: center;
   width: 80%;
-  margin-bottom: -10px;
+  margin-bottom: -40px;
 }
 
 .instructionsDiv {

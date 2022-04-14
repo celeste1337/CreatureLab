@@ -10,14 +10,20 @@ import DoneButton from './DoneButton';
 import LineWidthPicker from './LineWidthPicker';
 import Popup from 'reactjs-popup';
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
+import { ReactComponent as BigSquiggle } from '../../data/assets/BigSquiggle.svg';
+import { ReactComponent as MediumSquiggle } from '../../data/assets/MediumSquiggle.svg';
+import { ReactComponent as SmallSquiggle } from '../../data/assets/SmallSquiggle.svg';
+import { ReactComponent as Bulb } from '../../data/assets/LightBulb.svg';
+import { ReactComponent as Trash } from '../../data/assets/Trash.svg';
+import { ReactComponent as QuestionMark } from '../../data/assets/Question.svg';
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
-import { config } from '../../utilities/constants'; 
+import { config } from '../../utilities/constants';
 //import "@lottiefiles/lottie-player";
 import logo from '../../data/assets/Logo.png';
 import { Cookies, withCookies } from 'react-cookie/lib';
-import {Link, unstable_HistoryRouter} from 'react-router-dom';
+import { Link, unstable_HistoryRouter } from 'react-router-dom';
 
 class DrawingPage extends React.Component {
     static propTypes = {
@@ -169,15 +175,15 @@ class DrawingPage extends React.Component {
                 'Content-type': 'application/json'
             }
         });
-        
+
         //response.then(() => {navigate("/combine")})
         //response.then(() => {return <Redirect to="/combine"></Redirect>})
 
-        
+
     }
 
     initiateDone() {
-        
+
         this.doneTriggered = !this.doneTriggered;
 
         this.setState({
@@ -256,14 +262,14 @@ class DrawingPage extends React.Component {
 
     renderIdeasButton() {
         return (
-            <Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={"!"} />
+            <Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={<Bulb></Bulb>} />
         )
     }
 
     renderInstructionsButton() {
         return (
             <div>
-                <Popup trigger={<Button className="rightButton" id="instructions" buttonText={"?"} />} position="top center">
+                <Popup trigger={<Button className="rightButton" id="instructions" buttonText={<QuestionMark></QuestionMark>} />} position="top center">
                     <div>Popup content here !!</div>
                 </Popup>
             </div>
@@ -272,7 +278,7 @@ class DrawingPage extends React.Component {
 
     renderClearButton() {
         return (
-            <Button className="rightButton" id="clear" onClick={() => this.initiateDone()} buttonText={"T"} />
+            <Button className="rightButton" id="clear" onClick={() => this.initiateDone()} buttonText={<Trash stroke="white"></Trash>} />
         )
     }
 
@@ -324,11 +330,11 @@ class DrawingPage extends React.Component {
                     <img className='logo' src={logo} alt="CreatureLab"></img>
 
                     <div className="lineWidthDiv">
-                    <h3>Brush Stroke</h3>
+                        <h3>Brush Stroke</h3>
 
-                    <div className="linewidthpickerWrapper">
-                        {this.renderLineWidthPicker()}
-                    </div>
+                        <div className="linewidthpickerWrapper">
+                            {this.renderLineWidthPicker()}
+                        </div>
 
                     </div>
 
