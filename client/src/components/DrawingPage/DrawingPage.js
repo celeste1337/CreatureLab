@@ -2,18 +2,28 @@
 //todo lol
 
 import React from 'react';
-import {instanceOf} from 'prop-types';
+import { instanceOf } from 'prop-types';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
+import DoneButton from './DoneButton';
 import LineWidthPicker from './LineWidthPicker';
-
+import Popup from 'reactjs-popup';
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
+import { ReactComponent as BigSquiggle } from '../../data/assets/BigSquiggle.svg';
+import { ReactComponent as MediumSquiggle } from '../../data/assets/MediumSquiggle.svg';
+import { ReactComponent as SmallSquiggle } from '../../data/assets/SmallSquiggle.svg';
+import { ReactComponent as Bulb } from '../../data/assets/LightBulb.svg';
+import { ReactComponent as Trash } from '../../data/assets/Trash.svg';
+import { ReactComponent as QuestionMark } from '../../data/assets/Question.svg';
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
-import {config} from '../../utilities/constants.js';
+import { config } from '../../utilities/constants';
+//import "@lottiefiles/lottie-player";
+import logo from '../../data/assets/Logo.png';
 import { Cookies, withCookies } from 'react-cookie/lib';
+import { Link, unstable_HistoryRouter } from 'react-router-dom';
 
 class DrawingPage extends React.Component {
     static propTypes = {
@@ -22,32 +32,38 @@ class DrawingPage extends React.Component {
 
     constructor(props) {
         super(props);
-        const {cookies} = props;
-        
+        const { cookies } = props;
+
         this.state = {
             creatureId: '',
             colors: [
-                {color: "#eb2727"}, //red
-                {color: "#333333"}, //black
-                {color: "#f89c14"}, //orange
-                {color: "#f1de2d"}, //yellow
-                {color: "#82de57"}, //lightgreen
-                {color: "#51ad42"}, //darkgreen
-                {color: "#84b5fe"}, //lightblue
-                {color: "#1f32de"}, //darkblue
-                {color: "#bb4bf0"}, //purple
+                { color: "#333333" }, //black
+                { color: "#eb2727" }, //red
+                { color: "#f89c14" }, //orange
+                { color: "#f1de2d" }, //yellow
+                { color: "#51ad42" }, //darkgreen
+                { color: "#82de57" }, //lightgreen
+                { color: "#1f32de" }, //darkblue
+                { color: "#84b5fe" }, //lightblue
+                { color: "#bb4bf0" }, //purple
+                { color: "#FC84CC" } //pink
             ],
             lineWidths: [
                 {
-                    size: 'Small',
-                    width: '3'
+                    size: 'S',
+                    width: '3',
+                    selected: false
                 },
                 {
-                    size: 'Medium',
-                    width: '7'
+                    size: 'M',
+                    width: '7',
+                    selected: true
                 },
-                { size: 'Large',
-                width: '12'}
+                {
+                    size: 'L',
+                    width: '12',
+                    selected: false
+                }
             ],
             currentColor: "#333333",
             currentWidth: "7",
@@ -68,7 +84,7 @@ class DrawingPage extends React.Component {
         this.dataURL = '';
         this.bodyPart = '';
         this.borderColor = '';
-        
+
         cookies.getAll();
     }
 
@@ -82,16 +98,16 @@ class DrawingPage extends React.Component {
         let part = randomNumber(3);
         switch (part) {
             case 0:
-                this.bodyPart = "Head";
+                this.bodyPart = "head";
                 break;
-            case 1: 
-                this.bodyPart = "Body";
+            case 1:
+                this.bodyPart = "body";
                 break;
             case 2:
-                this.bodyPart = "Legs";
+                this.bodyPart = "legs";
                 break;
             default:
-                this.bodyPart = "Head";
+                this.bodyPart = "head";
                 break;
         }
     }
@@ -103,15 +119,15 @@ class DrawingPage extends React.Component {
     }
 
     setId() {
-        const {cookies} = this.props;
+        const { cookies } = this.props;
         //make an id - 5 for a little bit more security
         const id = nanoid(5);
         this.setState({
             creatureId: id
         });
         //set the cookie - we use this to reference in the combination pg
-        
-        cookies.set('creatureId', id, {path: '/'});
+
+        cookies.set('creatureId', id, { path: '/' });
     }
 
     handleHistoryCallback = (childData) => {
@@ -123,8 +139,10 @@ class DrawingPage extends React.Component {
     }
 
     changeColor(i) {
+        //console.log(i);
+
         this.setState({
-            currentColor: i
+            currentColor: i.color
         });
     }
 
@@ -135,8 +153,7 @@ class DrawingPage extends React.Component {
         });
     }
 
-    handleDone = (childData) => 
-    {
+    handleDone = (childData) => {
         //handle imagedata in here
         this.dataURL = childData;
 
@@ -155,22 +172,29 @@ class DrawingPage extends React.Component {
             method: 'POST',
             body: JSON.stringify(dataObj),
             headers: {
-                'Content-type':'application/json'
+                'Content-type': 'application/json'
             }
         });
-        console.log(response);
+
+        //response.then(() => {navigate("/combine")})
+        //response.then(() => {return <Redirect to="/combine"></Redirect>})
+
+
     }
 
     initiateDone() {
+
         this.doneTriggered = !this.doneTriggered;
-        
+
         this.setState({
             finished: this.doneTriggered,
-        })
+        });
+
+        //console.log("done finished");
     }
 
-    handleToolChange(e) {
-        console.log("tool changed");
+    handleToolChange() {
+        //console.log("tool changed");
         //change the tool
         this.changeTool(!this.state.status);
     }
@@ -178,13 +202,27 @@ class DrawingPage extends React.Component {
     changeTool(i) {
         this.setState({
             status: i
-        })
+
+        });
+        const slider = document.getElementsByClassName("slider round")[0];
+        if (i) {
+            slider.id = "pencil";
+
+        } else slider.id = "eraser";
+        // window.setTimeout(() => {
+        //     if (i) {
+        //         slider.id = "eraser";
+
+        //     } else slider.id = "pencil";
+        // }, .4 * 1000);
     }
 
     changeWidth(i) {
         this.setState({
-            currentWidth: i
+            currentWidth: i.width
         });
+
+        //document.querySelector('.currentWidth').style.backgroundImage
     }
 
     renderColorPicker() {
@@ -192,27 +230,55 @@ class DrawingPage extends React.Component {
         let pickers = [];
         this.state.colors.map((i) => {
             pickers.push(
-                <Colorpicker key={i.color.toString()} value={i.color} onClick={() => this.changeColor(i.color)} />
+                <Colorpicker className={i.color} key={i.color.toString()} value={i.color} onClick={() => this.changeColor(i)} />
             )
         });
-           
+
         return pickers;
+    }
+
+    renderPopup() {
+        console.log("instructions");
+        return (Popup());
     }
 
     renderUndoButton() {
         return (
-            <Button onClick={() => this.removeLastLine()} buttonText={"Undo"} />
+            <Button className="undoButton" onClick={() => this.removeLastLine()} />
         )
     }
     renderEraseButton() {
         return (
-            <Button value = {this.eraseTriggered} onClick={() => this.handleEraser()} style={{background: this.bColor,color: this.textColor}}buttonText={"Erase"} />
+            <Button value={this.eraseTriggered} onClick={() => this.handleEraser()} style={{ background: this.bColor, color: this.textColor }} buttonText={"Erase"} />
         )
     }
 
-    renderDoneButton(){
-        return(
-            <Button onClick={() => this.initiateDone()} buttonText={"Done"} />
+    renderDoneButton() {
+        return (
+            <Button className="doneButton" onClick={() => this.initiateDone()} buttonText="I'm Finished!"></Button>
+            //<DoneButton onClick={() => this.initiateDone}></DoneButton>
+        )
+    }
+
+    renderIdeasButton() {
+        return (
+            <Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={<Bulb></Bulb>} />
+        )
+    }
+
+    renderInstructionsButton() {
+        return (
+            <div>
+                <Popup trigger={<Button className="rightButton" id="instructions" buttonText={<QuestionMark></QuestionMark>} />} position="top center">
+                    <div>Popup content here !!</div>
+                </Popup>
+            </div>
+        )
+    }
+
+    renderClearButton() {
+        return (
+            <Button className="rightButton" id="clear" onClick={() => this.initiateDone()} buttonText={<Trash stroke="white"></Trash>} />
         )
     }
 
@@ -225,9 +291,16 @@ class DrawingPage extends React.Component {
     renderLineWidthPicker() {
         //loop thru object
         let widths = [];
+
         this.state.lineWidths.map((i) => {
+            let id = "widthButton";
+
+            if (i.width == this.state.currentWidth) {
+                id = "selected";
+            }
+
             widths.push(
-                <LineWidthPicker key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i.width)} buttonText={i.size}/>
+                <LineWidthPicker className={id} key={i.width.toString()} value={i.width} onClick={() => this.changeWidth(i)} buttonText={i.size} />
             )
         });
         return widths;
@@ -251,28 +324,34 @@ class DrawingPage extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div className="drawingPage">
-                <div className="linewidthpickerWrapper">
-                    <h2>Brush Stroke</h2>
-                    {this.renderLineWidthPicker()}
-                </div>
+                <div className='leftDrawing'>
+                    <img className='logo' src={logo} alt="CreatureLab"></img>
 
-                <div className="colorpickerWrapper">
-                    <CurrentColorIndicator fill={this.state.currentColor}/>
-                    {this.renderColorPicker()}
-                </div>
+                    <div className="lineWidthDiv">
+                        <h3>Brush Stroke</h3>
 
-                <Switch checked={this.state.status} onChange={
-                    this.handleToolChange}></Switch>
+                        <div className="linewidthpickerWrapper">
+                            {this.renderLineWidthPicker()}
+                        </div>
 
-                <div className="sliderDiv">
-                    <label className="switchTool" >
-                        <input type="checkbox"
-                               checked={this.state.status}
-                               onChange={this.handleToolChange} ></input>
-                        <span className="slider round"></span>
-                </label>
+                    </div>
+
+                    <CurrentColorIndicator className="currentColor" fill={this.state.currentColor} />
+                    <div className="colorpickerWrapper">
+
+                        {this.renderColorPicker()}
+                    </div>
+
+                    <div className="sliderDiv">
+                        <label className="switchTool" >
+                            <input type="checkbox"
+                                checked={!this.state.status}
+                                onChange={this.handleToolChange} ></input>
+                            <span className="slider round" id="pencil"></span>
+                        </label>
+                    </div>
                 </div>
 
                 <Canvas strokeColor={this.state.currentColor}
@@ -289,11 +368,37 @@ class DrawingPage extends React.Component {
                     status={this.state.status}>
                 </Canvas>
 
-                <p>{this.bodyPart}</p>
+                <div className="rightDrawing" >
+                    <div className='undoDiv'>
+                        {this.renderUndoButton()}
+                    </div>
 
-                {this.renderUndoButton()}
+                    <div className='taskDiv'>
+                        <h2>Task:</h2>
+                        <p align="center">Draw the <span className="purpleP">{this.bodyPart}</span> for your creature!</p>
+                    </div>
 
-                {this.renderDoneButton()}
+                    <div className='buttonDiv'>
+                        <div className='ideasDiv'>
+                            <h2>Ideas</h2>
+                            {this.renderIdeasButton()}
+                        </div>
+
+                        <div className='instructionsDiv'>
+                            <h2>Instructions</h2>
+                            {this.renderInstructionsButton()}
+                        </div>
+
+                        <div className='clearDiv'>
+                            <h2>Clear All</h2>
+                            {this.renderClearButton()}
+                        </div>
+                    </div>
+
+                    <div className='doneDiv'>
+                        {this.renderDoneButton()}
+                    </div>
+                </div>
 
             </div>
         );

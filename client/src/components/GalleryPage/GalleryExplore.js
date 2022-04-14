@@ -1,10 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
-import InfiniteScroll from "react-infinite-scroll-component";
-import Creature1 from '../../data/creature1.PNG';
-import Creature2 from '../../data/creature2.PNG';
-import Creature3 from '../../data/creature3.PNG';
-import Creature4 from '../../data/creature4.PNG';
-import Creature5 from '../../data/creature5.PNG';
+//import InfiniteScroll from "react-infinite-scroll-component";
+import Creature1 from '../../data/assets/creature1.PNG';
+import Creature2 from '../../data/assets/creature2.png';
+import Creature3 from '../../data/assets/creature3.png';
+import Creature4 from '../../data/assets/creature4.png';
+import Creature5 from '../../data/assets/creature5.png';
 
 class GalleryExplore extends React.Component {
     constructor(props) {
@@ -107,7 +107,7 @@ class GalleryExplore extends React.Component {
         // const returnArray = imageArray.map(({key, src}) => {
         //     return <img key={key} src={src} alt={key}></img>
         // });
-
+ 
         return galleryImages;
     }
 

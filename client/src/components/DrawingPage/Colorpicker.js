@@ -1,14 +1,16 @@
-import Button from "../Button";
+import RadioButton from "../RadioButton";
 
 function Colorpicker(props) {
     const buttonStyle = {
         backgroundColor: props.value,
-        border: '1px solid darkgrey',
+        border: 'none',
         cursor: 'pointer',
+        width: '45px',
+        height: '45px'
     };
 
     return(
-        <Button className="colorOption" onClick={props.onClick} style={buttonStyle}></Button>
+        <RadioButton className="colorOption" name="colorOption" onClick={props.onClick} style={buttonStyle}></RadioButton>
     );
 }
 

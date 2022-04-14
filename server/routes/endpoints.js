@@ -7,28 +7,29 @@ const path = require('path');
 //instance of the router
 const routes = express.Router();
 
-routes.route("/getAllBodyParts").get(function (req, res) {
+
+routes.route("/getAllBodyParts").get(async (req, res) => {
     const dbConnect = dbo.getDb();
 
     dbConnect
         .collection("bodyparts")
-        .find({})
-        .toArray(function(err, result) {
+        .find()
+        .toArray((err, result) => {
             if(err) {
                 res.status(400).send("error fetching the guys")
             } else {
                 res.json(result);
+                console.log("result sent")
             }
         })
 })
 
-routes.route("/getAllCreatures").get(function (req, res) {
+routes.route("/getAllCreatures").get(async (req, res) => {
     const dbConnect = dbo.getDb();
-
     dbConnect
         .collection("completedcreatures")
         .find({})
-        .toArray(function(err, result) {
+        .toArray((err, result) => {
             if(err) {
                 res.status(400).send("error fetching the guys")
             } else {
@@ -37,9 +38,8 @@ routes.route("/getAllCreatures").get(function (req, res) {
         })
 })
 
-routes.get("/getPart/:id", (req, res, next) => {
+routes.get("/getPart/:id", async (req, res, next) => {
     const dbConnect = dbo.getDb();
-    
     dbConnect
         .collection("bodyparts")
         .findOne({creatureid: req.params.id})
@@ -50,9 +50,8 @@ routes.get("/getPart/:id", (req, res, next) => {
         .catch(err => console.log(err));
 })
 
-routes.route("/savePart").post(function (req, res) {
+routes.route("/savePart").post(async (req, res) => {
     const dbConnect = dbo.getDb();
-
     dbConnect.collection("bodyparts")
         .insertOne({
             creatureid: req.body.id,
@@ -66,9 +65,8 @@ routes.route("/savePart").post(function (req, res) {
     //
 });
 
-routes.route("/saveCreature").post(function (req, res) {
+routes.route("/saveCreature").post(async (req, res) => {
     const dbConnect = dbo.getDb();
-
     dbConnect.collection("completedcreatures")
         .insertOne({
             creatureid: req.body.creatureid,
@@ -82,16 +80,14 @@ routes.route("/saveCreature").post(function (req, res) {
     //
 });
 
-routes.route("/search").post((req, res) => {
+routes.route("/search").post(async (req, res) => {
     const dbConnect = dbo.getDb();
-
 
     //
 });
 
-routes.route("/getRandomPart/:bodyPart").get(function (req, res) {
+routes.route("/getRandomPart/:bodyPart").get(async (req, res) => {
     const dbConnect = dbo.getDb();
-
     dbConnect.collection("bodyparts")
     .aggregate([
         //match certain trait
@@ -99,7 +95,7 @@ routes.route("/getRandomPart/:bodyPart").get(function (req, res) {
         {$match: {type:req.params.bodyPart}},
         {$sample: {size:1}}
     ])
-    .toArray(function(err, result) {
+    .toArray((err, result) => {
         if(err) {
             res.status(400).send("error fetching the guys")
         } else {
