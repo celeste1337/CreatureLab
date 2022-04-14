@@ -9,7 +9,6 @@ import Button from '../Button';
 import DoneButton from './DoneButton';
 import LineWidthPicker from './LineWidthPicker';
 import Popup from 'reactjs-popup';
-import {Link} from 'react-router-dom';
 
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
 import { ReactComponent as BigSquiggle } from '../../data/assets/BigSquiggle.svg';
@@ -72,6 +71,7 @@ class DrawingPage extends React.Component {
             lineHistory: [],
             //true means we are drawing
             status: true,
+            clear: false,
             finished: false,
         }
         this.removeLastLine = this.removeLastLine.bind(this);
@@ -275,7 +275,7 @@ class DrawingPage extends React.Component {
 
     renderClearButton() {
         return (
-            <Button className="rightButton" id="clear" onClick={() => this.initiateDone()} buttonText={<Trash stroke="white"></Trash>} />
+            <Button className="rightButton" id="clear" onClick={() => this.clearAll(!this.state.clear)} buttonText={<Trash stroke="white"></Trash>} />
         )
     }
 
@@ -320,6 +320,12 @@ class DrawingPage extends React.Component {
         console.log(this.props.smooth);
     }
 
+    clearAll(i) {
+        this.setState({
+            clear: i,
+        })
+    }
+
     render() {
         return (
             <div className="drawingPage">
@@ -337,7 +343,6 @@ class DrawingPage extends React.Component {
 
                     <CurrentColorIndicator className="currentColor" fill={this.state.currentColor} />
                     <div className="colorpickerWrapper">
-
                         {this.renderColorPicker()}
                     </div>
 
@@ -362,7 +367,10 @@ class DrawingPage extends React.Component {
 
                     lineHistory={this.state.lineHistory}
                     lineWidth={this.state.currentWidth}
-                    status={this.state.status}>
+                    status={this.state.status}
+
+                    clear={this.state.clear}>
+
                 </Canvas>
 
                 <div className="rightDrawing" >

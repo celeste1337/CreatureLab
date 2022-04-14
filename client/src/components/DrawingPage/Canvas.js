@@ -236,11 +236,20 @@ class Canvas extends React.Component{
             this.undoLastLine();
         }
 
+        if(prevProps.clear !== this.props.clear) {
+            this.clearAll();
+        }
+
         if(this.props.doneTrigger === true)
         {
             this.saveCanvas();
         }
 
+
+    }
+
+    clearAll() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     sendHistory(lineData) {
