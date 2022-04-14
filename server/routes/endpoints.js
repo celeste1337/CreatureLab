@@ -28,8 +28,12 @@ routes.route("/getAllCreatures").get(async (req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect
         .collection("completedcreatures")
-        .find({})
-        .toArray((err, result) => {
+        .find({}, {projection:{
+            "creatureid": 1,
+            "data.imageData": 1,
+            "_id": 0
+        }})
+        .toArray(function(err, result) {
             if(err) {
                 res.status(400).send("error fetching the guys")
             } else {

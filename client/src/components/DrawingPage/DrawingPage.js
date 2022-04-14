@@ -9,6 +9,8 @@ import Button from '../Button';
 import DoneButton from './DoneButton';
 import LineWidthPicker from './LineWidthPicker';
 import Popup from 'reactjs-popup';
+import {Link} from 'react-router-dom';
+
 import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
 import { ReactComponent as BigSquiggle } from '../../data/assets/BigSquiggle.svg';
 import { ReactComponent as MediumSquiggle } from '../../data/assets/MediumSquiggle.svg';
@@ -176,21 +178,16 @@ class DrawingPage extends React.Component {
             }
         });
 
-        //response.then(() => {navigate("/combine")})
-        //response.then(() => {return <Redirect to="/combine"></Redirect>})
-
-
+        response.then(() => {
+            this.setState({
+                finished: this.doneTriggered,
+            })
+        })
     }
 
     initiateDone() {
 
         this.doneTriggered = !this.doneTriggered;
-
-        this.setState({
-            finished: this.doneTriggered,
-        });
-
-        //console.log("done finished");
     }
 
     handleToolChange() {
@@ -284,7 +281,7 @@ class DrawingPage extends React.Component {
 
     renderSmoothButton() {
         return (
-            <Button onClick={() => this.toggleSmooth()} buttonText={"Smooth"} />
+            <Button onClick={this.toggleSmooth()} buttonText={"Smooth"} />
         )
     }
 
