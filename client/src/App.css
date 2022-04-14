@@ -154,12 +154,10 @@ input:checked+.slider:before {
 }
 
 /* Width Picker */
-
-
 .selected {
   background-color: white;
   color: #7F3AD7;
-  border: 5px solid #7F3AD7;
+  border: 6px solid #7F3AD7;
   border-radius: 50%;
   height: 50px;
   width: 50px;  
@@ -247,10 +245,6 @@ input:checked+.slider:before {
   background-color: #FBD449 !important;
 }
 
-.currentColor {
-  
-}
-
 .drawingPage {
   display: flex;
   touch-action: none;
@@ -320,6 +314,10 @@ input:checked+.slider:before {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.scribbleDiv {
+  width: 80%;
 }
 
 /* Color Picker */

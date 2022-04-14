@@ -222,7 +222,24 @@ class DrawingPage extends React.Component {
             currentWidth: i.width
         });
 
-        //document.querySelector('.currentWidth').style.backgroundImage
+        // let element;
+        // if (i.size == 'S') element = '<SmallSquiggle className="currentColor" fill={this.state.currentColor}></SmallSquiggle>';
+        // else if (i.size == 'M') element = '<MediumSquiggle className="currentColor" fill={this.state.currentColor}></MediumSquiggle>';
+        // else if (i.size == 'L') element = '<BigSquiggle className="currentColor" fill={this.state.currentColor}></BigSquiggle>';
+
+        // document.querySelector('.scribbleDiv').innerHTML = element;
+    }
+
+    renderScribble(size) {
+        console.log(size);
+        switch(size) {
+            case '12':
+                return <BigSquiggle className="currentColor" fill={this.state.currentColor}></BigSquiggle>;
+            case '7':
+                return <MediumSquiggle className="currentColor" fill={this.state.currentColor}></MediumSquiggle>;
+            case '3':
+                return <SmallSquiggle className="currentColor" fill={this.state.currentColor}></SmallSquiggle>;
+        }
     }
 
     renderColorPicker() {
@@ -338,9 +355,11 @@ class DrawingPage extends React.Component {
 
                     </div>
 
-                    <CurrentColorIndicator className="currentColor" fill={this.state.currentColor} />
-                    <div className="colorpickerWrapper">
+                    <div className="scribbleDiv">
+                        {this.renderScribble(this.state.currentWidth)}
+                    </div>
 
+                    <div className="colorpickerWrapper">
                         {this.renderColorPicker()}
                     </div>
 
