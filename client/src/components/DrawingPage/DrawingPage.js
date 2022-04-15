@@ -24,6 +24,7 @@ import { config } from '../../utilities/constants';
 import logo from '../../data/assets/Logo.png';
 import { Cookies, withCookies } from 'react-cookie/lib';
 import { Link, unstable_HistoryRouter } from 'react-router-dom';
+import Instructions from './Instructions';
 
 class DrawingPage extends React.Component {
     static propTypes = {
@@ -231,8 +232,8 @@ class DrawingPage extends React.Component {
     }
 
     renderScribble(size) {
-        console.log(size);
-        switch(size) {
+        //console.log(size);
+        switch (size) {
             case '12':
                 return <BigSquiggle className="currentColor" fill={this.state.currentColor}></BigSquiggle>;
             case '7':
@@ -284,13 +285,7 @@ class DrawingPage extends React.Component {
     }
 
     renderInstructionsButton() {
-        return (
-            <div>
-                <Popup trigger={<Button className="rightButton" id="instructions" buttonText={<QuestionMark></QuestionMark>} />} position="top center">
-                    <div>Popup content here !!</div>
-                </Popup>
-            </div>
-        )
+        return <Instructions className="test"></Instructions>
     }
 
     renderClearButton() {
