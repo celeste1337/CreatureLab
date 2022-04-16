@@ -73,6 +73,7 @@ class DrawingPage extends React.Component {
             status: true,
             clear: false,
             finished: false,
+            bodyPart: '',
         }
         this.removeLastLine = this.removeLastLine.bind(this);
         this.handleToolChange = this.handleToolChange.bind(this);
@@ -84,7 +85,7 @@ class DrawingPage extends React.Component {
         this.undoTriggered = false;
         this.doneTriggered = false;
         this.dataURL = '';
-        this.bodyPart = '';
+        
         this.borderColor = '';
 
         cookies.getAll();
@@ -98,18 +99,20 @@ class DrawingPage extends React.Component {
 
     setBodyPart() {
         let part = randomNumber(3);
+        const setIt = (input) => this.setState({bodyPart: input})
+
         switch (part) {
             case 0:
-                this.bodyPart = "head";
+                setIt("head")
                 break;
             case 1:
-                this.bodyPart = "body";
+                setIt("body")
                 break;
             case 2:
-                this.bodyPart = "legs";
+                setIt("legs")
                 break;
             default:
-                this.bodyPart = "head";
+                setIt("head")
                 break;
         }
     }
@@ -365,6 +368,7 @@ class DrawingPage extends React.Component {
                     doneTrigger={this.doneTriggered}
                     doneCallback={this.handleDone}
 
+                    bodyPart={this.state.bodyPart}
                     lineHistory={this.state.lineHistory}
                     lineWidth={this.state.currentWidth}
                     status={this.state.status}
@@ -380,7 +384,7 @@ class DrawingPage extends React.Component {
 
                     <div className='taskDiv'>
                         <h2>Task:</h2>
-                        <p align="center">Draw the <span className="purpleP">{this.bodyPart}</span> for your creature!</p>
+                        <p align="center">Draw the <span className="purpleP">{this.state.bodyPart}</span> for your creature!</p>
                     </div>
 
                     <div className='buttonDiv'>
