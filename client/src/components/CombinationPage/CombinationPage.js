@@ -16,6 +16,8 @@ function CombinationPage(props) {
     const [imageArray, updateImageArray] = useState([]);
     const [idArray, setIdArray] = useState([]);
     const [finalImg, setFinalImg] = useState("");
+    const [finalCode, setFinalCode] = useState("");
+    const [bodyCode, setBodyCode] = useState("");
     const [borderColor, setBorderColor] = useState("");
     const firstRender = useFirstRender();
     const controller = new AbortController();
@@ -83,12 +85,12 @@ function CombinationPage(props) {
         //bc we use initimg to determine other types
 
         let initImg = await getImageByID(cookies.creatureId);
+        setBodyCode(cookies.creatureId);
 
         const otherTypes = determineTypesLeft(getType(initImg));
         let otherparts = otherTypes.map(type => getImageRandomType(type))
         Promise.all(otherparts).then(vals => {
             tempArr = tempArr.concat(initImg, vals).flat()
-            console.log(tempArr)
 
             tempArr.forEach((creature) => {
                 //this kinda doesnt matter as long as it has a value -> itll rewrite itself but thats whatevs
@@ -123,6 +125,7 @@ function CombinationPage(props) {
         if(idArray.length === 3) {
             let finalBase64 = finalImg;
             let finalCharCode = `${idArray[0]}-${idArray[1]}-${idArray[2]}`;
+            setFinalCode(finalCharCode);
             let dataObj = {
                 creatureid: finalCharCode,
                 creatures: idArray,
@@ -160,18 +163,24 @@ function CombinationPage(props) {
     return(
         <div className="combinationPageWrapper">
             
-            <div>
+            <div class="comboPage">
                 {!finalImg && 
                     <Player
                     autoplay
                     loop
-                    src="https://assets7.lottiefiles.com/private_files/lf30_eh7nrprb.json"
-                    style={{ height: '300px', width: '300px'}}></Player>
+                    src="https://assets7.lottiefiles.com/private_files/lf30_eh7nrprb.json"></Player>
                 }
                 <img src={finalImg}></img></div>
-                <div className="creatureCodeBox">Your creature's code </div>
+                <div className="creatureCodeBox">
+                    <h3>Creature Code</h3>
+                    <p>{{finalCharCode}}</p>
+                </div>
+                <div className="bodyPartCodeBox">
+                    <h3>Body Part Code</h3>
+                    <p>{{finalCode}}</p>
+               
                 <Link to="/" onClick={removeCookieOnDone}>Done</Link>
-            
+            </div>
         </div>
     );
 }
