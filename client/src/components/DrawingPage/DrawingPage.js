@@ -280,7 +280,17 @@ class DrawingPage extends React.Component {
 
     renderIdeasButton() {
         return (
-            <Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={<Bulb></Bulb>} />
+            <Popup
+                className="ideasPopup"
+                trigger={<Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={<Bulb></Bulb>} />} 
+                modal
+                position="right top"
+                >
+                    IDEAS
+            </Popup>
+            
+            
+            //<Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={<Bulb></Bulb>} />
         )
     }
 
