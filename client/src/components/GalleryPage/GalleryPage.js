@@ -31,16 +31,16 @@ class GalleryPage extends React.Component {
         )
 
         // if gallery is in explore mode
-        // return (
-        //     <ScrollContainer 
-        //         className="scrollContainer"
-        //         nativeMobileScroll={false}
-        //         ref={this.ref}>
-        //         <GalleryExplore>
+       // return (
+            // <ScrollContainer 
+            //     className="scrollContainer"
+            //     nativeMobileScroll={false}
+            //     ref={this.ref}>
+            //     <GalleryExplore>
                 
-        //         </GalleryExplore>
-        //     </ScrollContainer>
-        // )
+            //     </GalleryExplore>
+            // </ScrollContainer>
+        //)
     }
 }
 

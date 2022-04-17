@@ -88,6 +88,7 @@ function CombinationPage(props) {
         let otherparts = otherTypes.map(type => getImageRandomType(type))
         Promise.all(otherparts).then(vals => {
             tempArr = tempArr.concat(initImg, vals).flat()
+            console.log(tempArr)
 
             tempArr.forEach((creature) => {
                 //this kinda doesnt matter as long as it has a value -> itll rewrite itself but thats whatevs

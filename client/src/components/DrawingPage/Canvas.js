@@ -210,6 +210,61 @@ class Canvas extends React.Component{
         this.ctx.restore();
     }
 
+    drawGuideDots(bodyPart) {
+        if (bodyPart == "head") {
+            //yea
+            console.log("head")
+            this.ctx.strokeStyle = "black";
+            this.ctx.beginPath();
+            this.ctx.arc(300, 700, 9, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.fill();
+
+            this.ctx.beginPath();
+            this.ctx.arc(700, 700, 9, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.fill();
+        } else if (bodyPart == "body") {
+            //yea
+            console.log("body")
+            this.ctx.strokeStyle = "black";
+
+            this.ctx.beginPath();
+            this.ctx.arc(700, 20, 9, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.fill();
+
+            this.ctx.beginPath();
+            this.ctx.arc(300, 20, 9, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.fill();
+
+            this.ctx.beginPath();
+            this.ctx.arc(800, 700, 9, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.fill();
+
+            this.ctx.beginPath();
+            this.ctx.arc(200, 700, 9, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.fill();
+        } else if(bodyPart == "legs") {
+            //draw dots
+            console.log("legs")
+            this.ctx.strokeStyle = "black";
+            this.ctx.beginPath();
+            this.ctx.arc(800, 20, 9, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.fill();
+
+            this.ctx.beginPath();
+            this.ctx.arc(200, 20, 9, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.fill();
+
+        }
+    }
+
 
     //paint a smooth line to reduce user jitter
     paintSmooth(lineData) {
@@ -236,11 +291,20 @@ class Canvas extends React.Component{
             this.undoLastLine();
         }
 
+        if(prevProps.clear !== this.props.clear) {
+            this.clearAll();
+        }
+
         if(this.props.doneTrigger === true)
         {
             this.saveCanvas();
         }
 
+        this.drawGuideDots(this.props.bodyPart);
+    }
+
+    clearAll() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     sendHistory(lineData) {
