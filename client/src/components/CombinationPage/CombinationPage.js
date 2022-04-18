@@ -67,15 +67,13 @@ function CombinationPage(props) {
             }).then((img)=> {
                 setFinalImg(img);
                 //save to db :D
-                saveFinalImage(img);
+                saveFinalImage();
             })
         }
     }
 
     const fetchImages = async () => {
         //need to get initial creatureid via cookie
-        console.log("fetching images :p");
-
         let tempArr = [];
         let base64Images = [];
 
@@ -98,8 +96,6 @@ function CombinationPage(props) {
                 setIdArray(prev=>[...prev, creature.creatureid])
 
                 const setMe = (input) => input.replace("data:image/png;base64,","")
-
-                console.log(creature);
 
                 switch (getType(creature)) {
                     case 'Head':
@@ -125,7 +121,9 @@ function CombinationPage(props) {
         if(idArray.length === 3) {
             let finalBase64 = finalImg;
             let finalCharCode = `${idArray[0]}-${idArray[1]}-${idArray[2]}`;
+
             setFinalCode(finalCharCode);
+
             let dataObj = {
                 creatureid: finalCharCode,
                 creatures: idArray,
@@ -142,7 +140,6 @@ function CombinationPage(props) {
                     'Content-type':'application/json'
                 }
             });
-            console.log(response);
         }
     }
 
@@ -156,30 +153,29 @@ function CombinationPage(props) {
     }
 
     if(firstRender) {
-        console.log("first render :D")
         fetchImages();
     }
   
     return(
         <div className="combinationPageWrapper">
-            
-            <div class="comboPage">
+            <div className="comboPage">
                 {!finalImg && 
                     <Player
                     autoplay
                     loop
                     src="https://assets7.lottiefiles.com/private_files/lf30_eh7nrprb.json"></Player>
                 }
-                <img src={finalImg}></img></div>
-                <div className="creatureCodeBox">
-                    <h3>Creature Code</h3>
-                    <p>{{finalCharCode}}</p>
-                </div>
-                <div className="bodyPartCodeBox">
-                    <h3>Body Part Code</h3>
-                    <p>{{finalCode}}</p>
-               
-                <Link to="/" onClick={removeCookieOnDone}>Done</Link>
+                    <img src={finalImg}></img>
+                    <div className="creatureCodeBox">
+                        <h3>Creature Code</h3>
+                        <p>{finalCode}</p>
+                    </div>
+                    <div className="bodyPartCodeBox">
+                        <h3>Body Part Code</h3>
+                        <p>{bodyCode}</p>
+                    </div>
+                
+                    <Link to="/" onClick={removeCookieOnDone}>Done</Link>
             </div>
         </div>
     );

@@ -6,7 +6,6 @@ import { instanceOf } from 'prop-types';
 import Canvas from './Canvas';
 import Colorpicker from './Colorpicker';
 import Button from '../Button';
-import DoneButton from './DoneButton';
 import LineWidthPicker from './LineWidthPicker';
 import Popup from 'reactjs-popup';
 
@@ -17,6 +16,7 @@ import { ReactComponent as SmallSquiggle } from '../../data/assets/SmallSquiggle
 import { ReactComponent as Bulb } from '../../data/assets/LightBulb.svg';
 import { ReactComponent as Trash } from '../../data/assets/Trash.svg';
 import { ReactComponent as QuestionMark } from '../../data/assets/Question.svg';
+
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
@@ -24,7 +24,7 @@ import { config } from '../../utilities/constants';
 //import "@lottiefiles/lottie-player";
 import logo from '../../data/assets/Logo.png';
 import { Cookies, withCookies } from 'react-cookie/lib';
-import { Link, unstable_HistoryRouter } from 'react-router-dom';
+import {withNavigation} from './NavigationHook';
 
 class DrawingPage extends React.Component {
     static propTypes = {
@@ -74,6 +74,7 @@ class DrawingPage extends React.Component {
             clear: false,
             finished: false,
             bodyPart: '',
+            doneTrigger: false,
         }
         this.removeLastLine = this.removeLastLine.bind(this);
         this.handleToolChange = this.handleToolChange.bind(this);
@@ -83,7 +84,6 @@ class DrawingPage extends React.Component {
         }
 
         this.undoTriggered = false;
-        this.doneTriggered = false;
         this.dataURL = '';
         
         this.borderColor = '';
@@ -103,16 +103,16 @@ class DrawingPage extends React.Component {
 
         switch (part) {
             case 0:
-                setIt("head")
+                setIt("Head")
                 break;
             case 1:
-                setIt("body")
+                setIt("Body")
                 break;
             case 2:
-                setIt("legs")
+                setIt("Legs")
                 break;
             default:
-                setIt("head")
+                setIt("Head")
                 break;
         }
     }
@@ -165,7 +165,7 @@ class DrawingPage extends React.Component {
         //start building save object
         const dataObj = {
             id: this.state.creatureId,
-            type: this.bodyPart,
+            type: this.state.bodyPart,
             data: {
                 imageData: this.dataURL,
                 borderColor: this.borderColor
@@ -182,15 +182,15 @@ class DrawingPage extends React.Component {
         });
 
         response.then(() => {
-            this.setState({
-                finished: this.doneTriggered,
-            })
+            //saved :D
+            this.props.navigate('/combine');
         })
     }
 
     initiateDone() {
-
-        this.doneTriggered = !this.doneTriggered;
+        this.setState({
+            doneTrigger: true
+        })
     }
 
     handleToolChange() {
@@ -365,7 +365,7 @@ class DrawingPage extends React.Component {
                     undoTrigger={this.undoTriggered}
                     paintTrigger={this.paintTriggered}
 
-                    doneTrigger={this.doneTriggered}
+                    doneTrigger={this.state.doneTrigger}
                     doneCallback={this.handleDone}
 
                     bodyPart={this.state.bodyPart}
@@ -415,4 +415,5 @@ class DrawingPage extends React.Component {
 
 }
 
-export default withCookies(DrawingPage);
+//oh god
+export default withCookies(withNavigation(DrawingPage));
