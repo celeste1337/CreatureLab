@@ -1,5 +1,7 @@
 .galleryPage {
     padding: 0 3vw;
+    background-image: url("../../data/assets/Squigs.png");
+    background-size: contain;
 }
 
 .galleryPage .banner {

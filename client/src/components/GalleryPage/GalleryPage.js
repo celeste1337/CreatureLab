@@ -26,7 +26,7 @@ class GalleryPage extends React.Component {
             <div className="galleryPage">
                 <div className="logoBar"><img src={logo}/></div>
                 <div className="banner">
-                    <h1>Explore the limitless creativity</h1>
+                    <h1>Explore the <span class="purpleP">limitless</span> creativity</h1>
                     <p>Enter your creation code down below to see your creatures.</p>
                 </div>
                     <GalleryGrid>
