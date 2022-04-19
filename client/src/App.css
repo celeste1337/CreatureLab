@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap');
+
+body {
+  font-family: 'Outfit', sans-serif;
+}
  
 .App {
   text-align: center;
@@ -13,6 +17,10 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+#footer .container .row {
+  padding-bottom:8px;
 }
 
 .App-header {
@@ -153,6 +161,11 @@ input:checked+.slider:before {
   transform: translateX(85px);
 }
 
+.toolP {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Width Picker */
 .selected {
   background-color: white;
@@ -185,14 +198,17 @@ input:checked+.slider:before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
-  grid-template-columns: 50 50 50;
 
   padding-top: 3px;
   padding-bottom: 3px;
+  z-index: 1000;
 }
 
 /* Drawing Page */
+p {
+  font-family: 'Outfit', sans-serif;
+}
+
 .logo {
   width: 180px;
   margin-top: 20px;
@@ -269,11 +285,16 @@ input:checked+.slider:before {
   border-bottom: 3px dotted darkgrey;
 }
 
+.brushStroke {
+  margin-bottom: 20px;
+}
+
 .leftDrawing {
   width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .rightDrawing {
@@ -325,6 +346,12 @@ input:checked+.slider:before {
 
 
 /* Instructions */
+.ideasPopup-overlay {
+  width: 10vw;
+  height: 5vh;
+  position: element('.ideas');
+}
+
 .instructionsContainer {
   width: 100vw;
   height: 100vh;
@@ -383,8 +410,6 @@ input:checked+.slider:before {
   appearance: none;
 }
 
-
-
 .drawingPage .colorpickerWrapper>input:checked {
   border-radius: 50px;
   box-sizing: border-box;
@@ -395,6 +420,7 @@ input:checked+.slider:before {
   margin-left: 10px;
   margin-top: 10px;
 }
+
 
 /* Text */
 .purpleP {

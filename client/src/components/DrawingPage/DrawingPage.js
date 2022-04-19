@@ -86,6 +86,31 @@ class DrawingPage extends React.Component {
         this.bodyPart = '';
         this.borderColor = '';
 
+        this.ideas = [
+            'Draw a robot!',
+            "Draw a dinosaur",
+            "Draw something that lives in the ocean",
+            "Draw a magical creature",
+            "Draw something that lives in the rainforest",
+            "Draw an insect",
+            "Draw something purple",
+            "Draw something green",
+            "Draw something that flies",
+            "Draw something that burrows through the ground",
+            "Draw a human!",
+            "Draw a creature made out of objects in your home",
+            "Draw your pet",
+            "Draw a happy animal",
+            "Draw something ferocious",
+            "Draw a fish",
+            "Draw a monkey",
+            "Draw a Pokemon!",
+            "Draw something that roars",
+            "Draw something that squawks",
+            "Draw your favorite animal",
+            "Draw an animal you’ve never seen before",
+        ];
+
         cookies.getAll();
     }
 
@@ -282,14 +307,23 @@ class DrawingPage extends React.Component {
         return (
             <Popup
                 className="ideasPopup"
-                trigger={<Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={<Bulb></Bulb>} />} 
+                trigger={<Button className="rightButton ideas" id="ideas" buttonText={<Bulb></Bulb>} />}
                 modal
+                closeOnDocumentClick
                 position="right top"
-                >
-                    IDEAS
+            >
+                {close => (
+                    <div>
+                        <a onClick={close}>CLOSE</a>
+                        <div className='idea'>
+                            {this.ideas[Math.floor(Math.random() * this.ideas.length)]}
+                        </div>
+                    </div>
+                )}
+
             </Popup>
-            
-            
+
+
             //<Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={<Bulb></Bulb>} />
         )
     }
@@ -352,7 +386,7 @@ class DrawingPage extends React.Component {
                     <img className='logo' src={logo} alt="CreatureLab"></img>
 
                     <div className="lineWidthDiv">
-                        <h3>Brush Stroke</h3>
+                        <h3 className='brushStroke'>Brush Stroke</h3>
 
                         <div className="linewidthpickerWrapper">
                             {this.renderLineWidthPicker()}
@@ -369,6 +403,10 @@ class DrawingPage extends React.Component {
                     </div>
 
                     <div className="sliderDiv">
+                        <div className='toolP'>
+                            <p>Draw</p><p>Erase</p>
+                        </div>
+
                         <label className="switchTool" >
                             <input type="checkbox"
                                 checked={!this.state.status}
