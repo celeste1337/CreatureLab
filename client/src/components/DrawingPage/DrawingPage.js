@@ -310,16 +310,17 @@ class DrawingPage extends React.Component {
         return (
             <Popup
                 className="ideasPopup"
-                trigger={<Button className="rightButton ideas" id="ideas" buttonText={<Bulb></Bulb>} />}
+                trigger={<Button className="rightButton ideas" buttonText={<Bulb></Bulb>} />}
                 modal
-                closeOnDocumentClick
                 position="right top"
             >
                 {close => (
                     <div>
-                        <a onClick={close}>CLOSE</a>
                         <div className='idea'>
-                            {this.ideas[Math.floor(Math.random() * this.ideas.length)]}
+                            <div className="purpleCreature"></div>
+                            <div className="ideasBubble">
+                                {this.ideas[Math.floor(Math.random() * this.ideas.length)]}
+                            </div>
                         </div>
                     </div>
                 )}
