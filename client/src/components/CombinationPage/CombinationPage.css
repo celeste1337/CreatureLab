@@ -18,15 +18,15 @@
 }
 
 .creatureCodeBox, .bodyPartCodeBox {
-    border: 4px dotted rgb(60, 0, 128);
+    border: 4px dotted #944BF0;
     border-radius: 15px;
     padding: 10px;
     text-align: center;
 }
 
-a {
+.comboPage a {
     border: 1px solid black;
-    background-color: rgb(60, 0, 128);
+    background-color: #944BF0;
     color: white;
     text-decoration: none;
     border-radius: 3px;
@@ -35,3 +35,6 @@ a {
     text-align: center;
 }
 
+.comboPage .code {
+    color: #944BF0;
+}

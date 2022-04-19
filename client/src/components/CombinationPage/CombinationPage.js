@@ -177,12 +177,13 @@ function CombinationPage(props) {
                     <img id="finalImg" src={finalImg}></img>
                     <div id="codes">
                         <div className="creatureCodeBox">
-                            <h3>Creature Code</h3>
-                            <p>{finalCode}</p>
+                            <h3>Your creature code is</h3>
+                            <h2 class="code">{finalCode}</h2>
+                            <h4>Check in with a CreatureLab scientist to finish your creature.</h4>
                         </div>
                         <div className="bodyPartCodeBox">
-                            <h3>Body Part Code</h3>
-                            <p>{bodyCode}</p>
+                            <h3>Your body part code is</h3>
+                            <p class="code">{bodyCode}</p>
                         </div>
 
                         <Link to="/" onClick={removeCookieOnDone}>Done</Link>
