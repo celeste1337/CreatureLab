@@ -7,7 +7,6 @@ const path = require('path');
 //instance of the router
 const routes = express.Router();
 
-
 routes.route("/getAllBodyParts").get(async (req, res) => {
     const dbConnect = dbo.getDb();
 
@@ -52,7 +51,49 @@ routes.get("/getPart/:id", async (req, res, next) => {
             next();
         })
         .catch(err => console.log(err));
-})
+});
+
+routes.get("/find/:id", (req, res, next) => {
+    //the req body should contain a bool that determines what table to search in
+    const dbConnect = dbo.getDb();
+
+    if(req.params.id.search("-") !== -1) {
+        //we can assume its a full length code
+        dbConnect
+        .collection("completedcreatures")
+        .find({creatureid: req.params.id})
+        .toArray((err, result) => {
+            if(err) {
+                res.status(400).send("error fetching the guys")
+            } else {
+                res.json(result);
+                next();
+            }
+        })
+    } else {
+        //anything that has their code
+        let returnArr = [];
+       
+        dbConnect.collection("bodyparts")
+        .find({creatureid: req.params.id})
+        .toArray()
+        .then((arr) => {
+            returnArr.push(arr);;
+        })
+        .then(() => {
+            dbConnect.collection("completedcreatures")
+            .find({creatures: req.params.id})
+            .toArray()
+            .then((arr) => {
+                returnArr.push(arr);
+                returnArr = returnArr.flat();
+                res.json(returnArr);
+            })
+        })
+        
+        
+    }
+});
 
 routes.route("/savePart").post(async (req, res) => {
     const dbConnect = dbo.getDb();
@@ -81,12 +122,6 @@ routes.route("/saveCreature").post(async (req, res) => {
     
     const cursor = dbConnect.collection('completedcreatures').find({creatureid: req.body.id})
     res.json(cursor);
-    //
-});
-
-routes.route("/search").post(async (req, res) => {
-    const dbConnect = dbo.getDb();
-
     //
 });
 

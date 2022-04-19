@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { withCookies, useCookies } from 'react-cookie';
 import {Player, Controls} from '@lottiefiles/react-lottie-player';
 import {Link, Navigate} from 'react-router-dom';
-
 import {config} from '../../utilities/constants';
 import { useFirstRender } from './FirstRenderHook';
+import './CombinationPage.css';
 
 //why does it do this.
 const mergeImages = require('merge-base64');
-
 
 function CombinationPage(props) {
     //were using react hooks just for fun/to learn about them here
@@ -19,6 +18,7 @@ function CombinationPage(props) {
     const [finalCode, setFinalCode] = useState("");
     const [bodyCode, setBodyCode] = useState("");
     const [borderColor, setBorderColor] = useState("");
+    const [animationFinished, setAnimationFinished] = useState(false);
     const firstRender = useFirstRender();
     const controller = new AbortController();
     const signal = controller.signal;
@@ -133,7 +133,7 @@ function CombinationPage(props) {
                 },
                 createdOn: Date.now(),
             }
-            let response = fetch(config.url.API_URL + '/saveCreature', {
+            fetch(config.url.API_URL + '/saveCreature', {
                 method: 'POST',
                 body: JSON.stringify(dataObj),
                 headers: {
@@ -155,27 +155,42 @@ function CombinationPage(props) {
     if(firstRender) {
         fetchImages();
     }
-  
+    
     return(
         <div className="combinationPageWrapper">
             <div className="comboPage">
-                {!finalImg && 
-                    <Player
+                {!animationFinished && 
+                <Player
+                    onEvent={event => {
+                        if(event === 'complete') {
+                            setAnimationFinished(true);
+                            
+                            //hide
+
+                        }
+                    }}
                     autoplay
-                    loop
                     src="https://assets7.lottiefiles.com/private_files/lf30_eh7nrprb.json"></Player>
                 }
-                    <img src={finalImg}></img>
-                    <div className="creatureCodeBox">
-                        <h3>Creature Code</h3>
-                        <p>{finalCode}</p>
-                    </div>
-                    <div className="bodyPartCodeBox">
-                        <h3>Body Part Code</h3>
-                        <p>{bodyCode}</p>
+                {animationFinished && 
+                <div id="completed">
+                    <img id="finalImg" src={finalImg}></img>
+                    <div id="codes">
+                        <div className="creatureCodeBox">
+                            <h3>Creature Code</h3>
+                            <p>{finalCode}</p>
+                        </div>
+                        <div className="bodyPartCodeBox">
+                            <h3>Body Part Code</h3>
+                            <p>{bodyCode}</p>
+                        </div>
+
+                        <Link to="/" onClick={removeCookieOnDone}>Done</Link>
                     </div>
                 
-                    <Link to="/" onClick={removeCookieOnDone}>Done</Link>
+                </div>
+                }
+                    
             </div>
         </div>
     );
