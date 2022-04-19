@@ -206,22 +206,26 @@ class Canvas extends React.Component{
         this.ctx.stroke();
 
         this.ctx.restore();
+
+        this.drawGuideDots(this.props.bodyPart);
     }
 
     drawGuideDots(bodyPart) {
-        if (bodyPart == "head") {
+        console.log(bodyPart)
+        if (bodyPart === "Head") {
             //these might need to be adjusted
             this.ctx.strokeStyle = "black";
             this.ctx.beginPath();
-            this.ctx.arc(300, 700, 9, 0, 2 * Math.PI);
+            this.ctx.arc(300, 590, 9, 0, 2 * Math.PI);
             this.ctx.stroke();
             this.ctx.fill();
 
             this.ctx.beginPath();
-            this.ctx.arc(700, 700, 9, 0, 2 * Math.PI);
+            this.ctx.arc(700, 590, 9, 0, 2 * Math.PI);
             this.ctx.stroke();
             this.ctx.fill();
-        } else if (bodyPart == "body") {
+        } 
+        if (bodyPart === "Body") {
             //yea
             this.ctx.strokeStyle = "black";
 
@@ -236,19 +240,20 @@ class Canvas extends React.Component{
             this.ctx.fill();
 
             this.ctx.beginPath();
-            this.ctx.arc(800, 700, 9, 0, 2 * Math.PI);
+            this.ctx.arc(750, 690, 9, 0, 2 * Math.PI);
             this.ctx.stroke();
             this.ctx.fill();
 
             this.ctx.beginPath();
-            this.ctx.arc(200, 700, 9, 0, 2 * Math.PI);
+            this.ctx.arc(200, 690, 9, 0, 2 * Math.PI);
             this.ctx.stroke();
             this.ctx.fill();
-        } else if(bodyPart == "legs") {
+        }
+        if (bodyPart === "Legs") {
             //draw dots
             this.ctx.strokeStyle = "black";
             this.ctx.beginPath();
-            this.ctx.arc(800, 20, 9, 0, 2 * Math.PI);
+            this.ctx.arc(690, 20, 9, 0, 2 * Math.PI);
             this.ctx.stroke();
             this.ctx.fill();
 
@@ -256,7 +261,6 @@ class Canvas extends React.Component{
             this.ctx.arc(200, 20, 9, 0, 2 * Math.PI);
             this.ctx.stroke();
             this.ctx.fill();
-
         }
     }
 
@@ -276,10 +280,9 @@ class Canvas extends React.Component{
 
     componentDidMount() {
         //you can change these they were just kinda big on my monitor lmao
-        this.canvas.width = window.innerWidth * .63;
-        this.canvas.height = window.innerHeight;
+        this.canvas.width = 800
+        this.canvas.height = 600;
         this.ctx = this.canvas.getContext('2d');
-        this.drawGuideDots(this.props.bodyPart);
     }
 
     componentDidUpdate(prevProps) {
@@ -301,6 +304,7 @@ class Canvas extends React.Component{
 
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawGuideDots(this.props.bodyPart);
     }
 
     sendHistory(lineData) {
@@ -320,6 +324,8 @@ class Canvas extends React.Component{
                 this.paint(lineBetween);
             })
         })
+
+        this.drawGuideDots(this.props.bodyPart);
     }
 
     saveCanvas() {
