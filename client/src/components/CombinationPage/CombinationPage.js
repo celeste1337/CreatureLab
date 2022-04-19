@@ -186,7 +186,7 @@ function CombinationPage(props) {
                             <p class="code">{bodyCode}</p>
                         </div>
 
-                        <Link to="/" onClick={removeCookieOnDone}>Done</Link>
+                        <Link to="/home" onClick={removeCookieOnDone}>Done</Link>
                     </div>
                 
                 </div>

@@ -279,6 +279,7 @@ class Canvas extends React.Component{
         this.canvas.width = window.innerWidth * .63;
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
+        this.drawGuideDots(this.props.bodyPart);
     }
 
     componentDidUpdate(prevProps) {
