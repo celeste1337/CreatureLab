@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap');
+
+body {
+  font-family: 'Outfit', sans-serif;
+  margin: -10px;
+  padding: 0;
+}
  
 .App {
   text-align: center;
@@ -13,6 +19,10 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+#footer .container .row {
+  padding-bottom:8px;
 }
 
 .App-header {
@@ -153,18 +163,25 @@ input:checked+.slider:before {
   transform: translateX(85px);
 }
 
+.toolP {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Width Picker */
-
-
 .selected {
   background-color: white;
   color: #7F3AD7;
-  border: 5px solid #7F3AD7;
+  border: 8px solid #7F3AD7;
   border-radius: 50%;
-  height: 50px;
-  width: 50px;  
+  height: 54px;
+  width: 54px;  
   padding-left: 5px;
   padding-right: 5px;
+
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+
 }
 
 .widthButton {
@@ -172,9 +189,11 @@ input:checked+.slider:before {
   border-radius: 35px;
   border: none;
   color: white;
-  padding-left: 5px;
-  padding-right: 5px;
-  width: 50px;
+  padding-left: 9px;
+  padding-right: 9px;
+  width: 54px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
 }
 
 .linewidthpickerWrapper {
@@ -187,17 +206,21 @@ input:checked+.slider:before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
-  grid-template-columns: 50 50 50;
 
   padding-top: 3px;
   padding-bottom: 3px;
+  z-index: 1000;
 }
 
 /* Drawing Page */
-.logo {
-  width: 180px;
-  margin-top: 20px;
+p {
+  font-family: 'Outfit', sans-serif;
+}
+
+.logoDiv {
+  width: 65%;
+  display: flex;
+  align-items: center;
 }
 
 .doneButton {
@@ -236,8 +259,8 @@ input:checked+.slider:before {
 
 .rightButton {
   background-color: #3E4043;
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   border: none;
   border-radius: 50%;
   
@@ -245,10 +268,6 @@ input:checked+.slider:before {
 
 .ideas {
   background-color: #FBD449 !important;
-}
-
-.currentColor {
-  
 }
 
 .drawingPage {
@@ -275,11 +294,16 @@ input:checked+.slider:before {
   border-bottom: 3px dotted darkgrey;
 }
 
+.brushStroke {
+  margin-bottom: 20px;
+}
+
 .leftDrawing {
   width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .rightDrawing {
@@ -322,6 +346,74 @@ input:checked+.slider:before {
   align-items: center;
 }
 
+.currentColor {
+  width: 12vw;
+  height: 50px;
+}
+
+
+
+
+/* Popups */
+.ideasPopup-overlay {
+  width: 10vw;
+  height: 5vh;
+}
+
+.purpleCreature {
+  width: 8vw;
+  height: 14vh;
+  background-size: contain;
+  background-image: url('data/assets/purplecreature.png');
+  background-repeat: no-repeat;
+}
+
+.ideasBubble {
+  width: 8vw;
+  height: 14vh;
+  background-size: contain;
+  background-image: url('data/assets/textBubbleRight.png');
+  background-repeat: no-repeat;
+}
+
+.instructionsContainer {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 44%);
+  
+}
+
+.popupContent {
+  position: absolute;
+  left: 15vw;
+  top: 5vh;
+
+  display: flex;
+  align-items: center;
+}
+
+.instPopupDiv {
+  width: 10vw;
+  height: 7vh;
+  border: 2px solid black;
+  background-color: white;
+}
+
+.orangeCreature {
+  width: 8vw;
+  height: 14vh;
+  background-size: contain;
+  background-image: url('data/assets/orangecreature.png');
+  background-repeat: no-repeat;
+}
+
+.close {
+  position: relative;
+  left: -10px;
+  top: -10px;
+}
+
+
 /* Color Picker */
 .colorpickerWrapper {
   display: flex;
@@ -341,17 +433,24 @@ input:checked+.slider:before {
   appearance: none;
 }
 
-
-
 .drawingPage .colorpickerWrapper>input:checked {
   border-radius: 50px;
   box-sizing: border-box;
-  border-style: double !important;
-  border: 2px solid white !important;
+  box-shadow: inset 0px 0px 0px 3px white;
+  box-sizing: border-box;
   width: 50px;
   height: 50px;
   margin-left: 10px;
   margin-top: 10px;
+}
+
+.checkmark:after {
+  top: 9px;
+ left: 9px;
+ width: 8px;
+ height: 8px;
+ border-radius: 50%;
+ background: red;
 }
 
 /* Text */
