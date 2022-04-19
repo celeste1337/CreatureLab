@@ -37,7 +37,6 @@ class Canvas extends React.Component{
         for (var i = 0; i < 4; i++) {
             lastFour.push(lineHistory.pop());
         }
-        //console.log(lastFour);
         return lastFour;
     }
 
@@ -95,7 +94,6 @@ class Canvas extends React.Component{
     }
 
     onMouseDown({nativeEvent}) {
-        //console.log("mouse down");
         //grab mouse x and y from native event
         const {offsetX:prevX, offsetY:prevY} = nativeEvent;
         this.isPainting = true;
@@ -212,8 +210,7 @@ class Canvas extends React.Component{
 
     drawGuideDots(bodyPart) {
         if (bodyPart == "head") {
-            //yea
-            console.log("head")
+            //these might need to be adjusted
             this.ctx.strokeStyle = "black";
             this.ctx.beginPath();
             this.ctx.arc(300, 700, 9, 0, 2 * Math.PI);
@@ -226,7 +223,6 @@ class Canvas extends React.Component{
             this.ctx.fill();
         } else if (bodyPart == "body") {
             //yea
-            console.log("body")
             this.ctx.strokeStyle = "black";
 
             this.ctx.beginPath();
@@ -250,7 +246,6 @@ class Canvas extends React.Component{
             this.ctx.fill();
         } else if(bodyPart == "legs") {
             //draw dots
-            console.log("legs")
             this.ctx.strokeStyle = "black";
             this.ctx.beginPath();
             this.ctx.arc(800, 20, 9, 0, 2 * Math.PI);
@@ -295,7 +290,7 @@ class Canvas extends React.Component{
             this.clearAll();
         }
 
-        if(this.props.doneTrigger === true)
+        if(this.props.doneTrigger !== prevProps.doneTrigger)
         {
             this.saveCanvas();
         }
@@ -312,8 +307,6 @@ class Canvas extends React.Component{
     }
 
     undoLastLine() {
-        console.log("undo last lineeeee");
-        console.log(this.props.lineHistory);
         this.redrawAllFromData(this.props.lineHistory);
     }
 
@@ -333,11 +326,7 @@ class Canvas extends React.Component{
         //then were going to use sendCanvasData to send it back
         //to the main drawingpage
         let dataURL = this.canvas.toDataURL();
-        this.sendCanvasData(dataURL);
-    }
-
-    sendCanvasData(image) {
-        this.props.doneCallback(image);
+        this.props.doneCallback(dataURL);
     }
 
     render() {
