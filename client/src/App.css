@@ -2,6 +2,8 @@
 
 body {
   font-family: 'Outfit', sans-serif;
+  margin: -10px;
+  padding: 0;
 }
  
 .App {
@@ -170,12 +172,16 @@ input:checked+.slider:before {
 .selected {
   background-color: white;
   color: #7F3AD7;
-  border: 6px solid #7F3AD7;
+  border: 8px solid #7F3AD7;
   border-radius: 50%;
-  height: 50px;
-  width: 50px;  
+  height: 54px;
+  width: 54px;  
   padding-left: 5px;
   padding-right: 5px;
+
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+
 }
 
 .widthButton {
@@ -183,9 +189,11 @@ input:checked+.slider:before {
   border-radius: 35px;
   border: none;
   color: white;
-  padding-left: 5px;
-  padding-right: 5px;
-  width: 50px;
+  padding-left: 9px;
+  padding-right: 9px;
+  width: 54px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
 }
 
 .linewidthpickerWrapper {
@@ -209,9 +217,10 @@ p {
   font-family: 'Outfit', sans-serif;
 }
 
-.logo {
-  width: 180px;
-  margin-top: 20px;
+.logoDiv {
+  width: 65%;
+  display: flex;
+  align-items: center;
 }
 
 .doneButton {
@@ -250,8 +259,8 @@ p {
 
 .rightButton {
   background-color: #3E4043;
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   border: none;
   border-radius: 50%;
   
@@ -413,14 +422,22 @@ p {
 .drawingPage .colorpickerWrapper>input:checked {
   border-radius: 50px;
   box-sizing: border-box;
-  border-style: double !important;
-  border: 2px solid white !important;
+  box-shadow: inset 0px 0px 0px 3px white;
+  box-sizing: border-box;
   width: 50px;
   height: 50px;
   margin-left: 10px;
   margin-top: 10px;
 }
 
+.checkmark:after {
+  top: 9px;
+ left: 9px;
+ width: 8px;
+ height: 8px;
+ border-radius: 50%;
+ background: red;
+}
 
 /* Text */
 .purpleP {

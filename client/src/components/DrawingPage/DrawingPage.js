@@ -15,7 +15,8 @@ import { ReactComponent as SmallSquiggle } from '../../data/assets/SmallSquiggle
 import { ReactComponent as Bulb } from '../../data/assets/LightBulb.svg';
 import { ReactComponent as Trash } from '../../data/assets/Trash.svg';
 import { ReactComponent as QuestionMark } from '../../data/assets/Question.svg';
-
+import { ReactComponent as CreatureSVG } from '../../data/assets/Creature.svg';
+import { ReactComponent as LabSVG } from '../../data/assets/Lab.svg';
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
@@ -25,7 +26,7 @@ import logo from '../../data/assets/Logo.png';
 import { Cookies, withCookies } from 'react-cookie/lib';
 import { Link, unstable_HistoryRouter } from 'react-router-dom';
 import Instructions from './Instructions';
-import {withNavigation} from './NavigationHook';
+import { withNavigation } from './NavigationHook';
 
 class DrawingPage extends React.Component {
     static propTypes = {
@@ -68,6 +69,7 @@ class DrawingPage extends React.Component {
                 }
             ],
             currentColor: "#333333",
+            currentLab: "#944BF0",
             currentWidth: "7",
             lineHistory: [],
             //true means we are drawing
@@ -126,18 +128,22 @@ class DrawingPage extends React.Component {
         let part = randomNumber(3);
         switch (part) {
             case 0:
-                setIt("Head")
+                this.setIt("Head")
                 break;
             case 1:
-                setIt("Body")
+                this.setIt("Body")
                 break;
             case 2:
-                setIt("Legs")
+                this.setIt("Legs")
                 break;
             default:
-                setIt("Head")
+                this.setIt("Head")
                 break;
         }
+    }
+
+    setIt(part) {
+        this.bodyPart = part;
     }
 
     setBorderColor() {
@@ -359,6 +365,36 @@ class DrawingPage extends React.Component {
         return widths;
     }
 
+
+    getRandomColor() {
+        const randomColor = this.state.colors[Math.floor(Math.random() * 10)].color;
+        //console.log(randomColor);
+        return randomColor;
+    }
+
+    renderLogo() {
+        return (
+            <div className='logoDiv' onClick={() => this.changeLogoColor()}>
+                        <CreatureSVG></CreatureSVG>
+                        <LabSVG fill={this.state.currentLab}></LabSVG>
+            </div>
+        )
+    }
+
+    changeLogoColor(e) {
+        //e.preventDefault();
+
+        const color = this.getRandomColor();
+
+        this.setState({
+            currentLab: color,
+        });
+
+        //console.log(this.state.currentLab)
+
+        return false;
+    }
+
     removeLastLine() {
         this.undoTriggered = !this.undoTriggered;
 
@@ -380,7 +416,7 @@ class DrawingPage extends React.Component {
         return (
             <div className="drawingPage">
                 <div className='leftDrawing'>
-                    <img className='logo' src={logo} alt="CreatureLab"></img>
+                    {this.renderLogo()}
 
                     <div className="lineWidthDiv">
                         <h3 className='brushStroke'>Brush Stroke</h3>
