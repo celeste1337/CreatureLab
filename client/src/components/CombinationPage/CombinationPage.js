@@ -67,7 +67,7 @@ function CombinationPage(props) {
             }).then((img)=> {
                 setFinalImg(img);
                 //save to db :D
-                saveFinalImage();
+                saveFinalImage(img);
             })
         }
     }
@@ -116,10 +116,10 @@ function CombinationPage(props) {
         
     }
 
-    const saveFinalImage = () => {
+    const saveFinalImage = (img) => {
         //start building data obj to send to the db :)
         if(idArray.length === 3) {
-            let finalBase64 = finalImg;
+            let finalBase64 = img;
             let finalCharCode = `${idArray[0]}-${idArray[1]}-${idArray[2]}`;
 
             setFinalCode(finalCharCode);
@@ -133,6 +133,8 @@ function CombinationPage(props) {
                 },
                 createdOn: Date.now(),
             }
+            console.log(dataObj);
+
             fetch(config.url.API_URL + '/saveCreature', {
                 method: 'POST',
                 body: JSON.stringify(dataObj),
@@ -191,7 +193,6 @@ function CombinationPage(props) {
                 
                 </div>
                 }
-                    
             </div>
         </div>
     );
