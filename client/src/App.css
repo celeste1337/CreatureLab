@@ -2,7 +2,7 @@
 
 body {
   font-family: 'Outfit', sans-serif;
-  margin: -10px;
+  margin: 0px;
   padding: 0;
 }
  
@@ -459,21 +459,4 @@ h3 {
   font-family: 'Outfit', sans-serif;
   font-weight: 500;
   margin-bottom: 5px;
-}
-
-/* 
- * GALLERY PAGE
- */
-
-.galleryImg {
-  width: 150px;
-  border: 20px solid lightgrey;
-  border-radius: 20px;
-  
-  margin: 10px;
-}
-
-.galleryGrid {
-  display: flex;
-  justify-content: space-between;
 }

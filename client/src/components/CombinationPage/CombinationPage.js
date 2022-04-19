@@ -119,6 +119,7 @@ function CombinationPage(props) {
     const saveFinalImage = (img) => {
         //start building data obj to send to the db :)
         if(idArray.length === 3) {
+            console.log(borderColor);
             let finalBase64 = img;
             let finalCharCode = `${idArray[0]}-${idArray[1]}-${idArray[2]}`;
 

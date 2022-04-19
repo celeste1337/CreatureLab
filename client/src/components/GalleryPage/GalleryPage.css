@@ -1,0 +1,73 @@
+.galleryPage {
+    padding: 0 3vw;
+}
+
+.galleryPage .banner {
+    height: 100vh;
+}
+
+.galleryImg {
+    max-height: 350px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.galleryItemBlank {
+    display: none;
+}
+
+.galleryItem {
+    max-width: 22vw;
+    margin: 3vh 1vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 10px;
+    background-color: aliceblue;
+}
+
+.galleryGrid {
+    display: flex;
+    flex-direction: column;
+}
+
+.galleryGrid .grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.search input[type=text] {
+    width: 40vw;
+}
+
+.search input {
+    height: 10vh;
+}
+
+.search input[type=button], .search input[type=submit] {
+    background-color: purple;
+    color: white;
+    border: none;
+    height: 12vh;
+}
+
+.loading {
+    width: 100%;
+    text-align: center;
+}
+
+#creatureCodeFinal {
+    margin: 0 0 20px 0;
+}
+
+.logoBar img {
+    margin-top: 4vh;
+    width: 10vw;
+}

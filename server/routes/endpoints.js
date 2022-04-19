@@ -30,6 +30,7 @@ routes.route("/getAllCreatures").get(async (req, res) => {
         .find({}, {projection:{
             "creatureid": 1,
             "data.imageData": 1,
+            "data.borderColor": 1,
             "_id": 0
         }})
         .toArray(function(err, result) {

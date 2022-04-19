@@ -3,65 +3,96 @@ import { config } from '../../utilities/constants';
 import GalleryImg from './GalleryImg';
 import { FixedSizeList as List } from 'react-window';
 
-class GalleryGrid extends React.Component {
-    constructor(props) {
-        super(props);
-        this.ref = React.createRef();
-        this.state = {
-            imageResponse: [],
-        }
-        this.isLoaded = false;
-    }
+function GalleryGrid(props) {
+    const [imageResponse, setImageResponse] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [errMsg, setErrMsg] = useState('');
 
-    async retrieveImages() {
-
+    const retrieveImages = async () => {
         const response = await fetch(config.url.API_URL + '/getAllCreatures').catch((err) => console.log(err));
-        //debugger;
-        console.log(response)
 
         const json = await response.json();
-
-        if (json) {
-            this.isLoaded = true;
-            console.log(this.isLoaded);
-        };
-        console.log(json);
-        this.setState({imageResponse: json})
-
+        
+        setImageResponse(json);
     }
 
-    renderstuff(json) {
-        let arr = [];
-        json.map((data, _id) => {
-            //console.log(data)
-            arr.push(<GalleryImg key={_id} props={data}></GalleryImg>)
-        });
-        console.log(arr);
-        return arr;
+    const searchImages = async () => {
+        if(searchTerm) {
+            const response = await fetch(config.url.API_URL + '/find/' + searchTerm).catch((err) => console.error(err));
+
+            const json = await response.json();
+
+            if(json.length > 0) {
+                setImageResponse(json);
+            } else {
+                setErrMsg("Your search didn't come up with any results.")
+            }
+        } else {
+            setErrMsg("Something went wrong with your search! Try again.")
+        }
     }
 
-    // componentDidMount() {
-    //     this.retrieveImages();
-    // }
+    const renderError = () => {
+        if(errMsg) {
+            return (<div className="error">{errMsg}</div>)
+        }
+    }
 
-    // renderGrid(images) {
-    //     const gridImages = this.retrieveImages();
+    const search = (e) => {
+        setImageResponse([]);
+        setSearchTerm(e.target[0].value);
+        //grab text box value
+        //search
+        //chuck it into render stuff qB)
+    }
 
-    //     console.log(gridImages);
+    const renderstuff = () => {
+        if(imageResponse) {
+            let arr = [];
+            imageResponse.map((data, _id) => {
+                //console.log(data)
+                arr.push(<GalleryImg key={_id} props={data}></GalleryImg>)
+            });
+    
+            return arr;
+        }
+    }
 
-    //     return gridImages.map(({_id, data}) => {
-    //         return <img className="galleryImage" key={_id} src={data.imageData} alt={_id} loading='lazy'></img>
-    //     });
-    // }
+    const renderLoader = () => {
+        return(<div className="loading"><p>Your content is being loaded and will arrive soon...</p></div>)
+    }
+    
+    useEffect(() => { 
+        //every time search term updates
+        //we wanna search and rerender
+        if(searchTerm) {
+            //search
+            searchImages();
+        }
+        
+    }, [searchTerm])
 
-    render() {
-        this.retrieveImages();
-        return (
-            <div ref={this.ref} className="galleryGrid">
-                {this.isLoaded ? this.renderstuff(this.state.imageResponse) : []}
+
+    if(!searchTerm && !imageResponse.length > 0) {
+        retrieveImages();
+    }
+
+    return (
+        <div className="galleryGrid">
+            {errMsg.length > 0 ? renderError() : null}
+            <div className="search">
+                <form onSubmit={(e) => {e.preventDefault(); search(e)}}>
+                    <input type="text" name="search" id="searchInput" placeholder="Find your creature"/>
+                    <input type="submit" value="Search" />
+                    <input type="button" value="Refresh" onClick={(e) => {e.preventDefault(); retrieveImages();}}/>
+                </form>
             </div>
-        )
-    }
+            <div className="grid">
+                {imageResponse.length > 0 ? renderstuff() : renderLoader()}
+            </div>
+            
+        </div>
+    )
 }
 
 export default GalleryGrid;
