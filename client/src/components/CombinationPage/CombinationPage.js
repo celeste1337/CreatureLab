@@ -12,6 +12,10 @@ const mergeImages = require('merge-base64');
 function CombinationPage(props) {
     //were using react hooks just for fun/to learn about them here
     const [cookies, setCookie, removeCookie] = useCookies(['creatureId']);
+    const [imagesIds, setImagesIds] = useState({
+        images: [],
+        ids: [],
+    })
     const [imageArray, updateImageArray] = useState([]);
     const [idArray, setIdArray] = useState([]);
     const [finalImg, setFinalImg] = useState("");
@@ -32,17 +36,18 @@ function CombinationPage(props) {
             mergeThem();
         }
 
+        console.log(imagesIds);
+
         //cleanup :DDDDD
         return () => {
             controller.abort();
         }
     }, 
     //empty array here indicates what props to reload on
-    [imageArray])
+    [imagesIds])
     
     const determineTypesLeft = (type) => ["Head", "Body", "Legs"].filter(item => type !== item);
     
-
     const getType = (creatureObj) => creatureObj.type;
     
     const removeCookieOnDone = () => removeCookie('creatureId');
@@ -58,8 +63,8 @@ function CombinationPage(props) {
     };
 
     const mergeThem = () => {
-        if(imageArray && imageArray.length > 0) {
-            mergeImages(imageArray, {
+        if(imagesIds.images && imagesIds.images.length > 0) {
+            mergeImages(imagesIds.images, {
                 //options
                 //make it vertical
                 direction:true,
@@ -76,6 +81,7 @@ function CombinationPage(props) {
         //need to get initial creatureid via cookie
         let tempArr = [];
         let base64Images = [];
+        let idArr = [];
 
         //note the double awaits. there are a lot of promises going on
         //even tho the awaits are blocking it we kinda want them to
@@ -93,48 +99,49 @@ function CombinationPage(props) {
             tempArr.forEach((creature) => {
                 //this kinda doesnt matter as long as it has a value -> itll rewrite itself but thats whatevs
                 setBorderColor(creature.data.borderColor);
-                setIdArray(prev=>[...prev, creature.creatureid])
 
                 const setMe = (input) => input.replace("data:image/png;base64,","")
 
                 switch (getType(creature)) {
                     case 'Head':
                         base64Images[0] = setMe(creature.data.imageData);
+                        idArr[0] = creature.creatureid;
                         break;
                     case 'Body':
                         base64Images[1] = setMe(creature.data.imageData);
+                        idArr[1] = creature.creatureid;
                         break;
                     case 'Legs':
                         base64Images[2] = setMe(creature.data.imageData);
+                        idArr[2] = creature.creatureid;
                         break;
                     default:
                         break;
                 }
             });
-            updateImageArray(base64Images);
+            setImagesIds({...imagesIds, images: base64Images, ids: idArr})
         })
         
+        //useEffect((idArr, base64Images) => { setIdArray(idArr); updateImageArray(base64Images);})
     }
 
     const saveFinalImage = (img) => {
         //start building data obj to send to the db :)
-        if(idArray.length === 3) {
-            console.log(borderColor);
+        if(imagesIds.ids.length === 3) {
             let finalBase64 = img;
-            let finalCharCode = `${idArray[0]}-${idArray[1]}-${idArray[2]}`;
+            let finalCharCode = `${imagesIds.ids[0]}-${imagesIds.ids[1]}-${imagesIds.ids[2]}`;
 
             setFinalCode(finalCharCode);
 
             let dataObj = {
                 creatureid: finalCharCode,
-                creatures: idArray,
+                creatures: imagesIds.ids,
                 data: {
                     imageData: finalBase64,
                     borderColor: borderColor
                 },
                 createdOn: Date.now(),
             }
-            console.log(dataObj);
 
             fetch(config.url.API_URL + '/saveCreature', {
                 method: 'POST',
@@ -167,9 +174,6 @@ function CombinationPage(props) {
                     onEvent={event => {
                         if(event === 'complete') {
                             setAnimationFinished(true);
-                            
-                            //hide
-
                         }
                     }}
                     autoplay
@@ -181,12 +185,12 @@ function CombinationPage(props) {
                     <div id="codes">
                         <div className="creatureCodeBox">
                             <h3>Your creature code is</h3>
-                            <h2 class="code">{finalCode}</h2>
+                            <h2 className="code">{finalCode}</h2>
                             <h4>Check in with a CreatureLab scientist to finish your creature.</h4>
                         </div>
                         <div className="bodyPartCodeBox">
                             <h3>Your body part code is</h3>
-                            <p class="code">{bodyCode}</p>
+                            <p className="code">{bodyCode}</p>
                         </div>
 
                         <Link to="/home" onClick={removeCookieOnDone}>Done</Link>

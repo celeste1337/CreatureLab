@@ -13,11 +13,7 @@ class GalleryPage extends React.Component {
     
     
     componentDidMount() {
-        const element = this.ref.current;
-        if (element) {
-            element.scrollTop = (element.scrollHeight - element.clientWidth) / 2;
-            element.scrollLeft = (element.scrollWidth - element.clientHeight) / 2;
-        }
+
     }
  
     render() {
@@ -28,9 +24,12 @@ class GalleryPage extends React.Component {
                 <div className="banner">
                     <h1>Explore the <span className="purpleP">limitless</span> creativity</h1>
                     <p>Enter your creation code down below to see your creatures.</p>
+                    <a href='#gallery'>Click</a>
                 </div>
+                <div id="gallery">
                     <GalleryGrid>
                     </GalleryGrid>
+                </div>
             </div>
         )
     }

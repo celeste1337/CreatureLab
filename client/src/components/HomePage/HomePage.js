@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef, useRef } from "react";
 import Button from '../Button';
 import {Link} from 'react-router-dom';
 import {config} from '../../utilities/constants.js';
@@ -6,6 +6,7 @@ import {instanceOf} from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 import "./HomePage.css";
 import logo from "../../data/assets/Logo.png";
+import {Player} from '@lottiefiles/react-lottie-player'
 
 class HomePage extends React.Component {
     static propTypes = {
@@ -16,6 +17,7 @@ class HomePage extends React.Component {
         super(props);
         const {cookies} = props;
         cookies.getAll();
+        this.myRef = React.createRef();
     }
 
     componentDidMount() {
@@ -25,13 +27,19 @@ class HomePage extends React.Component {
             cookies.remove('creatureId');
         }
     }
-
     render() {
         return(
             <div className="homePage">
-                <h2>Discover the power of creative collaboration</h2>
-                <img id="logo" src={logo}></img>
-                <Link to="/draw">Get Started!</Link>
+                <div>
+                    <Player
+                    ref={this.myRef}
+                    id='player'
+                    autoplay={true}
+                    loop={true}
+                    src={'https://assets2.lottiefiles.com/private_files/lf30_kxxu2cdj.json'}></Player>
+                </div>
+                
+                <Link style={{position: 'absolute', top: '70vh'}} to="/draw">Get Started!</Link>
             </div>
         );
     }

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { config } from '../../utilities/constants';
 import GalleryImg from './GalleryImg';
 import { FixedSizeList as List } from 'react-window';
+import {Player} from '@lottiefiles/react-lottie-player'
 
 function GalleryGrid(props) {
     const [imageResponse, setImageResponse] = useState([]);
@@ -59,8 +60,10 @@ function GalleryGrid(props) {
     }
 
     const renderLoader = () => {
-        return(<div className="loading"><p>Your content is being loaded and will arrive soon...</p></div>)
-    }
+                return(<Player
+                    className="loading"
+                    autoplay
+                    src="https://assets2.lottiefiles.com/private_files/lf30_hbmgptwa.json"></Player>)}
     
     useEffect(() => { 
         //every time search term updates
