@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import {config} from '../../utilities/constants.js';
 import {instanceOf} from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
+import "./HomePage.css";
+import logo from "../../data/assets/Logo.png";
 
 class HomePage extends React.Component {
     static propTypes = {
@@ -26,10 +28,10 @@ class HomePage extends React.Component {
 
     render() {
         return(
-            <div className="routes">
-                <h2>Explore your creativity</h2>
-                <Link to="/draw">Draw</Link>
-                <Link to="/gallery"><Button buttonText="gallery"></Button></Link>
+            <div className="homePage">
+                <h2>Discover the power of creative collaboration</h2>
+                <img id="logo" src={logo}></img>
+                <Link to="/draw">Get Started!</Link>
             </div>
         );
     }
