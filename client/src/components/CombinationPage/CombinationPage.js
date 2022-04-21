@@ -8,6 +8,7 @@ import { useFirstRender } from './FirstRenderHook';
 import './CombinationPage.css';
 import first from './lotties/first.json';
 import second from './lotties/second.json'
+import third from './lotties/third.json'
 import { Player } from '@lottiefiles/react-lottie-player';
 
 //why does it do this.
@@ -26,8 +27,11 @@ function CombinationPage(props) {
     const [finalCode, setFinalCode] = useState("");
     const [bodyCode, setBodyCode] = useState("");
     const [borderColor, setBorderColor] = useState("");
-    const [currentAnimation, setCurrentAnimation] = useState(first);
+    const [animationArr, setAnimArr] = useState([first, "https://assets9.lottiefiles.com/private_files/lf30_m4vzl5es.json", "https://assets1.lottiefiles.com/private_files/lf30_kxxu2cdj.json"]);
+    const [animIndex, setAnimIndex] = useState(0);
+    const [currentAnimation, setCurrentAnimation] = useState(animationArr[animIndex]);
     const [animationFinished, setAnimationFinished] = useState(false);
+ 
     const firstRender = useFirstRender();
     const controller = new AbortController();
     const signal = controller.signal;
@@ -173,9 +177,21 @@ function CombinationPage(props) {
             <div className="comboPage">
                 {!animationFinished && 
                 <Player
+                    onEvent={
+                        event => {
+                            console.log(event)
+                            if(event == 'complete') {
+                                
+                                //set src to something else
+                                setAnimIndex(animIndex+1);
+                                
+                                setCurrentAnimation(animationArr[animIndex]);
+                            }
+                        }
+                    }
                     autoplay={true}
                     loop={false}
-                    src={currentAnimation}></Player>
+                    src={animationArr[animIndex]}></Player>
                 }
                 {animationFinished && 
                 <div id="completed">
