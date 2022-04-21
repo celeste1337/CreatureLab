@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { withCookies, useCookies } from 'react-cookie';
-import {Player, Controls} from '@lottiefiles/react-lottie-player';
+
+import {create} from '@lottiefiles/lottie-interactivity';
 import {Link, Navigate} from 'react-router-dom';
 import {config} from '../../utilities/constants';
 import { useFirstRender } from './FirstRenderHook';
 import './CombinationPage.css';
+import first from './lotties/first.json';
+import second from './lotties/second.json'
+import { Player } from '@lottiefiles/react-lottie-player';
 
 //why does it do this.
 const mergeImages = require('merge-base64');
@@ -22,10 +26,12 @@ function CombinationPage(props) {
     const [finalCode, setFinalCode] = useState("");
     const [bodyCode, setBodyCode] = useState("");
     const [borderColor, setBorderColor] = useState("");
+    const [currentAnimation, setCurrentAnimation] = useState(first);
     const [animationFinished, setAnimationFinished] = useState(false);
     const firstRender = useFirstRender();
     const controller = new AbortController();
     const signal = controller.signal;
+    const player = useRef(null);
 
     //on init
     useEffect(() => {
@@ -36,15 +42,13 @@ function CombinationPage(props) {
             mergeThem();
         }
 
-        console.log(imagesIds);
-
         //cleanup :DDDDD
         return () => {
             controller.abort();
         }
     }, 
     //empty array here indicates what props to reload on
-    [imagesIds])
+    [imagesIds, player])
     
     const determineTypesLeft = (type) => ["Head", "Body", "Legs"].filter(item => type !== item);
     
@@ -121,8 +125,6 @@ function CombinationPage(props) {
             });
             setImagesIds({...imagesIds, images: base64Images, ids: idArr})
         })
-        
-        //useEffect((idArr, base64Images) => { setIdArray(idArr); updateImageArray(base64Images);})
     }
 
     const saveFinalImage = (img) => {
@@ -171,13 +173,9 @@ function CombinationPage(props) {
             <div className="comboPage">
                 {!animationFinished && 
                 <Player
-                    onEvent={event => {
-                        if(event === 'complete') {
-                            setAnimationFinished(true);
-                        }
-                    }}
-                    autoplay
-                    src="https://assets7.lottiefiles.com/private_files/lf30_eh7nrprb.json"></Player>
+                    autoplay={true}
+                    loop={false}
+                    src={currentAnimation}></Player>
                 }
                 {animationFinished && 
                 <div id="completed">

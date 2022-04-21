@@ -6,6 +6,8 @@ import {instanceOf} from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 import "./HomePage.css";
 import logo from "../../data/assets/Logo.png";
+import '@lottiefiles/lottie-player'
+import {create} from '@lottiefiles/lottie-interactivity'
 import {Player} from '@lottiefiles/react-lottie-player'
 
 class HomePage extends React.Component {
@@ -26,17 +28,14 @@ class HomePage extends React.Component {
             //you have a cookie already set
             cookies.remove('creatureId');
         }
+
     }
+
     render() {
         return(
             <div className="homePage">
                 <div>
-                    <Player
-                    ref={this.myRef}
-                    id='player'
-                    autoplay={true}
-                    loop={true}
-                    src={'https://assets2.lottiefiles.com/private_files/lf30_kxxu2cdj.json'}></Player>
+                    <Player autoplay={true} loop={true} src="https://assets1.lottiefiles.com/private_files/lf30_kxxu2cdj.json"></Player>
                 </div>
                 
                 <Link style={{position: 'absolute', top: '70vh'}} to="/draw">Get Started!</Link>
