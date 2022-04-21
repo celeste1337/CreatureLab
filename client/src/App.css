@@ -209,7 +209,6 @@ input:checked+.slider:before {
 
   padding-top: 3px;
   padding-bottom: 3px;
-  z-index: 1000;
 }
 
 /* Drawing Page */
@@ -276,6 +275,14 @@ p {
 
   background: linear-gradient(61.55deg, rgba(148, 75, 240, 0.04) 23.21%, rgba(113, 0, 255, 0) 88.59%),
     linear-gradient(0deg, #FFFFFF, #FFFFFF);
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 
 }
 
@@ -413,6 +420,10 @@ p {
   top: -10px;
 }
 
+.highlighted {
+  position: relative;
+  z-index: 1000;
+}
 
 /* Color Picker */
 .colorpickerWrapper {

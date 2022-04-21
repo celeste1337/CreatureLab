@@ -164,7 +164,7 @@ function CombinationPage(props) {
                     onEvent={event => {
                         if(event === 'complete') {
                             setAnimationFinished(true);
-                            
+                            console.log(animationFinished);
                             //hide
 
                         }

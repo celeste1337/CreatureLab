@@ -8,25 +8,21 @@ import Colorpicker from './Colorpicker';
 import Button from '../Button';
 import LineWidthPicker from './LineWidthPicker';
 import Popup from 'reactjs-popup';
-import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
 import { ReactComponent as BigSquiggle } from '../../data/assets/BigSquiggle.svg';
 import { ReactComponent as MediumSquiggle } from '../../data/assets/MediumSquiggle.svg';
 import { ReactComponent as SmallSquiggle } from '../../data/assets/SmallSquiggle.svg';
 import { ReactComponent as Bulb } from '../../data/assets/LightBulb.svg';
 import { ReactComponent as Trash } from '../../data/assets/Trash.svg';
-import { ReactComponent as QuestionMark } from '../../data/assets/Question.svg';
 import { ReactComponent as CreatureSVG } from '../../data/assets/Creature.svg';
 import { ReactComponent as LabSVG } from '../../data/assets/Lab.svg';
-import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
 import { config } from '../../utilities/constants';
-//import "@lottiefiles/lottie-player";
-import logo from '../../data/assets/Logo.png';
 import { Cookies, withCookies } from 'react-cookie/lib';
 import { Link, unstable_HistoryRouter } from 'react-router-dom';
 import Instructions from './Instructions';
 import { withNavigation } from './NavigationHook';
+import ToolPlayer from './ToolPlayer';
 
 class DrawingPage extends React.Component {
     static propTypes = {
@@ -333,7 +329,9 @@ class DrawingPage extends React.Component {
     }
 
     renderInstructionsButton() {
-        return <Instructions className="test"></Instructions>
+        return (
+            <Instructions className="test"></Instructions>
+        )
     }
 
     renderClearButton() {
@@ -413,10 +411,18 @@ class DrawingPage extends React.Component {
         console.log(this.props.smooth);
     }
 
+    renderLottie() {
+        return (
+            <ToolPlayer></ToolPlayer>
+        )
+    }
+
     render() {
         return (
             <div className="drawingPage">
                 <div className='leftDrawing'>
+                    {this.renderLottie()}
+
                     {this.renderLogo()}
 
                     <div className="lineWidthDiv">
