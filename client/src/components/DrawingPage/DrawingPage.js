@@ -70,6 +70,7 @@ class DrawingPage extends React.Component {
                 }
             ],
             currentColor: "#333333",
+            currentLab: "#bb4bf0",
             currentWidth: "7",
             lineHistory: [],
             //true means we are drawing
@@ -79,6 +80,8 @@ class DrawingPage extends React.Component {
             bodyPart: '',
             doneTrigger: false,
         }
+        //this.currentLab = "#bb4bf0";
+
         this.removeLastLine = this.removeLastLine.bind(this);
         this.handleToolChange = this.handleToolChange.bind(this);
 
@@ -88,7 +91,7 @@ class DrawingPage extends React.Component {
 
         this.undoTriggered = false;
         this.dataURL = '';
-        
+
         this.borderColor = '';
 
         cookies.getAll();
@@ -102,7 +105,7 @@ class DrawingPage extends React.Component {
 
     setBodyPart() {
         let part = randomNumber(3);
-        const setIt = (input) => this.setState({bodyPart: input})
+        const setIt = (input) => this.setState({ bodyPart: input })
 
         switch (part) {
             case 0:
@@ -327,7 +330,25 @@ class DrawingPage extends React.Component {
             <ToolPlayer></ToolPlayer>
         )
     }
-    
+
+    changeLab() {
+        const rand = Math.floor(Math.random()*this.state.colors.length);
+        this.setState({
+            currentLab: this.state.colors[rand].color
+        });
+        console.log(this.state.currentLab);
+
+        // this.currentLab = this.state.colors[rand].color;
+    }
+
+    renderLogo() {
+        return (
+        <div className="logo" onClick={() => this.changeLab()}>
+            <CreatureSVG></CreatureSVG>
+            <LabSVG fill={this.state.currentLab}></LabSVG>
+        </div>)
+    }
+
     clearAll(i) {
         this.setState({
             clear: i,
@@ -338,8 +359,6 @@ class DrawingPage extends React.Component {
         return (
             <div className="drawingPage">
                 <div className='leftDrawing'>
-                    {this.renderLottie()}
-
                     {this.renderLogo()}
 
                     <div className="lineWidthDiv">
@@ -361,7 +380,7 @@ class DrawingPage extends React.Component {
                             <input type="checkbox"
                                 checked={!this.state.status}
                                 onChange={this.handleToolChange} ></input>
-                            <span className="slider round" id="pencil"></span>
+                            <span className="slider round" id="pencil">{this.renderLottie()}</span>
                         </label>
                     </div>
                 </div>

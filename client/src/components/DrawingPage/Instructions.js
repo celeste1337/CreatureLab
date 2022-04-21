@@ -13,14 +13,14 @@ export default function Instructions() {
                     trigger={<Button className="rightButton" buttonText={<QuestionMark></QuestionMark>} />}
                     modal
                 >
-                    {closeTwo => (
+                    {close => (
                         <div className='popupContent'>
                             <div className='orangeCreature'></div>
                             <div className="instPopupDiv">
-                                <a className="close" onClick={closeTwo}>X</a>
+                                <a className="close" onClick={close}>X</a>
                                 Use this to change your brush size
                             </div>
-                            <Button className="nextButton" buttonText="Next" onClick={next()}></Button>
+                            <Button className="nextButton" buttonText="Next" onClick={() => next()}></Button>
                         </div>
                     )}
                 </Popup>
@@ -30,7 +30,7 @@ export default function Instructions() {
             id: 1,
             data:
                 <Popup
-                    trigger={<Button className="nextButton" buttonText="Next" />}
+                    trigger={<Button className="rightButton" buttonText={<QuestionMark></QuestionMark>} />}
                     modal
                 >
                     {close => (
@@ -40,7 +40,7 @@ export default function Instructions() {
                                 <a className="close" onClick={close}>X</a>
                                 Use this to switch between eraser and brush tools
                             </div>
-                            <Button className="nextButton" buttonText="Next" onClick={next()}></Button>
+                            <Button className="nextButton" buttonText="Next" onClick={() => next()}></Button>
                         </div>
                     )}
                 </Popup>
@@ -50,7 +50,7 @@ export default function Instructions() {
             id: 2,
             data:
                 <Popup
-                    trigger={<Button className="nextButton" buttonText="Next" />}
+                    trigger={<Button className="rightButton" buttonText={<QuestionMark></QuestionMark>} />}
                     modal
                 >
                     {close => (
@@ -60,7 +60,7 @@ export default function Instructions() {
                                 <a className="close" onClick={close}>X</a>
                                 Make sure your drawing connects to the dots
                             </div>
-                            <Button className="nextButton" buttonText="Next" onClick={next()}></Button>
+                            <Button className="nextButton" buttonText="Next" onClick={() => next()}></Button>
                         </div>
                     )}
                 </Popup>
@@ -70,7 +70,7 @@ export default function Instructions() {
             id: 3,
             data:
                 <Popup
-                    trigger={<Button className="nextButton" buttonText="Next" />}
+                    trigger={<Button className="rightButton" buttonText={<QuestionMark></QuestionMark>} />}
                     modal
                 >
                     {close => (
@@ -80,7 +80,7 @@ export default function Instructions() {
                                 <a className="close" onClick={close}>X</a>
                                 Tap here if you need help deciding what to draw
                             </div>
-                            <Button className="nextButton" buttonText="Next" onClick={next()}></Button>
+                            <Button className="nextButton" buttonText="Next" onClick={() => next()}></Button>
                         </div>
                     )}
                 </Popup>
@@ -90,7 +90,7 @@ export default function Instructions() {
             id: 4,
             data:
                 <Popup
-                    trigger={<Button className="nextButton" buttonText="Next"/>}
+                    trigger={<Button className="rightButton" buttonText={<QuestionMark></QuestionMark>} />}
                     modal
                 >
                     {close => (
@@ -100,7 +100,7 @@ export default function Instructions() {
                                 <a className="close" onClick={close}>X</a>
                                 Tap here when you're all done drawing
                             </div>
-                            <Button className="nextButton" buttonText="Next" onClick={next()}></Button>
+                            <Button className="nextButton" buttonText="Next" onClick={close}></Button>
                         </div>
                     )}
                 </Popup>
@@ -110,8 +110,7 @@ export default function Instructions() {
     const [currentStep, setCurrent] = useState(0);
 
     const next = () => {
-        useEffect(() => {setCurrent(currentStep + 1);})
-        
+        if (currentStep < 4) setCurrent(currentStep + 1);
     }
 
     return (
