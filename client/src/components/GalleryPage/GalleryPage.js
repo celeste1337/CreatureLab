@@ -1,6 +1,7 @@
 import React from 'react';
-import GalleryExplore from './GalleryExplore';
 import GalleryGrid from './GalleryGrid';
+import './GalleryPage.css';
+import logo from './../../data/assets/Logo.png'
 //import ScrollContainer from 'react-indiana-drag-scroll';
 
 class GalleryPage extends React.Component {
@@ -12,35 +13,25 @@ class GalleryPage extends React.Component {
     
     
     componentDidMount() {
-        const element = this.ref.current;
-        if (element) {
-            element.scrollTop = (element.scrollHeight - element.clientWidth) / 2;
-            element.scrollLeft = (element.scrollWidth - element.clientHeight) / 2;
-        }
+
     }
  
     render() {
         // if gallery is in grid mode
         return (
-            <div ref={this.ref} className="galleryGrid" >
-                <GalleryGrid>
-                    
-                </GalleryGrid>
-
+            <div className="galleryPage">
+                <div className="logoBar"><img src={logo}/></div>
+                <div className="banner">
+                    <h1>Explore the <span className="purpleP">limitless</span> creativity</h1>
+                    <p>Enter your creation code down below to see your creatures.</p>
+                    <a href='#gallery'>Click</a>
+                </div>
+                <div id="gallery">
+                    <GalleryGrid>
+                    </GalleryGrid>
+                </div>
             </div>
         )
-
-        // if gallery is in explore mode
-       // return (
-            // <ScrollContainer 
-            //     className="scrollContainer"
-            //     nativeMobileScroll={false}
-            //     ref={this.ref}>
-            //     <GalleryExplore>
-                
-            //     </GalleryExplore>
-            // </ScrollContainer>
-        //)
     }
 }
 

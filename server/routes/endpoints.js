@@ -3,7 +3,7 @@
 const express = require("express");
 const dbo = require('../config/dbconnect');
 const path = require('path');
-
+const ObjectID = require("bson-objectid");
 //instance of the router
 const routes = express.Router();
 
@@ -30,12 +30,50 @@ routes.route("/getAllCreatures").get(async (req, res) => {
         .find({}, {projection:{
             "creatureid": 1,
             "data.imageData": 1,
+            "data.borderColor": 1,
             "_id": 0
         }})
         .toArray(function(err, result) {
             if(err) {
                 res.status(400).send("error fetching the guys")
             } else {
+                res.json(result);
+            }
+        })
+})
+
+routes.route("/getInitialCreature").get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("completedcreatures")
+    .find({})
+    .limit(1)
+    .toArray((err, result) => {
+        if(err) {
+            res.status(400).send("error fetching the guys")
+        } else {
+            //console.log(result);
+            res.json(result);
+        }
+    })
+})
+
+routes.route("/getSomeCreatures/:objId").get(async (req, res) => {
+    const lastObjId = ObjectID(req.params.objId);
+    const dbConnect = dbo.getDb();
+
+    dbConnect
+        .collection("completedcreatures")
+        .find({ _id: { $gt: lastObjId}},  { projection: {
+            "creatureid": 1,
+            "data.imageData": 1,
+            "data.borderColor": 1,
+            "_id": 1}})
+        .limit(8)
+        .toArray(function(err, result) {
+            if(err) {
+                res.status(400).send("error fetching the guys")
+            } else {
+               // console.log(result);
                 res.json(result);
             }
         })

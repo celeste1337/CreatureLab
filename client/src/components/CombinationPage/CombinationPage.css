@@ -10,7 +10,9 @@
 #codes {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    width: 35vw;
+    justify-content: center;
+    margin-left: 7vw;
 }
 
 #finalImg {
@@ -18,8 +20,6 @@
 }
 
 .creatureCodeBox, .bodyPartCodeBox {
-    border: 4px dotted #944BF0;
-    border-radius: 15px;
     padding: 10px;
     text-align: center;
 }

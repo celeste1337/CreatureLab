@@ -1,8 +1,5 @@
 .homePage {
     height: 100vh;
-    background-size: 100px 100px;
-    background-image: linear-gradient(45deg, transparent 69px, rgb(189, 188, 188) 70px, transparent 50px),
-    linear-gradient(-45deg, transparent 69px, rgb(190, 190, 190) 70px, transparent 30px);
     justify-content: center;
     display: flex;
     flex-direction: column;
