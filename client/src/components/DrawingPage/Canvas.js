@@ -265,18 +265,6 @@ class Canvas extends React.Component{
     }
 
 
-    //paint a smooth line to reduce user jitter
-    paintSmooth(lineData) {
-        // this.ctx.beginPath();
-        // this.ctx.moveTo(lineData[3].x, lineData[3].y); //the third most recent point
-        // this.ctx.lineCap = 'round';
-        // this.ctx.bezierCurveTo(lineData[2].x, lineData[2].y, lineData[1].x, lineData[1].y, lineData[0].x, lineData[0].y);
-        // this.ctx.strokeStyle = this.props.strokeColor;
-        // this.ctx.stroke();
-        
-        //this.prevPos = lineData[1].end;
-    }
-
 
     componentDidMount() {
         //you can change these they were just kinda big on my monitor lmao
