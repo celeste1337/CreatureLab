@@ -2,7 +2,7 @@
   "name": "capstone~",
   "main": "server.js",
   "scripts": {
-    "start": "node server/",
+    "start": "node server/server.js",
     "nodemon": "nodemon server/server.js"
   },
   "dependencies": {
