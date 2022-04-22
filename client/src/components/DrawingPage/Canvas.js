@@ -211,7 +211,7 @@ class Canvas extends React.Component{
     }
 
     drawGuideDots(bodyPart) {
-        console.log(bodyPart)
+        //console.log(bodyPart)
         if (bodyPart === "Head") {
             //these might need to be adjusted
             this.ctx.strokeStyle = "black";
