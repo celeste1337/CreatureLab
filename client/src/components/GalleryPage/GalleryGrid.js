@@ -23,18 +23,20 @@ function GalleryGrid(props) {
     }
 
     const getMoreImages = async () => {
-        console.log(stopCalling);
+        //console.log(stopCalling);
         if(lastId && !stopCalling) {
         const response = await fetch(config.url.API_URL + '/getSomeCreatures/' + lastId).catch((err) => console.log(err));
         const json = await response.json();
 
         if(json.length < 1) {
             setStop(true)
-            console.log(imageResponse.length)
+           // console.log(imageResponse.length)
         } else {
             setLastId(json[json.length-1]._id)
-    
-            setImageResponse(imageResponse => [...imageResponse, ...json]);
+            
+            let returndata = json.filter((item) => item.data.imageData.length > 0)
+            //console.log(returndata);
+            setImageResponse(imageResponse => [...imageResponse, ...returndata]);
         }
         
         }
@@ -72,6 +74,8 @@ function GalleryGrid(props) {
     }
 
     const renderstuff = () => {
+
+
         if(isLoaded === true) {
             let arr = [];
             imageResponse.map((data, _id) => {
