@@ -8,8 +8,6 @@ import Colorpicker from './Colorpicker';
 import Button from '../Button';
 import LineWidthPicker from './LineWidthPicker';
 import Popup from 'reactjs-popup';
-
-import { ReactComponent as CurrentColorIndicator } from '../../data/assets/currentColorScribble.svg';
 import { ReactComponent as BigSquiggle } from '../../data/assets/BigSquiggle.svg';
 import { ReactComponent as MediumSquiggle } from '../../data/assets/MediumSquiggle.svg';
 import { ReactComponent as SmallSquiggle } from '../../data/assets/SmallSquiggle.svg';
@@ -17,8 +15,6 @@ import { ReactComponent as Bulb } from '../../data/assets/LightBulb.svg';
 import { ReactComponent as Trash } from '../../data/assets/Trash.svg';
 import { ReactComponent as CreatureSVG } from '../../data/assets/Creature.svg';
 import { ReactComponent as LabSVG } from '../../data/assets/Lab.svg';
-import { ReactComponent as QuestionMark } from '../../data/assets/Question.svg';
-
 import Switch from '../Switch';
 import { randomNumber } from '../../utilities/util';
 import { nanoid } from 'nanoid';
@@ -93,6 +89,31 @@ class DrawingPage extends React.Component {
         this.dataURL = '';
 
         this.borderColor = '';
+
+        this.ideas = [
+            'Draw a robot!',
+            "Draw a dinosaur",
+            "Draw something that lives in the ocean",
+            "Draw a magical creature",
+            "Draw something that lives in the rainforest",
+            "Draw an insect",
+            "Draw something purple",
+            "Draw something green",
+            "Draw something that flies",
+            "Draw something that burrows through the ground",
+            "Draw a human!",
+            "Draw a creature made out of objects in your home",
+            "Draw your pet",
+            "Draw a happy animal",
+            "Draw something ferocious",
+            "Draw a fish",
+            "Draw a monkey",
+            "Draw a Pokemon!",
+            "Draw something that roars",
+            "Draw something that squawks",
+            "Draw your favorite animal",
+            "Draw an animal you’ve never seen before",
+        ];
 
         cookies.getAll();
     }
@@ -268,7 +289,24 @@ class DrawingPage extends React.Component {
 
     renderIdeasButton() {
         return (
-            <Button className="rightButton ideas" id="ideas" onClick={() => this.initiateDone()} buttonText={<Bulb></Bulb>} />
+            <Popup
+                className="ideasPopup"
+                trigger={<Button className="rightButton ideas" buttonText={<Bulb></Bulb>} />}
+                modal
+                position="right top"
+            >
+                {close => (
+                    <div>
+                        <div className='idea'>
+                            <div className="purpleCreature"></div>
+                            <div className="ideasBubble">
+                                {this.ideas[Math.floor(Math.random() * this.ideas.length)]}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+            </Popup>
         )
     }
 
@@ -288,6 +326,19 @@ class DrawingPage extends React.Component {
         return (
             <Button onClick={this.toggleSmooth()} buttonText={"Smooth"} />
         )
+    }
+
+    renderScribble(size) {
+        //console.log(size);
+        switch (size) {
+            case '12':
+                return <BigSquiggle className="currentColor" fill={this.state.currentColor}></BigSquiggle>;
+            case '7':
+                return <MediumSquiggle className="currentColor" fill={this.state.currentColor}></MediumSquiggle>;
+            case '3':
+                return <SmallSquiggle className="currentColor" fill={this.state.currentColor}></SmallSquiggle>;
+        }
+        //document.querySelector('.currentWidth').style.backgroundImage
     }
 
     renderLineWidthPicker() {
@@ -332,7 +383,7 @@ class DrawingPage extends React.Component {
     }
 
     changeLab() {
-        const rand = Math.floor(Math.random()*this.state.colors.length);
+        const rand = Math.floor(Math.random() * this.state.colors.length);
         this.setState({
             currentLab: this.state.colors[rand].color
         });
@@ -343,10 +394,10 @@ class DrawingPage extends React.Component {
 
     renderLogo() {
         return (
-        <div className="logo" onClick={() => this.changeLab()}>
-            <CreatureSVG></CreatureSVG>
-            <LabSVG fill={this.state.currentLab}></LabSVG>
-        </div>)
+            <div className="logo" onClick={() => this.changeLab()}>
+                <CreatureSVG></CreatureSVG>
+                <LabSVG fill={this.state.currentLab}></LabSVG>
+            </div>)
     }
 
     clearAll(i) {
@@ -370,17 +421,23 @@ class DrawingPage extends React.Component {
 
                     </div>
 
-                    <CurrentColorIndicator className="currentColor" fill={this.state.currentColor} />
+                    <div className="scribbleDiv">
+                        {this.renderScribble(this.state.currentWidth)}
+                    </div>
+
                     <div className="colorpickerWrapper">
                         {this.renderColorPicker()}
                     </div>
 
                     <div className="sliderDiv">
+                        <div className='toolP'>
+                            <p>Draw</p><p>Erase</p>
+                        </div>
                         <label className="switchTool" >
                             <input type="checkbox"
                                 checked={!this.state.status}
                                 onChange={this.handleToolChange} ></input>
-                            <span className="slider round" id="pencil">{this.renderLottie()}</span>
+                            <span className="slider round" id="pencil" toolswitch={<ToolPlayer></ToolPlayer>}>{this.renderLottie()}</span>
                         </label>
                     </div>
                 </div>

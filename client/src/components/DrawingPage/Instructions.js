@@ -1,4 +1,5 @@
-import React, { Component, useEffect, useState } from 'react';
+import { ListCollectionsCursor } from 'mongodb';
+import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import { ReactComponent as QuestionMark } from '../../data/assets/Question.svg';
 import Button from '../Button';
@@ -15,15 +16,13 @@ export default function Instructions() {
                 >
                     {close => (
                         <div className='popupContent'>
-                            <div className='orangeCreature'></div>
-                            <div className="instPopupDiv">
-                                <a className="close" onClick={close}>X</a>
-                                Use this to change your brush size
-                            </div>
-                            <Button className="nextButton" buttonText="Next" onClick={() => next()}></Button>
+                            <div className='ruleOne'></div>
+                            <Button className="nextButton" buttonText="Next" onClick={() => next(1)}></Button>
                         </div>
                     )}
-                </Popup>
+                </Popup>,
+            // elements:
+            //         [lineWidthPicker, scribble]
         },
 
         {
@@ -35,12 +34,8 @@ export default function Instructions() {
                 >
                     {close => (
                         <div className='popupContent'>
-                            <div className='orangeCreature'></div>
-                            <div className="instPopupDiv">
-                                <a className="close" onClick={close}>X</a>
-                                Use this to switch between eraser and brush tools
-                            </div>
-                            <Button className="nextButton" buttonText="Next" onClick={() => next()}></Button>
+                            <div className='ruleTwo'></div>
+                            <Button className="nextButton" buttonText="Next" onClick={() => next(2)}></Button>
                         </div>
                     )}
                 </Popup>
@@ -55,12 +50,8 @@ export default function Instructions() {
                 >
                     {close => (
                         <div className='popupContent'>
-                            <div className='orangeCreature'></div>
-                            <div className="instPopupDiv">
-                                <a className="close" onClick={close}>X</a>
-                                Make sure your drawing connects to the dots
-                            </div>
-                            <Button className="nextButton" buttonText="Next" onClick={() => next()}></Button>
+                            <div className='ruleThree'></div>
+                            <Button className="nextButton" buttonText="Next" onClick={() => next(3)}></Button>
                         </div>
                     )}
                 </Popup>
@@ -75,12 +66,8 @@ export default function Instructions() {
                 >
                     {close => (
                         <div className='popupContent'>
-                            <div className='orangeCreature'></div>
-                            <div className="instPopupDiv">
-                                <a className="close" onClick={close}>X</a>
-                                Tap here if you need help deciding what to draw
-                            </div>
-                            <Button className="nextButton" buttonText="Next" onClick={() => next()}></Button>
+                            <div className='ruleFour'></div>
+                            <Button className="nextButton" buttonText="Next" onClick={() => next(4)}></Button>
                         </div>
                     )}
                 </Popup>
@@ -95,12 +82,10 @@ export default function Instructions() {
                 >
                     {close => (
                         <div className='popupContent'>
-                            <div className='orangeCreature'></div>
-                            <div className="instPopupDiv">
-                                <a className="close" onClick={close}>X</a>
-                                Tap here when you're all done drawing
+                            <div className='ruleFive'></div>
+                            <div className='closeButton' onClick={() => next(0)}>
+                                <Button className="nextButton" buttonText="Close" onClick={close}></Button>
                             </div>
-                            <Button className="nextButton" buttonText="Next" onClick={close}></Button>
                         </div>
                     )}
                 </Popup>
@@ -109,10 +94,29 @@ export default function Instructions() {
 
     const [currentStep, setCurrent] = useState(0);
 
-    const next = () => {
-        if (currentStep < 4) setCurrent(currentStep + 1);
+    // const lineWidthPicker = document.querySelector(".linewidthpickerWrapper");
+    // const scribble = document.querySelector(".scribbleDiv");
+
+    // const toolSwitch = document.querySelector(".sliderDiv");
+
+    // // const dots
+
+    // const ideas = document.querySelector(".ideasDiv");
+
+    // const tools = [];
+
+    // tools.push(lineWidthPicker, scribble, toolSwitch, ideas)
+
+    const next = (i) => {
+        //tools.foreach(tool => tool.style.zIndex = 10);
+
+        setCurrent(i);
+        //console.log(currentStep);
+
+        
     }
 
+    //console.log(currentStep);
     return (
         steps[currentStep].data
     );

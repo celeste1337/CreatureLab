@@ -122,7 +122,7 @@ body {
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
-
+  content: attr(toolswitch);
   border-radius: 10px;
 }
 
@@ -364,7 +364,7 @@ p {
   width: 8vw;
   height: 14vh;
   background-size: contain;
-  background-image: url('data/assets/purplecreature.png');
+  background-image: url('data/assets/popups/purplecreature.png');
   background-repeat: no-repeat;
 }
 
@@ -372,24 +372,14 @@ p {
   width: 8vw;
   height: 14vh;
   background-size: contain;
-  background-image: url('data/assets/textBubbleRight.png');
+  background-image: url('data/assets/popups/textBubbleRight.png');
   background-repeat: no-repeat;
 }
 
-.instructionsContainer {
+.popupContent {
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 44%);
-  
-}
-
-.popupContent {
-  position: absolute;
-  left: 15vw;
-  top: 5vh;
-
-  display: flex;
-  align-items: center;
 }
 
 .instPopupDiv {
@@ -417,6 +407,53 @@ p {
   position: relative;
   z-index: 1000;
 }
+
+.nextButton {
+  position: absolute;
+  left: 49%;
+  top: 80%;
+}
+
+.ruleOne {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-1.gif');
+  background-repeat: no-repeat;
+}
+
+.ruleTwo {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-2.gif');
+  background-repeat: no-repeat;
+}
+
+.ruleThree {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-3.gif');
+  background-repeat: no-repeat;
+}
+
+.ruleFour {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-4.gif');
+  background-repeat: no-repeat;
+}
+
+.ruleFive {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-5.gif');
+  background-repeat: no-repeat;
+}
+
 
 /* Color Picker */
 .colorpickerWrapper {
