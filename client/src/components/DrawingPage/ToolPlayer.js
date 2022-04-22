@@ -7,22 +7,23 @@ export default function ToolPlayer() {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div id="animDiv" onClick={() => {
+    <div className="sliderBack" onClick={() => {
       //console.log('clicked');
       setTool(!tool);
-      if (tool) setSrc("https://assets1.lottiefiles.com/packages/lf20_evz9joti.json");
+      if (!tool) setSrc("https://assets1.lottiefiles.com/packages/lf20_evz9joti.json");
       else setSrc("https://assets8.lottiefiles.com/packages/lf20_kgdnuo0z.json");
     }}>
       <Player
         // onEvent={event => {
-        //   if (loaded === false && event === 'load') {
-        //     setLoaded(true);
-        //     //console.log(loaded);
+        //   if (event === 'complete') {
+        //     this.pause();
         //   }
         // }}
         id="toolSwitch"
+        className="sliderFront"
         autoplay
-        loop="false"
+        
+        loop={false}
         src={src}
         style={{ width: 50, height: 50 }}
       ></Player>

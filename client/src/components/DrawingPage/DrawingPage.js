@@ -229,19 +229,16 @@ class DrawingPage extends React.Component {
     changeTool(i) {
         this.setState({
             status: i
-
         });
-        const slider = document.getElementsByClassName("slider round")[0];
-        if (i) {
-            slider.id = "pencil";
+        const slider = document.getElementsByClassName("sliderFront")[0];
+        
+        i ? slider.className= "sliderFront checked" : slider.className = "sliderFront";
+        
 
-        } else slider.id = "eraser";
-        // window.setTimeout(() => {
-        //     if (i) {
-        //         slider.id = "eraser";
+        // if (i) {
+        //     slider.id = "pencil";
 
-        //     } else slider.id = "pencil";
-        // }, .4 * 1000);
+        // } else slider.id = "eraser";
     }
 
     changeWidth(i) {
@@ -433,12 +430,10 @@ class DrawingPage extends React.Component {
                         <div className='toolP'>
                             <p>Draw</p><p>Erase</p>
                         </div>
-                        <label className="switchTool" >
-                            <input type="checkbox"
-                                checked={!this.state.status}
-                                onChange={this.handleToolChange} ></input>
-                            <span className="slider round" id="pencil" toolswitch={<ToolPlayer></ToolPlayer>}>{this.renderLottie()}</span>
-                        </label>
+
+                        <div onClick={() => this.handleToolChange()}>
+                            {this.renderLottie()}
+                        </div>
                     </div>
                 </div>
 
