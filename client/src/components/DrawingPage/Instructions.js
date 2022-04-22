@@ -1,4 +1,3 @@
-import { ListCollectionsCursor } from 'mongodb';
 import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import { ReactComponent as QuestionMark } from '../../data/assets/Question.svg';
