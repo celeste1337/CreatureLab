@@ -73,7 +73,7 @@ routes.route("/getSomeCreatures/:objId").get(async (req, res) => {
             if(err) {
                 res.status(400).send("error fetching the guys")
             } else {
-                console.log(result);
+               // console.log(result);
                 res.json(result);
             }
         })

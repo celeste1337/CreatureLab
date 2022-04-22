@@ -30,6 +30,7 @@ function GalleryGrid(props) {
 
         if(json.length < 1) {
             setStop(true)
+            console.log(imageResponse.length)
         } else {
             setLastId(json[json.length-1]._id)
     
