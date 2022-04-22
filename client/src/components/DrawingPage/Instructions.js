@@ -5,12 +5,23 @@ import Button from '../Button';
 
 export default function Instructions() {
 
+    const lineWidthPicker = document.querySelector(".linewidthpickerWrapper");
+    const scribble = document.querySelector(".scribbleDiv");
+
+    const slider = document.querySelector(".sliderBack");
+
+    // const dots
+
+    const ideas = document.querySelector(".ideasDiv");
+
+    const confirm = document.querySelector(".doneButton");
+
     const steps = [
         {
             id: 0,
             data:
                 <Popup
-                    trigger={<Button className="rightButton" buttonText={<QuestionMark></QuestionMark>} />}
+                    trigger={<Button className="rightButton" buttonText={<QuestionMark></QuestionMark>} onClick={() => console.log('clicked')} />}
                     modal
                 >
                     {close => (
@@ -20,8 +31,8 @@ export default function Instructions() {
                         </div>
                     )}
                 </Popup>,
-            // elements:
-            //         [lineWidthPicker, scribble]
+            elements:
+                    [scribble, lineWidthPicker]
         },
 
         {
@@ -37,7 +48,9 @@ export default function Instructions() {
                             <Button className="nextButton" buttonText="Next" onClick={() => next(2)}></Button>
                         </div>
                     )}
-                </Popup>
+                </Popup>,
+            elements:
+                [slider]
         },
 
         {
@@ -53,7 +66,9 @@ export default function Instructions() {
                             <Button className="nextButton" buttonText="Next" onClick={() => next(3)}></Button>
                         </div>
                     )}
-                </Popup>
+                </Popup>,
+            elements:
+                    [],
         },
 
         {
@@ -69,7 +84,9 @@ export default function Instructions() {
                             <Button className="nextButton" buttonText="Next" onClick={() => next(4)}></Button>
                         </div>
                     )}
-                </Popup>
+                </Popup>,
+            elements:
+                    [ideas],
         },
 
         {
@@ -87,32 +104,33 @@ export default function Instructions() {
                             </div>
                         </div>
                     )}
-                </Popup>
+                </Popup>,
+                elements:
+                    [confirm],
         },
     ];
 
     const [currentStep, setCurrent] = useState(0);
 
-    // const lineWidthPicker = document.querySelector(".linewidthpickerWrapper");
-    // const scribble = document.querySelector(".scribbleDiv");
+    
 
-    // const toolSwitch = document.querySelector(".sliderDiv");
+    const tools = [];
 
-    // // const dots
+    tools.push(scribble, lineWidthPicker, slider, ideas, confirm);
 
-    // const ideas = document.querySelector(".ideasDiv");
-
-    // const tools = [];
-
-    // tools.push(lineWidthPicker, scribble, toolSwitch, ideas)
+    const instructionsStarted = () => {
+        console.log('inst clicked');
+        steps[0].elements.forEach(element => element.style.zIndex = 1000);
+    }
 
     const next = (i) => {
-        //tools.foreach(tool => tool.style.zIndex = 10);
+        tools.forEach(tool => tool.style.zIndex = 10);
 
         setCurrent(i);
         //console.log(currentStep);
 
-        
+        steps[i].elements.forEach(element => element.style.zIndex = 1000);
+        console.log(steps[i].elements);
     }
 
     //console.log(currentStep);

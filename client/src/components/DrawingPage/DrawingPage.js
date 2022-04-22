@@ -231,9 +231,9 @@ class DrawingPage extends React.Component {
             status: i
         });
         const slider = document.getElementsByClassName("sliderFront")[0];
-        
-        i ? slider.className= "sliderFront checked" : slider.className = "sliderFront";
-        
+
+        i ? slider.className = "sliderFront" : slider.className = "sliderFront checked";
+
 
         // if (i) {
         //     slider.id = "pencil";
@@ -403,6 +403,42 @@ class DrawingPage extends React.Component {
         })
     }
 
+    renderTopDots() {
+        if (this.state.bodyPart === "Body") {
+            return (
+                <div className="thinDots">
+                    <div className="dot"></div>
+                    <div className='dot'></div>
+                </div>
+            )
+        } else if (this.state.bodyPart === "Legs") {
+            return (
+                <div className="thickDots">
+                    <div className="dot"></div>
+                    <div className='dot'></div>
+                </div>  
+            )
+        }
+    }
+
+    renderBottomDots() {
+        if (this.state.bodyPart === "Head") {
+            return (
+                <div className="thinDots">
+                    <div className="dot"></div>
+                    <div className='dot'></div>
+                </div>
+            )
+        } else if (this.state.bodyPart === "Body") {
+            return (
+                <div className="thickDots">
+                    <div className="dot"></div>
+                    <div className='dot'></div>
+                </div>
+            )
+        }
+    }
+
     render() {
         return (
             <div className="drawingPage">
@@ -437,23 +473,34 @@ class DrawingPage extends React.Component {
                     </div>
                 </div>
 
-                <Canvas strokeColor={this.state.currentColor}
-                    historyCallback={this.handleHistoryCallback}
-                    eraseTrigger={this.eraseTriggered}
-                    undoTrigger={this.undoTriggered}
-                    paintTrigger={this.paintTriggered}
 
-                    doneTrigger={this.state.doneTrigger}
-                    doneCallback={this.handleDone}
+                <div className="centerDrawing">
+                    <div className='topDotDiv'>
+                        {this.renderTopDots()}
+                    </div>
 
-                    bodyPart={this.state.bodyPart}
-                    lineHistory={this.state.lineHistory}
-                    lineWidth={this.state.currentWidth}
-                    status={this.state.status}
+                    <Canvas strokeColor={this.state.currentColor}
+                        historyCallback={this.handleHistoryCallback}
+                        eraseTrigger={this.eraseTriggered}
+                        undoTrigger={this.undoTriggered}
+                        paintTrigger={this.paintTriggered}
 
-                    clear={this.state.clear}>
+                        doneTrigger={this.state.doneTrigger}
+                        doneCallback={this.handleDone}
 
-                </Canvas>
+                        bodyPart={this.state.bodyPart}
+                        lineHistory={this.state.lineHistory}
+                        lineWidth={this.state.currentWidth}
+                        status={this.state.status}
+
+                        clear={this.state.clear}>
+
+                    </Canvas>
+                    
+                    <div className='bottomDotDiv'>
+                        {this.renderBottomDots()}
+                    </div>
+                </div>
 
                 <div className="rightDrawing" >
                     <div className='undoDiv'>
@@ -461,7 +508,7 @@ class DrawingPage extends React.Component {
                     </div>
 
                     <div className='taskDiv'>
-                        <h2>Task:</h2>
+                        <h2 className="taskH2">Task:</h2>
                         <p align="center">Draw the <span className="purpleP">{this.state.bodyPart}</span> for your creature!</p>
                     </div>
 

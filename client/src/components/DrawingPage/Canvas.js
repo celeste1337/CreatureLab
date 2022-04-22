@@ -280,8 +280,8 @@ class Canvas extends React.Component{
 
     componentDidMount() {
         //you can change these they were just kinda big on my monitor lmao
-        this.canvas.width = 800;
-        this.canvas.height = 600;
+        this.canvas.width = 700;
+        this.canvas.height = 500;
         this.ctx = this.canvas.getContext('2d');
     }
 
@@ -299,7 +299,7 @@ class Canvas extends React.Component{
             this.saveCanvas();
         }
 
-        this.drawGuideDots(this.props.bodyPart);
+        //this.drawGuideDots(this.props.bodyPart);
     }
 
     clearAll() {
