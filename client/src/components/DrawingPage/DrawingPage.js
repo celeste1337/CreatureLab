@@ -232,7 +232,7 @@ class DrawingPage extends React.Component {
         });
         const slider = document.getElementsByClassName("sliderFront")[0];
         
-        i ? slider.className= "sliderFront checked" : slider.className = "sliderFront";
+        i ? slider.className= "sliderFront" : slider.className = "sliderFront checked";
         
 
         // if (i) {

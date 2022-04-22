@@ -76,9 +76,7 @@ body {
 * The following CSS modified from
 * https://www.w3schools.com/howto/howto_css_switch.asp
 */
-.sliderDiv {
-  margin-top: 15px;
-}
+
 
 /* The switch - the box around the slider */
 .switchTool {
@@ -110,8 +108,8 @@ body {
   right: 0;
   bottom: 0;
   background-color: #7F3AD7;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: .7s;
+  transition: .7s;
 
   border-radius: 10px;
 }
@@ -130,8 +128,8 @@ body {
   left: 8px;
   bottom: 8px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: .7s;
+  transition: .7s;
   content: attr(toolswitch);
   border-radius: 10px;
 }
@@ -187,9 +185,8 @@ input:checked+.slider:before {
   background-color: #7F3AD7;
   height: 30px;
   width: 160px;
-  margin-bottom: 15px;
   border-radius: 30px;
-
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -258,7 +255,9 @@ p {
 
 .drawingPage {
   display: flex;
+  justify-content: space-between;
   touch-action: none;
+  height: 100vh;
 
   background: linear-gradient(61.55deg, rgba(148, 75, 240, 0.04) 23.21%, rgba(113, 0, 255, 0) 88.59%),
     linear-gradient(0deg, #FFFFFF, #FFFFFF);
@@ -274,7 +273,7 @@ p {
 }
 
 .drawingPage .canvasComponent {
-  height: 100vh;
+  height: 500px;
   background-size: 40px 40px;
   background-image:
     linear-gradient(to right, lightgrey 1px, transparent 1px),
@@ -282,7 +281,7 @@ p {
 }
 
 .drawingPage canvas {
-
+  top: 100px;
   box-sizing: border-box;
   border-top: 3px dotted darkgrey;
   border-bottom: 3px dotted darkgrey;
@@ -293,11 +292,12 @@ p {
 }
 
 .leftDrawing {
-  width: 400px;
+  width: 19vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  
 }
 
 .rightDrawing {
