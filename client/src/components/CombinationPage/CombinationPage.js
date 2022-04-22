@@ -6,10 +6,9 @@ import {Link, Navigate} from 'react-router-dom';
 import {config} from '../../utilities/constants';
 import { useFirstRender } from './FirstRenderHook';
 import './CombinationPage.css';
-import first from './lotties/first.json';
-import second from './lotties/second.json'
-import third from './lotties/third.json'
 import { Player } from '@lottiefiles/react-lottie-player';
+import '@lottiefiles/lottie-player';
+import hexToRgba from 'hex-to-rgba';
 
 //why does it do this.
 const mergeImages = require('merge-base64');
@@ -27,15 +26,16 @@ function CombinationPage(props) {
     const [finalCode, setFinalCode] = useState("");
     const [bodyCode, setBodyCode] = useState("");
     const [borderColor, setBorderColor] = useState("");
-    const [animationArr, setAnimArr] = useState([first, "https://assets9.lottiefiles.com/private_files/lf30_m4vzl5es.json", "https://assets1.lottiefiles.com/private_files/lf30_kxxu2cdj.json"]);
+    const [animationArr, setAnimArr] = useState(['https://assets6.lottiefiles.com/private_files/lf30_ameqkhrk.json', "https://assets8.lottiefiles.com/private_files/lf30_5idqduw8.json",       "https://assets8.lottiefiles.com/private_files/lf30_8gz8gkan.json","https://assets10.lottiefiles.com/private_files/lf30_xqh0udix.json"]);
     const [animIndex, setAnimIndex] = useState(0);
     const [currentAnimation, setCurrentAnimation] = useState(animationArr[animIndex]);
     const [animationFinished, setAnimationFinished] = useState(false);
+    let rotate = 0;
  
     const firstRender = useFirstRender();
     const controller = new AbortController();
     const signal = controller.signal;
-    const player = useRef(null);
+    const player = useRef();
 
     //on init
     useEffect(() => {
@@ -52,7 +52,7 @@ function CombinationPage(props) {
         }
     }, 
     //empty array here indicates what props to reload on
-    [imagesIds, player])
+    [imagesIds])
     
     const determineTypesLeft = (type) => ["Head", "Body", "Legs"].filter(item => type !== item);
     
@@ -78,6 +78,7 @@ function CombinationPage(props) {
                 direction:true,
                 color: '#ffffff',
             }).then((img)=> {
+                rotate = parseInt(Math.random () * 3);
                 setFinalImg(img);
                 //save to db :D
                 saveFinalImage(img);
@@ -97,38 +98,42 @@ function CombinationPage(props) {
         //bc we use initimg to determine other types
 
         let initImg = await getImageByID(cookies.creatureId);
-        setBodyCode(cookies.creatureId);
-
-        const otherTypes = determineTypesLeft(getType(initImg));
-        let otherparts = otherTypes.map(type => getImageRandomType(type))
-        Promise.all(otherparts).then(vals => {
-            tempArr = tempArr.concat(initImg, vals).flat()
-
-            tempArr.forEach((creature) => {
-                //this kinda doesnt matter as long as it has a value -> itll rewrite itself but thats whatevs
-                setBorderColor(creature.data.borderColor);
-
-                const setMe = (input) => input.replace("data:image/png;base64,","")
-
-                switch (getType(creature)) {
-                    case 'Head':
-                        base64Images[0] = setMe(creature.data.imageData);
-                        idArr[0] = creature.creatureid;
-                        break;
-                    case 'Body':
-                        base64Images[1] = setMe(creature.data.imageData);
-                        idArr[1] = creature.creatureid;
-                        break;
-                    case 'Legs':
-                        base64Images[2] = setMe(creature.data.imageData);
-                        idArr[2] = creature.creatureid;
-                        break;
-                    default:
-                        break;
-                }
-            });
-            setImagesIds({...imagesIds, images: base64Images, ids: idArr})
-        })
+        console.log(initImg)
+        if(initImg !== null) {
+            setBodyCode(cookies.creatureId);
+            const otherTypes = determineTypesLeft(getType(initImg));
+            let otherparts = otherTypes.map(type => getImageRandomType(type))
+            Promise.all(otherparts).then(vals => {
+                tempArr = tempArr.concat(initImg, vals).flat()
+    
+                tempArr.forEach((creature) => {
+                    //this kinda doesnt matter as long as it has a value -> itll rewrite itself but thats whatevs
+                    console.log(creature)
+                    setBorderColor(creature.data.borderColor);
+    
+                    const setMe = (input) => input.replace("data:image/png;base64,","")
+    
+                    switch (getType(creature)) {
+                        case 'Head':
+                            base64Images[0] = setMe(creature.data.imageData);
+                            idArr[0] = creature.creatureid;
+                            break;
+                        case 'Body':
+                            base64Images[1] = setMe(creature.data.imageData);
+                            idArr[1] = creature.creatureid;
+                            break;
+                        case 'Legs':
+                            base64Images[2] = setMe(creature.data.imageData);
+                            idArr[2] = creature.creatureid;
+                            break;
+                        default:
+                            break;
+                    }
+                });
+                setImagesIds({...imagesIds, images: base64Images, ids: idArr})
+            })
+        }
+        
     }
 
     const saveFinalImage = (img) => {
@@ -161,6 +166,8 @@ function CombinationPage(props) {
 
     const checkCookies = (obj) => Object.keys(obj).length !== 0; //if cookie return true
 
+    
+
     if(!checkCookies(cookies)) {
         //see if they have the cookie w their creature id
         //if no cookies, redir to home
@@ -168,7 +175,8 @@ function CombinationPage(props) {
         return (<Navigate to="/"></Navigate>)
     }
 
-    if(firstRender) {
+    if(bodyCode.length == 0) {
+        console.log("fetch")
         fetchImages();
     }
     
@@ -177,9 +185,9 @@ function CombinationPage(props) {
             <div className="comboPage">
                 {!animationFinished && 
                 <Player
+                    ref={player}
                     onEvent={
                         event => {
-                            console.log(event)
                             if(event == 'complete') {
                                 
                                 //set src to something else
@@ -187,15 +195,19 @@ function CombinationPage(props) {
                                 
                                 setCurrentAnimation(animationArr[animIndex]);
                             }
+                            if(animIndex >= animationArr.length) {
+                                setAnimationFinished(true);
+                            }
                         }
                     }
                     autoplay={true}
                     loop={false}
                     src={animationArr[animIndex]}></Player>
                 }
+                
                 {animationFinished && 
                 <div id="completed">
-                    <img id="finalImg" src={finalImg}></img>
+                    <img id="finalImg" src={finalImg} style={{border: `25px solid ${hexToRgba(borderColor, 0.1)}`, transform: `rotate(${rotate%2==0 ? rotate*-1 : rotate}deg)}`, borderRadius: '5px'}}></img>
                     <div id="codes">
                         <div className="creatureCodeBox">
                             <h3>Your creature code is</h3>

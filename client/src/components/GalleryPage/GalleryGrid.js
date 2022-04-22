@@ -8,13 +8,36 @@ function GalleryGrid(props) {
     const [imageResponse, setImageResponse] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [lastId, setLastId] = useState('');
+    const [isLoaded, setLoaded] = useState(false);
+    const [stopCalling, setStop] = useState(false);
 
     const retrieveImages = async () => {
-        const response = await fetch(config.url.API_URL + '/getAllCreatures').catch((err) => console.log(err));
-
+        const response = await fetch(config.url.API_URL + '/getInitialCreature').catch((err) => console.log(err));
+        setLoaded(true);
         const json = await response.json();
+        setLastId(json[0]._id);
+       
         
         setImageResponse(json);
+    }
+
+    const getMoreImages = async () => {
+        console.log(stopCalling);
+        if(lastId && !stopCalling) {
+        const response = await fetch(config.url.API_URL + '/getSomeCreatures/' + lastId).catch((err) => console.log(err));
+        const json = await response.json();
+
+        if(json.length < 1) {
+            setStop(true)
+        } else {
+            setLastId(json[json.length-1]._id)
+    
+            setImageResponse(imageResponse => [...imageResponse, ...json]);
+        }
+        
+        }
+        
     }
 
     const searchImages = async () => {
@@ -48,7 +71,7 @@ function GalleryGrid(props) {
     }
 
     const renderstuff = () => {
-        if(imageResponse) {
+        if(isLoaded === true) {
             let arr = [];
             imageResponse.map((data, _id) => {
                 //console.log(data)
@@ -63,6 +86,7 @@ function GalleryGrid(props) {
                 return(<Player
                     className="loading"
                     autoplay
+                    loop
                     src="https://assets2.lottiefiles.com/private_files/lf30_hbmgptwa.json"></Player>)}
     
     useEffect(() => { 
@@ -72,12 +96,16 @@ function GalleryGrid(props) {
             //search
             searchImages();
         }
+
+            getMoreImages();
+
         
-    }, [searchTerm])
+        
+    }, [searchTerm, imageResponse])
 
 
-    if(!searchTerm && !imageResponse.length > 0) {
-        retrieveImages();
+    if(isLoaded == false) {
+        retrieveImages();        
     }
 
     return (
@@ -91,7 +119,7 @@ function GalleryGrid(props) {
                 </form>
             </div>
             <div className="grid">
-                {imageResponse.length > 0 ? renderstuff() : renderLoader()}
+                {isLoaded ? renderstuff() : renderLoader()}
             </div>
             
         </div>
