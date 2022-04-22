@@ -61,7 +61,6 @@
   },
   "devDependencies": {
     "express": "^4.17.2",
-    "merge-images": "^2.0.0",
-    "mongodb": "^4.3.0"
+    "merge-images": "^2.0.0"
   }
 }

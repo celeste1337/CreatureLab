@@ -1,18 +1,31 @@
-import React from 'react'
-import Lottie from 'react-lottie-player'
-// Alternatively:
-// import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
-
-
-import lottieJson from './my-lottie.json'
+import React, { useState } from 'react';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 export default function ToolPlayer() {
+  const [src, setSrc] = useState("https://assets1.lottiefiles.com/packages/lf20_evz9joti.json");
+  const [tool, setTool] = useState(true);
+  const [loaded, setLoaded] = useState(false);
+
   return (
-    <Lottie
-      loop
-      animationData={lottieJson}
-      play
-      style={{ width: 150, height: 150 }}
-    />
+    <div id="animDiv" onClick={() => {
+      //console.log('clicked');
+      setTool(!tool);
+      if (tool) setSrc("https://assets1.lottiefiles.com/packages/lf20_evz9joti.json");
+      else setSrc("https://assets8.lottiefiles.com/packages/lf20_kgdnuo0z.json");
+    }}>
+      <Player
+        // onEvent={event => {
+        //   if (loaded === false && event === 'load') {
+        //     setLoaded(true);
+        //     //console.log(loaded);
+        //   }
+        // }}
+        id="toolSwitch"
+        autoplay
+        loop="false"
+        src={src}
+        style={{ width: 50, height: 50 }}
+      ></Player>
+    </div>
   )
 }

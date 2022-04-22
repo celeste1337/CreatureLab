@@ -122,7 +122,7 @@ body {
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
-
+  content: attr(toolswitch);
   border-radius: 10px;
 }
 
@@ -202,7 +202,6 @@ input:checked+.slider:before {
 
   padding-top: 3px;
   padding-bottom: 3px;
-  z-index: 1000;
 }
 
 /* Drawing Page */
@@ -269,6 +268,14 @@ p {
 
   background: linear-gradient(61.55deg, rgba(148, 75, 240, 0.04) 23.21%, rgba(113, 0, 255, 0) 88.59%),
     linear-gradient(0deg, #FFFFFF, #FFFFFF);
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 
 }
 
@@ -357,7 +364,7 @@ p {
   width: 8vw;
   height: 14vh;
   background-size: contain;
-  background-image: url('data/assets/purplecreature.png');
+  background-image: url('data/assets/popups/purplecreature.png');
   background-repeat: no-repeat;
 }
 
@@ -365,24 +372,14 @@ p {
   width: 8vw;
   height: 14vh;
   background-size: contain;
-  background-image: url('data/assets/textBubbleRight.png');
+  background-image: url('data/assets/popups/textBubbleRight.png');
   background-repeat: no-repeat;
 }
 
-.instructionsContainer {
+.popupContent {
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 44%);
-  
-}
-
-.popupContent {
-  position: absolute;
-  left: 15vw;
-  top: 5vh;
-
-  display: flex;
-  align-items: center;
 }
 
 .instPopupDiv {
@@ -404,6 +401,57 @@ p {
   position: relative;
   left: -10px;
   top: -10px;
+}
+
+.highlighted {
+  position: relative;
+  z-index: 1000;
+}
+
+.nextButton {
+  position: absolute;
+  left: 49%;
+  top: 80%;
+}
+
+.ruleOne {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-1.gif');
+  background-repeat: no-repeat;
+}
+
+.ruleTwo {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-2.gif');
+  background-repeat: no-repeat;
+}
+
+.ruleThree {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-3.gif');
+  background-repeat: no-repeat;
+}
+
+.ruleFour {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-4.gif');
+  background-repeat: no-repeat;
+}
+
+.ruleFive {
+  width: 300px;
+  height: 200px;
+  background-size: contain;
+  background-image: url('data/assets/popups/Rule-5.gif');
+  background-repeat: no-repeat;
 }
 
 
