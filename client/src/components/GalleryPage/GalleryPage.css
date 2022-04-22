@@ -54,10 +54,12 @@
 }
 
 .search input[type=button], .search input[type=submit] {
-    background-color: purple;
+    background-color: #944bf0;
     color: white;
     border: none;
     height: 12vh;
+    border-radius: 3px;
+    margin: 0 2px;
 }
 
 .loading {
@@ -72,4 +74,12 @@
 .logoBar img {
     margin-top: 4vh;
     width: 10vw;
+}
+
+.letsGo {
+    text-decoration: none;
+    background-color: #944bf0;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
 }

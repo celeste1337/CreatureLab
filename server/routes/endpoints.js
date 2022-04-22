@@ -46,7 +46,7 @@ routes.route("/getInitialCreature").get((req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect.collection("completedcreatures")
     .find({})
-    .limit(1)
+    .limit(3)
     .toArray((err, result) => {
         if(err) {
             res.status(400).send("error fetching the guys")
@@ -94,8 +94,10 @@ routes.get("/getPart/:id", async (req, res, next) => {
 routes.get("/find/:id", (req, res, next) => {
     //the req body should contain a bool that determines what table to search in
     const dbConnect = dbo.getDb();
+    const searchTermArr = req.params.id.split("");
+    let numHyphens = searchTermArr.filter((letter) => letter === "-")
 
-    if(req.params.id.search("-") !== -1) {
+    if(numHyphens.length >= 2) {
         //we can assume its a full length code
         dbConnect
         .collection("completedcreatures")

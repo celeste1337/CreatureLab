@@ -98,7 +98,7 @@ function CombinationPage(props) {
         //bc we use initimg to determine other types
 
         let initImg = await getImageByID(cookies.creatureId);
-        console.log(initImg)
+
         if(initImg !== null) {
             setBodyCode(cookies.creatureId);
             const otherTypes = determineTypesLeft(getType(initImg));
@@ -166,8 +166,6 @@ function CombinationPage(props) {
 
     const checkCookies = (obj) => Object.keys(obj).length !== 0; //if cookie return true
 
-    
-
     if(!checkCookies(cookies)) {
         //see if they have the cookie w their creature id
         //if no cookies, redir to home
@@ -176,7 +174,6 @@ function CombinationPage(props) {
     }
 
     if(bodyCode.length == 0) {
-        console.log("fetch")
         fetchImages();
     }
     

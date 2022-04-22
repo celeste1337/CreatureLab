@@ -13,55 +13,67 @@ function GalleryGrid(props) {
     const [stopCalling, setStop] = useState(false);
     const [searchFor, setSearchFor] = useState(false);
     let myRef = useRef(null);
+    let gridContainer = useRef(null);
 
     const retrieveImages = async () => {
         const response = await fetch(config.url.API_URL + '/getInitialCreature').catch((err) => console.log(err));
-        
-        const json = await response.json();
-        setLastId(json[0]._id);
-       
-       
-        setImageResponse(json);
 
-        setLoaded(true);
+        const json = await response.json();
+        if(stopCalling == false) {
+            setLoaded(true);
+            setLastId(json[json.length-1]._id);
+        
+            setImageResponse(json);
+        }
     }
 
     const getMoreImages = async () => {
-        //console.log(stopCalling);
-        if(lastId && !stopCalling) {
-        const response = await fetch(config.url.API_URL + '/getSomeCreatures/' + lastId).catch((err) => console.log(err));
-        const json = await response.json();
+        if(lastId) {
+            const response = await fetch(config.url.API_URL + '/getSomeCreatures/' + lastId).catch((err) => console.log(err));
+            const json = await response.json();
+            setLoaded(true);
 
-        if(json.length < 1) {
-            setStop(true)
-           // console.log(imageResponse.length)
-        } else {
-            setLastId(json[json.length-1]._id)
-            
-            let returndata = json.filter((item) => item.data.imageData.length > 0)
-            //console.log(returndata);
-            setImageResponse(imageResponse => [...imageResponse, ...returndata]);
+            if(json.length < 1) {
+                setStop(true);
+            // console.log(imageResponse.length)
+            } else {
+                if(stopCalling == false) {
+                    setLastId(json[json.length-1]._id)
+                    
+                    let returndata = json.filter((item) => item.data.imageData.length > 0)
+                
+                    setImageResponse(imageResponse => [...imageResponse, ...returndata]);
+                }
+               
+            }
         }
-        
+    }
+
+    const clearGrid = () => {
+        while(gridContainer.firstChild) {
+            gridContainer.removeChild(gridContainer.firstChild);
         }
-        
     }
 
     const searchImages = async () => {
-        if(searchTerm && searchFor) {
+        if(searchTerm.length > 0 && searchFor === true) {
             const response = await fetch(config.url.API_URL + '/find/' + searchTerm).catch((err) => console.error(err));
+            setSearchFor(false);
+            setSearchTerm("");
 
             const json = await response.json();
 
             if(json.length > 0) {
                 let returndata = json.filter((item) => item.data.imageData.length > 0)
-                //console.log(returndata);
-                setImageResponse(imageResponse => [...imageResponse, ...returndata]);
-                setLoaded(true);
+
+                setImageResponse(returndata);
+
+                setSearchFor(false);
             } else {
                 setImageResponse([]);
+                clearGrid();
                 setErrMsg("Your search didn't come up with any results.")
-                setSearchFor(false);
+                clearGrid();
             }
         } else {
             setErrMsg("Something went wrong with your search! Try again.")
@@ -75,19 +87,35 @@ function GalleryGrid(props) {
     }
 
     const search = (e) => {
-        setImageResponse([]);
+        setStop(true);
+        setImageResponse([])
+        clearGrid();
         setSearchTerm(e.target[0].value);
         setSearchFor(true);
-        //grab text box value
-        //search
-        //chuck it into render stuff qB)
     }
 
     const renderstuff = () => {
-        if(isLoaded === true) {
+        clearGrid();
+        if(searchFor && searchTerm.length > 0) {
+            //were searching for stuff
+            if(imageResponse.length == 0) {
+                //they found no results lmfao
+                //do nothing
+                setSearchFor(false);
+                setSearchTerm("")
+                return;
+            } else if (!imageResponse[0].creatureid.includes(searchTerm)) {
+                setImageResponse([])
+                setSearchTerm("")
+                clearGrid();
+                return;
+            }
+        }
+
+        if(isLoaded === true && stopCalling == false) {
             let arr = [];
             imageResponse.map((data, _id) => {
-                //console.log(data)
+                //check first index of img response and if were searching 
                 arr.push(<GalleryImg key={_id} props={data}></GalleryImg>)
             });
     
@@ -100,21 +128,21 @@ function GalleryGrid(props) {
             className="loading"
             autoplay
             loop
-            src="https://assets2.lottiefiles.com/private_files/lf30_hbmgptwa.json"></Player>)}
+            src="https://assets2.lottiefiles.com/private_files/lf30_hbmgptwa.json"></Player>)
+    }
     
     useEffect(() => { 
         //every time search term updates
         //we wanna search and rerender
-        if(searchTerm && searchFor) {
+        if(searchTerm.length > 0 && searchFor) {
             //search
             setErrMsg("");
             searchImages();
         }
-        if(!searchTerm && !searchFor) {
-            setErrMsg("");
+        console.log(lastId);
+        if(lastId && stopCalling == false) {
             getMoreImages();
         }
-        
         
     }, [searchTerm, imageResponse])
 
@@ -123,10 +151,13 @@ function GalleryGrid(props) {
         setImageResponse([]);
         setErrMsg("")
         setLoaded(false);
+        setSearchFor(false);
+        setStop(false);
+        clearGrid();
     }
 
 
-    if(isLoaded == false) {
+    if(isLoaded == false && searchFor == false && stopCalling == false) {
         retrieveImages();        
     }
 
@@ -137,11 +168,11 @@ function GalleryGrid(props) {
                 <form onSubmit={(e) => {e.preventDefault(); search(e)}}>
                     <input ref={myRef} type="text" name="search" id="searchInput" placeholder="Find your creature"/>
                     <input type="submit" value="Search" />
-                    <input type="button" value="Refresh" onClick={(e) => {e.preventDefault(); resetSearch()}}/>
+                    <input type="button" value="Show me everything!" onClick={(e) => {e.preventDefault(); resetSearch()}}/>
                 </form>
             </div>
-            <div className="grid">
-                {isLoaded ? renderstuff() : renderLoader()}
+            <div className="grid" ref={gridContainer}>
+                {imageResponse.length > 0 ? renderstuff() : errMsg.length <= 0 ? renderLoader() : null}
             </div>
             
         </div>
