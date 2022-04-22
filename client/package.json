@@ -13,6 +13,7 @@
     "cardinal-spline-js": "^2.3.10",
     "core-js": "^3.21.1",
     "cross-env": "^7.0.3",
+    "eslint-config-react-app": "^7.0.1",
     "hex-to-rgba": "^2.0.1",
     "http-proxy-middleware": "^2.0.4",
     "lottie-react": "^2.2.1",
