@@ -299,7 +299,7 @@ class Canvas extends React.Component{
             this.saveCanvas();
         }
 
-        this.drawGuideDots(this.props.bodyPart);
+        //this.drawGuideDots(this.props.bodyPart);
     }
 
     clearAll() {

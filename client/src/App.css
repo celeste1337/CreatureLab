@@ -198,6 +198,7 @@ input:checked+.slider:before {
 /* Drawing Page */
 p {
   font-family: 'Outfit', sans-serif;
+  font-size: .8em;
 }
 
 .logo {
@@ -233,11 +234,12 @@ p {
   background-color: #3E4043;
   background-image: url('./undo-thumb.PNG');
   background-size: contain;
-  width: 45px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 90px;
   height: 45px;
   border: none;
   border-radius: 5px;
-  margin-top: 10px;
 }
 
 .rightButton {
@@ -255,7 +257,7 @@ p {
 
 .drawingPage {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   touch-action: none;
   height: 100vh;
 
@@ -272,6 +274,12 @@ p {
 
 }
 
+.centerDrawing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .drawingPage .canvasComponent {
   height: 500px;
   background-size: 40px 40px;
@@ -281,15 +289,11 @@ p {
 }
 
 .drawingPage canvas {
-  top: 100px;
   box-sizing: border-box;
   border-top: 3px dotted darkgrey;
   border-bottom: 3px dotted darkgrey;
 }
 
-.brushStroke {
-  margin-bottom: 20px;
-}
 
 .leftDrawing {
   width: 19vw;
@@ -305,7 +309,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:space-around;
+  justify-content:space-evenly;
 }
 
 .buttonDiv {
@@ -319,7 +323,11 @@ p {
   flex-direction: column;
   align-items: center;
   width: 80%;
-  margin-bottom: -40px;
+  margin-bottom: -30px;
+}
+
+.taskH2 {
+  margin-bottom: -10px;
 }
 
 .instructionsDiv {
@@ -497,12 +505,45 @@ h2 {
   color: #3E4043;
   font-family: 'Outfit', sans-serif;
   font-weight: 500;
-  margin-bottom: 5px;
+  font-size: 1em;
 }
 
 h3 {
   color: #3E4043;
   font-family: 'Outfit', sans-serif;
   font-weight: 500;
-  margin-bottom: 5px;
+  font-size: 1em;
+}
+
+/* GUIDE DOTS */
+.thinDots {
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.thickDots {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.topDotDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+
+.bottomDotDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dot {
+  background-color: black;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
 }
