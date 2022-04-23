@@ -25,6 +25,21 @@ dbconnect.connectToServer(function(err) {
 
 const routes = require('./routes/endpoints');
 
+app.get("/api/getInitialCreature", (req, res) => {
+    const dbConnect = dbconnect.getDb();
+    dbConnect.collection("completedcreatures")
+    .find({})
+    .limit(3)
+    .toArray((err, result) => {
+        if(err) {
+            res.status(400).send("error fetching the guys")
+        } else {
+            //console.log(result);
+            res.json(result);
+        }
+    })
+})
+
 app.use(routes)
 
 if (process.env.NODE_ENV === "production") {
