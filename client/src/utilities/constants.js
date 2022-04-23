@@ -1,6 +1,6 @@
 const prod = {
     url: {
-        API_URL: `http://www.creaturelab.art`
+        API_URL: `/`
     }
 };
 
