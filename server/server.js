@@ -19,7 +19,7 @@ const routes = require('./routes/endpoints');
 app.use('/api', routes);
 
 app.use(express.static(path.join(__dirname, '../build/')));
-app.get('/', (req,res) =>{
+app.get('*', (req,res) =>{
     //res.json("hi")
     res.sendFile(path.join(__dirname+'../build/index.html'));
 });
