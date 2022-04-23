@@ -25,7 +25,7 @@ dbconnect.connectToServer(function(err) {
 
 const routes = require('./routes/endpoints');
 
-app.use('api', routes)
+app.use('/api', routes)
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "../client/build")));
