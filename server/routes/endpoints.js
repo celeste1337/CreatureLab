@@ -7,7 +7,7 @@ const ObjectID = require("bson-objectid");
 //instance of the router
 const routes = express.Router();
 
-routes.route("/getAllBodyParts").get(async (req, res) => {
+routes.route("/api/getAllBodyParts").get(async (req, res) => {
     const dbConnect = dbo.getDb();
 
     dbConnect
@@ -23,7 +23,7 @@ routes.route("/getAllBodyParts").get(async (req, res) => {
         })
 })
 
-routes.route("/getAllCreatures").get(async (req, res) => {
+routes.route("/api/getAllCreatures").get(async (req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect
         .collection("completedcreatures")
@@ -42,7 +42,7 @@ routes.route("/getAllCreatures").get(async (req, res) => {
         })
 })
 
-routes.route("/getInitialCreature").get((req, res) => {
+routes.route("/api/getInitialCreature").get((req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect.collection("completedcreatures")
     .find({})
@@ -57,7 +57,7 @@ routes.route("/getInitialCreature").get((req, res) => {
     })
 })
 
-routes.route("/getSomeCreatures/:objId").get(async (req, res) => {
+routes.route("/api/getSomeCreatures/:objId").get(async (req, res) => {
     const lastObjId = ObjectID(req.params.objId);
     const dbConnect = dbo.getDb();
 
@@ -79,7 +79,7 @@ routes.route("/getSomeCreatures/:objId").get(async (req, res) => {
         })
 })
 
-routes.get("/getPart/:id", async (req, res, next) => {
+routes.get("/api/getPart/:id", async (req, res, next) => {
     const dbConnect = dbo.getDb();
     dbConnect
         .collection("bodyparts")
@@ -91,7 +91,7 @@ routes.get("/getPart/:id", async (req, res, next) => {
         .catch(err => console.log(err));
 });
 
-routes.get("/find/:id", (req, res, next) => {
+routes.get("/api/find/:id", (req, res, next) => {
     //the req body should contain a bool that determines what table to search in
     const dbConnect = dbo.getDb();
     const searchTermArr = req.params.id.split("");
@@ -135,7 +135,7 @@ routes.get("/find/:id", (req, res, next) => {
     }
 });
 
-routes.route("/savePart").post(async (req, res) => {
+routes.route("/api/savePart").post(async (req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect.collection("bodyparts")
         .insertOne({
@@ -150,7 +150,7 @@ routes.route("/savePart").post(async (req, res) => {
     //
 });
 
-routes.route("/saveCreature").post(async (req, res) => {
+routes.route("/api/saveCreature").post(async (req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect.collection("completedcreatures")
         .insertOne({
@@ -165,7 +165,7 @@ routes.route("/saveCreature").post(async (req, res) => {
     //
 });
 
-routes.route("/getRandomPart/:bodyPart").get(async (req, res) => {
+routes.route("/api/getRandomPart/:bodyPart").get(async (req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect.collection("bodyparts")
     .aggregate([
