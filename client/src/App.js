@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react';
 import HomePage from './components/HomePage/HomePage';
 import DrawingPage from './components/DrawingPage/DrawingPage';
 import GalleryPage from './components/GalleryPage/GalleryPage';
