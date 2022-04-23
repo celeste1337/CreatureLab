@@ -25,40 +25,10 @@ dbconnect.connectToServer(function(err) {
 
 const routes = require('./routes/endpoints');
 
-app.get("/api/api/getInitialCreature", (req, res) => {
-    const dbConnect = dbconnect.getDb();
-    dbConnect.collection("completedcreatures")
-    .find({})
-    .limit(3)
-    .toArray((err, result) => {
-        if(err) {
-            res.status(400).send("error fetching the guys")
-        } else {
-            //console.log(result);
-            res.json(result);
-        }
-    })
-})
-
-app.use(routes)
+app.use('api', routes)
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "../client/build")));
-
-    app.get("/api/api/getInitialCreature", (req, res) => {
-        const dbConnect = dbconnect.getDb();
-        dbConnect.collection("completedcreatures")
-        .find({})
-        .limit(3)
-        .toArray((err, result) => {
-            if(err) {
-                res.status(400).send("error fetching the guys")
-            } else {
-                //console.log(result);
-                res.json(result);
-            }
-        })
-    })
 
 	app.get("/", function(req, res) {
 		res.sendFile(path.join(__dirname, "../client/build", "index.html"));
