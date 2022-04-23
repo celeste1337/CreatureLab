@@ -17,10 +17,10 @@ app.use(express.json({limit: '50mb'}));
 
 app.use(require('./routes/endpoints'));
 
-app.use(express.static(path.join(__dirname, '../client/build/')));
+app.use(express.static(path.join(__dirname, '../build/')));
 app.get('/', (req,res) =>{
     //res.json("hi")
-    res.sendFile(path.join(__dirname+'../client/build/index.html'));
+    res.sendFile(path.join(__dirname+'../build/index.html'));
 });
 
 //err handling
