@@ -61,12 +61,12 @@ function CombinationPage(props) {
     const removeCookieOnDone = () => removeCookie('creatureId');
 
     const getImageByID = async (creatureId) => {
-        let img = await fetch(config.url.API_URL + '/getPart/' + creatureId, {signal});
+        let img = await fetch(config.url.API_URL + '/api/getPart/' + creatureId, {signal});
         return img.json();
     };
 
     const getImageRandomType = async (type) => {
-        let img = await fetch(config.url.API_URL + '/getRandomPart/' + type, {signal});
+        let img = await fetch(config.url.API_URL + '/api/getRandomPart/' + type, {signal});
         return img.json();
     };
 
@@ -154,7 +154,7 @@ function CombinationPage(props) {
                 createdOn: Date.now(),
             }
 
-            fetch(config.url.API_URL + '/saveCreature', {
+            fetch(config.url.API_URL + '/api/saveCreature', {
                 method: 'POST',
                 body: JSON.stringify(dataObj),
                 headers: {
