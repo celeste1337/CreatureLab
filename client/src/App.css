@@ -368,10 +368,10 @@ p {
 
 .assignmentHead {
   position: absolute;
-  left: 31.5%;
-  top: 20%;
-  width: 500px;
-  height: 500px;
+  left: 20%;
+  top: 10%;
+  width: 90%;
+  height: 80%;
   background-image: url('data/assets/popups/head-ass.png');
   background-repeat: no-repeat;
   background-size: contain;
@@ -379,10 +379,10 @@ p {
 
 .assignmentBody {
   position: absolute;
-  left: 31.5%;
-  top: 20%;
-  width: 500px;
-  height: 500px;
+  left: 20%;
+  top: 10%;
+  width: 90%;
+  height: 80%;
   background-image: url('data/assets/popups/body-ass.png');
   background-repeat: no-repeat;
   background-size: contain;
@@ -390,10 +390,10 @@ p {
 
 .assignmentLegs {
   position: absolute;
-  left: 31.5%;
-  top: 20%;
-  width: 500px;
-  height: 500px;
+  left: 20%;
+  top: 10%;
+  width: 90%;
+  height: 80%;
   background-image: url('data/assets/popups/legs-ass.png');
   background-repeat: no-repeat;
   background-size: contain;

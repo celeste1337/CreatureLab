@@ -35,8 +35,8 @@ export default function ToolPlayer() {
             console.log('loaded new. framecount is 0');
             setFrameCount(0);
           }
-          if (frameCount === 153) {
-            console.log('frame 153');
+          if (frameCount === 362) {
+            console.log('frame 362');
             ref.current.pause();
             setFrameCount(0);
           }
