@@ -33,7 +33,7 @@ function GalleryGrid(props) {
             const json = await response.json();
             setLoaded(true);
             console.log(json.length)
-            if(json.length <= 1) {
+            if(json.length < 1) {
                 setStop(true);
             // console.log(imageResponse.length)
             } else {
