@@ -2,7 +2,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const path = require('path')
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 
-const connectionStr = process.env.ATLAS_URI;
+const connectionStr = "mongodb+srv://dbadmin:L5J1QMP3s6arJ6dh@cluster0.soskd.mongodb.net/CreatureLab?retryWrites=true&w=majority";
 
 const client = new MongoClient(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
