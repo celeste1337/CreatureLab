@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "1216e40cca84bd59ab93",
+    "revision": "8685e03ba7002c7a3dd0",
     "url": "/static/css/main.51abf067.chunk.css"
   },
   {
-    "revision": "1216e40cca84bd59ab93",
-    "url": "/static/js/main.15173433.chunk.js"
+    "revision": "8685e03ba7002c7a3dd0",
+    "url": "/static/js/main.080b75c0.chunk.js"
   },
   {
     "revision": "a94cb13bd8c3349e145f",
@@ -40,12 +40,12 @@ self.__precacheManifest = [
     "url": "/static/media/purplecreature.49bcee8e.png"
   },
   {
-    "revision": "cbb68760ce92cd61e7d1b16dc117290d",
-    "url": "/static/media/Rule-4.cbb68760.gif"
-  },
-  {
     "revision": "674897aeb0aada04433d5d923d201062",
     "url": "/static/media/Rule-2.674897ae.gif"
+  },
+  {
+    "revision": "cbb68760ce92cd61e7d1b16dc117290d",
+    "url": "/static/media/Rule-4.cbb68760.gif"
   },
   {
     "revision": "796bc5f311b937d90339b45008c28a64",
@@ -92,7 +92,7 @@ self.__precacheManifest = [
     "url": "/static/media/Question.d0b71baa.svg"
   },
   {
-    "revision": "f1da10255ec5afff405faf0f1f923a60",
+    "revision": "4da25aa83320b62ff01c7595c4242f7b",
     "url": "/index.html"
   }
 ];
