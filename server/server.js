@@ -25,7 +25,7 @@ dbconnect.connectToServer(function(err) {
 
 const routes = require('./routes/endpoints');
 
-app.get("/api/getInitialCreature", (req, res) => {
+app.get("/api/api/getInitialCreature", (req, res) => {
     const dbConnect = dbconnect.getDb();
     dbConnect.collection("completedcreatures")
     .find({})
