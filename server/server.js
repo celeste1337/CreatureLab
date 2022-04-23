@@ -16,13 +16,14 @@ app.use(express.json({limit: '50mb'}));
 
 const routes = require('./routes/endpoints');
 
-app.use(routes);
+app.use('/api', routes);
 
-app.use(express.static(path.join(__dirname, '../build/')));
-app.get('', (req,res) =>{
-    //res.json("hi")
-    res.sendFile(path.join(__dirname+'../build/index.html'));
-});
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "../client/build")));
+	app.get("*", function(req, res) {
+		res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+	});
+}
 
 //err handling
 app.use(function(err, _req, res, next) {
