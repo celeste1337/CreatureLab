@@ -10,7 +10,8 @@ export default function Instructions() {
 
     const slider = document.querySelector(".sliderBack");
 
-    // const dots
+    const topDots = document.querySelector(".topDotDiv");
+    const bottomDots = document.querySelector(".bottomDotDiv");
 
     const ideas = document.querySelector(".ideasDiv");
 
@@ -27,7 +28,7 @@ export default function Instructions() {
                     {close => (
                         <div className='popupContent'>
                             <div className='ruleOne'></div>
-                            <Button className="nextButton" buttonText="Next" onClick={() => next(1)}></Button>
+                            <Button className="nextButton" buttonText="Tap to Continue" onClick={() => next(1)}></Button>
                         </div>
                     )}
                 </Popup>,
@@ -45,7 +46,7 @@ export default function Instructions() {
                     {close => (
                         <div className='popupContent'>
                             <div className='ruleTwo'></div>
-                            <Button className="nextButton" buttonText="Next" onClick={() => next(2)}></Button>
+                            <Button className="nextButton" buttonText="Continue" onClick={() => next(2)}></Button>
                         </div>
                     )}
                 </Popup>,
@@ -63,12 +64,12 @@ export default function Instructions() {
                     {close => (
                         <div className='popupContent'>
                             <div className='ruleThree'></div>
-                            <Button className="nextButton" buttonText="Next" onClick={() => next(3)}></Button>
+                            <Button className="nextButton" buttonText="Continue" onClick={() => next(3)}></Button>
                         </div>
                     )}
                 </Popup>,
             elements:
-                    [],
+                    [topDots, bottomDots],
         },
 
         {
@@ -81,7 +82,7 @@ export default function Instructions() {
                     {close => (
                         <div className='popupContent'>
                             <div className='ruleFour'></div>
-                            <Button className="nextButton" buttonText="Next" onClick={() => next(4)}></Button>
+                            <Button className="nextButton" buttonText="Continue" onClick={() => next(4)}></Button>
                         </div>
                     )}
                 </Popup>,
@@ -116,7 +117,7 @@ export default function Instructions() {
 
     const tools = [];
 
-    tools.push(scribble, lineWidthPicker, slider, ideas, confirm);
+    tools.push(scribble, lineWidthPicker, slider, ideas, confirm, topDots, bottomDots);
 
     const instructionsStarted = () => {
         console.log('inst clicked');

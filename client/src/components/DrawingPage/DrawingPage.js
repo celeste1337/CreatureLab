@@ -51,17 +51,17 @@ class DrawingPage extends React.Component {
             lineWidths: [
                 {
                     size: 'S',
-                    width: '3',
+                    width: '7',
                     selected: false
                 },
                 {
                     size: 'M',
-                    width: '7',
+                    width: '14',
                     selected: true
                 },
                 {
                     size: 'L',
-                    width: '12',
+                    width: '22',
                     selected: false
                 }
             ],
@@ -290,15 +290,15 @@ class DrawingPage extends React.Component {
                 className="ideasPopup"
                 trigger={<Button className="rightButton ideas" buttonText={<Bulb></Bulb>} />}
                 modal
-                position="right top"
             >
                 {close => (
                     <div>
                         <div className='idea'>
-                            <div className="purpleCreature"></div>
+                            <a className="close" onClick={close}>X</a>
                             <div className="ideasBubble">
                                 {this.ideas[Math.floor(Math.random() * this.ideas.length)]}
                             </div>
+                            <div className="purpleCreature"></div>
                         </div>
                     </div>
                 )}
@@ -328,11 +328,11 @@ class DrawingPage extends React.Component {
     renderScribble(size) {
         //console.log(size);
         switch (size) {
-            case '12':
+            case '22':
                 return <BigSquiggle className="currentColor" fill={this.state.currentColor}></BigSquiggle>;
-            case '7':
+            case '14':
                 return <MediumSquiggle className="currentColor" fill={this.state.currentColor}></MediumSquiggle>;
-            case '3':
+            case '7':
                 return <SmallSquiggle className="currentColor" fill={this.state.currentColor}></SmallSquiggle>;
         }
         //document.querySelector('.currentWidth').style.backgroundImage
@@ -416,7 +416,7 @@ class DrawingPage extends React.Component {
                 <div className="thickDots">
                     <div className="dot"></div>
                     <div className='dot'></div>
-                </div>  
+                </div>
             )
         }
     }
@@ -439,9 +439,35 @@ class DrawingPage extends React.Component {
         }
     }
 
+    renderAssignment() {
+        let div = '';
+
+        if (this.state.bodyPart === "Head") {
+            div = <div className='assignmentHead'></div>
+        } else if (this.state.bodyPart === "Body") {
+            div = <div className='assignmentBody'></div>
+        } else if (this.state.bodyPart === "Legs") {
+            div = <div className='assignmentLegs'></div>
+        }
+
+        return (
+            <div className="assignmentPopup">
+                {div}
+                <Button className="nextButton" buttonText="Start" onClick={() => this.dismiss()}></Button>
+            </div>
+        )
+    }
+
+    dismiss() {
+        const ass = document.querySelector(".assignmentPopup");
+
+        ass.style.display = 'none';
+    }
+
     render() {
         return (
             <div className="drawingPage">
+
                 <div className='leftDrawing'>
                     {this.renderLogo()}
 
@@ -464,7 +490,8 @@ class DrawingPage extends React.Component {
 
                     <div className="sliderDiv">
                         <div className='toolP'>
-                            <p>Draw</p><p>Erase</p>
+                            <p>Draw</p>
+                            <p>Erase</p>
                         </div>
 
                         <div onClick={() => this.handleToolChange()}>
@@ -496,7 +523,7 @@ class DrawingPage extends React.Component {
                         clear={this.state.clear}>
 
                     </Canvas>
-                    
+
                     <div className='bottomDotDiv'>
                         {this.renderBottomDots()}
                     </div>
@@ -532,6 +559,7 @@ class DrawingPage extends React.Component {
                     <div className='doneDiv'>
                         {this.renderDoneButton()}
                     </div>
+                    {this.renderAssignment()}
                 </div>
 
             </div>
