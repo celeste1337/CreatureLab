@@ -16,7 +16,7 @@ function GalleryGrid(props) {
     let gridContainer = useRef(null);
 
     const retrieveImages = async () => {
-        const response = await fetch(config.url.API_URL + '/api/getInitialCreature').catch((err) => console.log(err));
+        const response = await fetch(config.url.API_URL + '/api/api/getInitialCreature').catch((err) => console.log(err));
 
         const json = await response.json();
         if(stopCalling == false) {
@@ -29,11 +29,11 @@ function GalleryGrid(props) {
 
     const getMoreImages = async () => {
         if(lastId) {
-            const response = await fetch(config.url.API_URL + '/api/getSomeCreatures/' + lastId).catch((err) => console.log(err));
+            const response = await fetch(config.url.API_URL + '/api/api/getSomeCreatures/' + lastId).catch((err) => console.log(err));
             const json = await response.json();
             setLoaded(true);
-
-            if(json.length < 1) {
+            console.log(json.length)
+            if(json.length <= 1) {
                 setStop(true);
             // console.log(imageResponse.length)
             } else {
@@ -95,7 +95,8 @@ function GalleryGrid(props) {
     }
 
     const renderstuff = () => {
-        clearGrid();
+        //debugger;
+        //clearGrid();
         if(searchFor && searchTerm.length > 0) {
             //were searching for stuff
             if(imageResponse.length == 0) {
@@ -111,8 +112,8 @@ function GalleryGrid(props) {
                 return;
             }
         }
-
-        if(isLoaded === true && stopCalling == false) {
+        debugger;
+        if(isLoaded === true || stopCalling === false) {
             let arr = [];
             imageResponse.map((data, _id) => {
                 //check first index of img response and if were searching 
@@ -172,7 +173,7 @@ function GalleryGrid(props) {
                 </form>
             </div>
             <div className="grid" ref={gridContainer}>
-                {imageResponse.length > 0 ? renderstuff() : errMsg.length <= 0 ? renderLoader() : null}
+                {imageResponse.length > 0 ? renderstuff() : renderLoader()}
             </div>
             
         </div>
