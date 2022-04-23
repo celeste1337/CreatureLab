@@ -22,8 +22,8 @@ app.use(express.static(path.join(__dirname, 'client', 'build')))
       })
     }
 
-
-app.use(require('./routes/endpoints'));
+const apiCalls = require('./routes/endpoints');
+app.use('/api', apiCalls);
 
 app.use(express.static(path.join(__dirname, '../build/')));
 app.get('/', (req,res) =>{
