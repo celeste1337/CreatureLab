@@ -207,7 +207,7 @@ class Canvas extends React.Component{
 
         this.ctx.restore();
 
-        this.drawGuideDots(this.props.bodyPart);
+        //this.drawGuideDots(this.props.bodyPart);
     }
 
     drawGuideDots(bodyPart) {
@@ -292,7 +292,7 @@ class Canvas extends React.Component{
 
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawGuideDots(this.props.bodyPart);
+        //this.drawGuideDots(this.props.bodyPart);
     }
 
     sendHistory(lineData) {
@@ -313,7 +313,7 @@ class Canvas extends React.Component{
             })
         })
 
-        this.drawGuideDots(this.props.bodyPart);
+        //this.drawGuideDots(this.props.bodyPart);
     }
 
     saveCanvas() {

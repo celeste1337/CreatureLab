@@ -26,7 +26,7 @@ function CombinationPage(props) {
     const [finalCode, setFinalCode] = useState("");
     const [bodyCode, setBodyCode] = useState("");
     const [borderColor, setBorderColor] = useState("");
-    const [animationArr, setAnimArr] = useState(['https://assets6.lottiefiles.com/private_files/lf30_ameqkhrk.json', "https://assets8.lottiefiles.com/private_files/lf30_5idqduw8.json", "https://assets3.lottiefiles.com/private_files/lf30_qui4vle6.json"    ,   "https://assets8.lottiefiles.com/private_files/lf30_8gz8gkan.json","https://assets10.lottiefiles.com/private_files/lf30_xqh0udix.json"]);
+    const [animationArr, setAnimArr] = useState(['https://assets6.lottiefiles.com/private_files/lf30_ameqkhrk.json', "https://assets8.lottiefiles.com/private_files/lf30_5idqduw8.json", "https://assets3.lottiefiles.com/private_files/lf30_qui4vle6.json"    ,   "https://assets8.lottiefiles.com/private_files/lf30_8gz8gkan.json"]);
     const [animIndex, setAnimIndex] = useState(0);
     const [currentAnimation, setCurrentAnimation] = useState(animationArr[animIndex]);
     const [animationFinished, setAnimationFinished] = useState(false);

@@ -51,23 +51,23 @@ class DrawingPage extends React.Component {
             lineWidths: [
                 {
                     size: 'S',
-                    width: '3',
+                    width: '7',
                     selected: false
                 },
                 {
                     size: 'M',
-                    width: '7',
+                    width: '14',
                     selected: true
                 },
                 {
                     size: 'L',
-                    width: '12',
+                    width: '22',
                     selected: false
                 }
             ],
             currentColor: "#333333",
             currentLab: "#bb4bf0",
-            currentWidth: "7",
+            currentWidth: "14",
             lineHistory: [],
             //true means we are drawing
             status: true,
@@ -95,24 +95,70 @@ class DrawingPage extends React.Component {
             "Draw a dinosaur",
             "Draw something that lives in the ocean",
             "Draw a magical creature",
-            "Draw something that lives in the rainforest",
+            "Something that lives in the rainforest",
             "Draw an insect",
             "Draw something purple",
             "Draw something green",
             "Draw something that flies",
             "Draw something that burrows through the ground",
             "Draw a human!",
-            "Draw a creature made out of objects in your home",
+            "Something made out of objects in your home",
             "Draw your pet",
             "Draw a happy animal",
             "Draw something ferocious",
-            "Draw a fish",
+            "A fish!",
             "Draw a monkey",
             "Draw a Pokemon!",
             "Draw something that roars",
             "Draw something that squawks",
             "Draw your favorite animal",
             "Draw an animal you’ve never seen before",
+            "Draw something pink",
+            "Draw something spooky",
+            "Draw a plant!",
+            "Draw something robotic",
+            "Draw something with sunglasses",
+            "Combine two animals and make a new one",
+            "Draw your favorite dog",
+            "Draw something square",
+            "Draw something with only two colors",
+            "Draw something speedy",
+            "Draw something sneaky",
+            "Draw something on fire",
+            "Something with bumps",
+            "Draw something that lives in a river",
+            "Draw something fantastical!",
+            "Draw a superhero",
+            "A happy thing!",
+            "Use the eraser tool creatively!",
+            "Give it clothes!",
+            "Draw something from space",
+            "Draw a rock creature!",
+            "Draw a bear",
+            "Draw ice cream!!",
+            "Draw food",
+            "Draw a robot",
+            "Give it antennae",
+            "Draw something small",
+            "Draw something covered in eyes",
+            "Something with leaves!",
+            "Give it a face",
+            "Draw something mean >:(",
+            "Give it fabulous hair",
+            "Make it have wonky features",
+            "Give it a dress!",
+            "Give it a bow!",
+            "Draw a heart somewhere on it!",
+            "Start with a single line",
+            "Draw a letter, then complete the drawing!",
+            "Draw a bird!",
+            "A llama!",
+            "Draw something from Star Wars",
+            "Draw something with wheels",
+            "Make it chaotic!",
+            "Give it claws",
+            "Make it electric",
+            "Draw a farm animal",
         ];
 
         cookies.getAll();
@@ -290,15 +336,15 @@ class DrawingPage extends React.Component {
                 className="ideasPopup"
                 trigger={<Button className="rightButton ideas" buttonText={<Bulb></Bulb>} />}
                 modal
-                position="right top"
             >
                 {close => (
                     <div>
                         <div className='idea'>
-                            <div className="purpleCreature"></div>
+                            <a className="close" onClick={close}>X</a>
                             <div className="ideasBubble">
                                 {this.ideas[Math.floor(Math.random() * this.ideas.length)]}
                             </div>
+                            <div className="purpleCreature"></div>
                         </div>
                     </div>
                 )}
@@ -328,11 +374,11 @@ class DrawingPage extends React.Component {
     renderScribble(size) {
         //console.log(size);
         switch (size) {
-            case '12':
+            case '22':
                 return <BigSquiggle className="currentColor" fill={this.state.currentColor}></BigSquiggle>;
-            case '7':
+            case '14':
                 return <MediumSquiggle className="currentColor" fill={this.state.currentColor}></MediumSquiggle>;
-            case '3':
+            case '7':
                 return <SmallSquiggle className="currentColor" fill={this.state.currentColor}></SmallSquiggle>;
         }
         //document.querySelector('.currentWidth').style.backgroundImage
@@ -416,7 +462,7 @@ class DrawingPage extends React.Component {
                 <div className="thickDots">
                     <div className="dot"></div>
                     <div className='dot'></div>
-                </div>  
+                </div>
             )
         }
     }
@@ -439,9 +485,35 @@ class DrawingPage extends React.Component {
         }
     }
 
+    renderAssignment() {
+        let div = '';
+
+        if (this.state.bodyPart === "Head") {
+            div = <div className='assignmentHead'></div>
+        } else if (this.state.bodyPart === "Body") {
+            div = <div className='assignmentBody'></div>
+        } else if (this.state.bodyPart === "Legs") {
+            div = <div className='assignmentLegs'></div>
+        }
+
+        return (
+            <div className="assignmentPopup">
+                {div}
+                <Button className="nextButton" buttonText="Start" onClick={() => this.dismiss()}></Button>
+            </div>
+        )
+    }
+
+    dismiss() {
+        const ass = document.querySelector(".assignmentPopup");
+
+        ass.style.display = 'none';
+    }
+
     render() {
         return (
             <div className="drawingPage">
+
                 <div className='leftDrawing'>
                     {this.renderLogo()}
 
@@ -464,7 +536,8 @@ class DrawingPage extends React.Component {
 
                     <div className="sliderDiv">
                         <div className='toolP'>
-                            <p>Draw</p><p>Erase</p>
+                            <p>Draw</p>
+                            <p>Erase</p>
                         </div>
 
                         <div onClick={() => this.handleToolChange()}>
@@ -496,7 +569,7 @@ class DrawingPage extends React.Component {
                         clear={this.state.clear}>
 
                     </Canvas>
-                    
+
                     <div className='bottomDotDiv'>
                         {this.renderBottomDots()}
                     </div>
@@ -532,6 +605,7 @@ class DrawingPage extends React.Component {
                     <div className='doneDiv'>
                         {this.renderDoneButton()}
                     </div>
+                    {this.renderAssignment()}
                 </div>
 
             </div>
