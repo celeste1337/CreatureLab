@@ -1,6 +1,6 @@
 const prod = {
     url: {
-        API_URL: `https://capstone-testzone.herokuapp.com`
+        API_URL: `http://www.creaturelab.art`
     }
 };
 
