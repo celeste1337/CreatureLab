@@ -16,7 +16,7 @@ function GalleryGrid(props) {
     let gridContainer = useRef(null);
 
     const retrieveImages = async () => {
-        const response = await fetch(config.url.API_URL + '/api/api/getInitialCreature').catch((err) => console.log(err));
+        const response = await fetch(config.url.API_URL + '/api/getInitialCreature').catch((err) => console.log(err));
 
         const json = await response.json();
         if(stopCalling == false) {
@@ -29,7 +29,7 @@ function GalleryGrid(props) {
 
     const getMoreImages = async () => {
         if(lastId) {
-            const response = await fetch(config.url.API_URL + '/api/api/getSomeCreatures/' + lastId).catch((err) => console.log(err));
+            const response = await fetch(config.url.API_URL + '/api/getSomeCreatures/' + lastId).catch((err) => console.log(err));
             const json = await response.json();
             setLoaded(true);
             console.log(json.length)
