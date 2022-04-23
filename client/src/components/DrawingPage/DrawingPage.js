@@ -299,7 +299,9 @@ class DrawingPage extends React.Component {
                             <div className="ideasBubble">
                                 {this.ideas[Math.floor(Math.random() * this.ideas.length)]}
                                 
-                                <Button className="nextButton" buttonText="Close" onClick={close}></Button>
+                                <Button className="nextButton" buttonText="Close" style={{left: '50%',
+    top: '70%',
+    width: '81px',}} onClick={close}></Button>
                             </div>
                             </div>
                         </div>
