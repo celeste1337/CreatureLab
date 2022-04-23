@@ -1,6 +1,6 @@
 const prod = {
     url: {
-        API_URL: `/api/`
+        API_URL: ``
     }
 };
 
