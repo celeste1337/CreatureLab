@@ -14,9 +14,18 @@ app.use(cors());
 app.use(bodyparser.raw({limit: '50mb'}));
 app.use(express.json({limit: '50mb'}));
 
+dbconnect.connectToServer(function(err) {
+    if(err) {
+        console.error(err);
+        process.exit();
+    }
+    //start server
+    
+});
+
 const routes = require('./routes/endpoints');
 
-app.use('/api', routes);
+app.use('/api', routes)
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "../client/build")));
@@ -25,19 +34,8 @@ if (process.env.NODE_ENV === "production") {
 	});
 }
 
-//err handling
-app.use(function(err, _req, res, next) {
-    console.error(err.stack);
-    res.status(500).send("Something went wrong.");
-});
 
-dbconnect.connectToServer(function(err) {
-    if(err) {
-        console.error(err);
-        process.exit();
-    }
-    //start server
-    app.listen(port, () => {
-        console.log('app is listening on port '+port)
-    })
-});
+
+app.listen(port, () => {
+    console.log('app is listening on port '+port)
+})
