@@ -11,16 +11,12 @@ class GalleryPage extends React.Component {
         this.ref = React.createRef();
     } 
     
-    
-    componentDidMount() {
-
-    }
  
     render() {
         // if gallery is in grid mode
         return (
             <div className="galleryPage">
-                <div className="logoBar"><img src={logo}/></div>
+                <div className="logoBar" style={{display: 'flex', justifyContent: 'space-between'}}><img src={logo}/><a href="/home" style={{paddingTop: '10px', textDecoration: 'none'}}>Drawing Experience</a></div>
                 <div className="banner">
                     <h1>Explore the <span className="purpleP">limitless</span> creativity</h1>
                     <p>Enter your creation code down below to see your creatures.</p>
