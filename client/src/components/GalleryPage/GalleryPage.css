@@ -2,15 +2,20 @@ body .galleryPage {
     overflow: auto;
 }
 
+.galleryHeading {
+    font-weight: 800;
+    font-size: 10vh;
+  }
 
 .galleryPage {
     padding: 0 3vw;
     background-image: url("../../data/assets/Squigs.png");
     background-size: contain;
+    
 }
 
 .galleryPage .banner {
-    height: 100vh;
+    height: 80vh;
 }
 
 .galleryImg {
@@ -55,16 +60,41 @@ body .galleryPage {
 }
 
 .search input {
-    height: 10vh;
+    height: 5vh;
 }
 
-.search input[type=button], .search input[type=submit] {
+.showAll {
     background-color: #944bf0;
     color: white;
     border: none;
     height: 12vh;
     border-radius: 3px;
     margin: 0 2px;
+}
+
+.searchLeft {
+    margin-right: -3px;
+    border-radius: 3px 0px 0px 3px;
+    border: 1px solid #EBEBED;
+    height: 40px !important;
+}
+
+.searchRight {
+    background-color: #944bf0;
+    color: #944bf0;
+    border: 1px solid #944bf0 !important;
+    width: 50px;
+    height: 44px !important;
+    border-radius: 0px 5px 5px 0px !important;
+    margin-right: 3px;
+    background-image: url('../../data/assets/Search.svg');
+
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.showAll {
+    height: 44px !important;
 }
 
 .loading {
@@ -81,10 +111,45 @@ body .galleryPage {
     width: 10vw;
 }
 
-.letsGo {
-    text-decoration: none;
-    background-color: #944bf0;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
+.navLinks {
+    display: flex;
 }
+
+.navLink {
+    margin-top: 12px;
+}
+
+.letsGo {
+    position: relative;
+    left: 49%;
+    top: 10%;
+}
+
+.imagesOne {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -80px;
+}
+
+.creature1 {
+    background-color: white;
+    border: 15px solid rgba(81, 173, 66, 0.3);
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    margin-right: 8vw;
+    transform: rotate(8deg);
+}
+
+.creature2 {
+    background-color: white;
+    border: 15px solid rgba(235, 39, 39, 0.2);
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    margin-right: 5vw;
+    transform: rotate(-8deg);
+}
+

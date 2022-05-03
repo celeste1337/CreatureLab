@@ -166,9 +166,11 @@ function GalleryGrid(props) {
             {errMsg.length > 0 ? renderError() : null}
             <div className="search">
                 <form onSubmit={(e) => {e.preventDefault(); search(e)}}>
-                    <input ref={myRef} type="text" name="search" id="searchInput" placeholder="Find your creature"/>
-                    <input type="submit" value="Search" />
-                    <input type="button" value="Show me everything!" onClick={(e) => {e.preventDefault(); resetSearch()}}/>
+                    
+                        <input className="searchLeft" ref={myRef} type="text" name="search" id="searchInput" placeholder="Enter creation code"/>
+                        <input className="searchRight" type="submit" value=" " />
+                    
+                    <input className="showAll" type="button" value="Refresh" onClick={(e) => {e.preventDefault(); resetSearch()}}/>
                 </form>
             </div>
             <div className="grid" ref={gridContainer}>
